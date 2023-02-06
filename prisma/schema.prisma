@@ -1,0 +1,105 @@
+datasource db {
+  provider     = "postgresql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  links         Link[]
+  accounts      Account[]
+  sessions      Session[]
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+enum PaymentStatus {
+  SUCCEEDED
+  PENDING
+  FAILED
+}
+
+model Link {
+  id        String    @id @default(cuid())
+  archived  Boolean   @default(false) // whether the link is archived or not
+  expiresAt DateTime? // when the link expires – stored on Redis via ttl
+
+  title       String // OG title for the link (e.g. Dub - Open-Source Bitly Alternative)
+  status      PaymentStatus @default(PENDING)
+  amount      Int
+  reference   String        @unique
+  description String?       @db.VarChar(280) // OG description for the link (e.g. An open-source link management tool for modern marketing teams to create, share, and track short links.)
+  notes       String?
+  image       String? // OG image for the link (e.g. https://dub.sh/og-image.png)
+
+  // UTM parameters
+  utm_source   String? // UTM source for the link (e.g. youtube.com)
+  utm_medium   String? // UTM medium for the link (e.g. social)
+  utm_campaign String? // UTM campaign for the link (e.g. summer-sale)
+  utm_term     String? // UTM term for the link (e.g. dub)
+  utm_content  String? // UTM content for the link (e.g. description)
+
+  clicks Int @default(0) // number of clicks
+
+  // User who created the link
+  user   User?   @relation(fields: [userId], references: [id])
+  userId String?
+
+  // Project that the link belongs to
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // TODO: might wanna add indices for utm_source, utm_medium, utm_campaign
+
+  // indices for links per domain/project
+  @@index([archived, expiresAt, createdAt(sort: Desc)])
+  @@index([archived, expiresAt, clicks(sort: Desc)])
+  // indices for links per domain/project specific to a user
+  @@index([archived, expiresAt, userId, createdAt(sort: Desc)])
+  @@index([archived, expiresAt, userId, clicks(sort: Desc)])
+  @@index([userId])
+}
