@@ -1,5 +1,14 @@
 import prisma from "@/lib/prisma";
 
+interface AddLinkProps {
+  expiresAt?: Date;
+  title: string;
+  description: string;
+  amount: number;
+  reference: string;
+  userId: string;
+}
+
 export async function checkIfKeyExists(reference: string) {
   const link = await prisma.link.findUnique({
     where: {
@@ -9,7 +18,7 @@ export async function checkIfKeyExists(reference: string) {
   return !!link;
 }
 
-export async function addLink(link: any) {
+export async function addLink(link: AddLinkProps) {
   const { expiresAt, title, description, amount, reference } = link;
 
   // add qstash update on expiry

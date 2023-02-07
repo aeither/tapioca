@@ -23,6 +23,14 @@ export const authOptions: NextAuthOptions = {
       from: process.env.SMTP_FROM,
     }),
   ],
+  callbacks: {
+    session: async ({ session, token, user }) => {
+      if (session?.user) {
+        (session.user as any).id = user.id;
+      }
+      return session;
+    },
+  },
 };
 
 export default NextAuth(authOptions);

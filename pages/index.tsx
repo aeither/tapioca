@@ -9,8 +9,16 @@ import ComponentGrid from "@/components/home/component-grid";
 import Image from "next/image";
 import { ConnectWallet } from "@/components/home/wallet";
 import Products from "@/components/home/products";
+import { addLink } from "@/lib/api/links";
+import { mutate } from "swr";
+import { Keypair, LAMPORTS_PER_SOL } from "@solana/web3.js";
+import useSWR from "swr";
+import { fetcher } from "@/lib/utils";
+import { Prisma } from "@prisma/client";
 
 export default function Home() {
+  const { data: links } = useSWR<Prisma.LinkSelect[]>(`/api/links`, fetcher);
+
   return (
     <Layout>
       <motion.h1 className="bg-gradient-to-br from-black to-stone-500 bg-clip-text text-center font-display text-4xl font-bold tracking-[-0.02em] text-transparent drop-shadow-sm md:text-7xl md:leading-[5rem]">
@@ -23,6 +31,35 @@ export default function Home() {
           <ConnectWallet />
           <p>content</p>
           <Products submitTarget="/cart" enabled />
+        </div>
+        <div className={""}>
+          <h3>link to db</h3>
+          <button
+            onClick={() => {
+              fetch("/api/links", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  title: "brownie",
+                  description: "a chocolate brownie",
+                  amount: 0.012,
+                  reference: new Keypair().publicKey.toBase58(),
+                }),
+              }).then((res) => {
+                console.log(res), mutate("/api/links");
+              });
+            }}
+          >
+            add link
+          </button>
+          {links &&
+            links.map((link) => (
+              <>
+                <p>Reference: {link.reference}</p>
+              </>
+            ))}
         </div>
         {features.map(({ title, description, demo, large }) => (
           <Card
