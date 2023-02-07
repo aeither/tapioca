@@ -1,7 +1,13 @@
 import ms from "ms";
 import { ParsedUrlQuery } from "querystring";
 import BigNumber from "bignumber.js";
+import { customAlphabet } from "nanoid";
 import { products } from "./data/products";
+
+export const nanoid = customAlphabet(
+  "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
+  7,
+); // 7-character random string
 
 export const timeAgo = (timestamp: Date, timeOnly?: boolean): string => {
   if (!timestamp) return "never";
