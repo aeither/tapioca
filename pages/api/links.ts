@@ -4,6 +4,7 @@ import { addLink } from "@/lib/api/links";
 import { authOptions } from "pages/api/auth/[...nextauth]";
 import { getServerSession } from "next-auth/next";
 import prisma from "@/lib/prisma";
+import { Keypair } from "@solana/web3.js";
 
 export default async function handler(
   req: NextApiRequest,
@@ -39,6 +40,7 @@ export default async function handler(
   } else if (req.method === "POST") {
     const response = await addLink({
       ...req.body,
+      reference: new Keypair().publicKey.toBase58(),
       userId: (session.user as any).id as string,
     });
 

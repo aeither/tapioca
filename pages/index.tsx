@@ -15,9 +15,34 @@ import { Keypair, LAMPORTS_PER_SOL } from "@solana/web3.js";
 import useSWR from "swr";
 import { fetcher } from "@/lib/utils";
 import { Prisma } from "@prisma/client";
+import { SubmitHandler, useForm, FieldValues } from "react-hook-form";
+
+interface FormInput {
+  title: string;
+  description: string;
+  amount: string;
+}
 
 export default function Home() {
   const { data: links } = useSWR<Prisma.LinkSelect[]>(`/api/links`, fetcher);
+  const { register, handleSubmit } = useForm<FormInput>();
+  const onSubmit: SubmitHandler<FormInput> = (data) => {
+    const { amount, description, title } = data;
+
+    fetch("/api/links", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        title,
+        description,
+        amount: parseFloat(amount),
+      }),
+    }).then((res) => {
+      console.log(res), mutate("/api/links");
+    });
+  };
 
   return (
     <Layout>
@@ -33,32 +58,30 @@ export default function Home() {
           <Products submitTarget="/cart" enabled />
         </div>
         <div className={""}>
-          <h3>link to db</h3>
-          <button
-            onClick={() => {
-              fetch("/api/links", {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                  title: "brownie",
-                  description: "a chocolate brownie",
-                  amount: 0.012,
-                  reference: new Keypair().publicKey.toBase58(),
-                }),
-              }).then((res) => {
-                console.log(res), mutate("/api/links");
-              });
-            }}
-          >
-            add link
-          </button>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <h3>link to db</h3>
+            <input defaultValue="brownie" {...register("title")} />
+            <input
+              defaultValue="a chocolate brownie"
+              {...register("description")}
+            />
+            <input
+              type="number"
+              defaultValue={0.01}
+              step={0.01}
+              {...register("amount")}
+            />
+            <button type="submit" className="rounded bg-slate-300 p-4">
+              Create Link
+            </button>
+          </form>
           {links &&
-            links.map((link) => (
-              <>
+            links.map((link, i) => (
+              <div key={i} className="flex gap-4">
+                <p>Amount: {link.amount}</p>
                 <p>Reference: {link.reference}</p>
-              </>
+                <p>Status: {link.status}</p>
+              </div>
             ))}
         </div>
         {features.map(({ title, description, demo, large }) => (
