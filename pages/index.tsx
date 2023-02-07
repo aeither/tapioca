@@ -7,6 +7,8 @@ import { Github, Twitter } from "@/components/shared/icons";
 import WebVitals from "@/components/home/web-vitals";
 import ComponentGrid from "@/components/home/component-grid";
 import Image from "next/image";
+import { ConnectWallet } from "@/components/home/wallet";
+import Products from "@/components/home/products";
 
 export default function Home() {
   return (
@@ -18,7 +20,9 @@ export default function Home() {
       {/* here we are animating with Tailwind instead of Framer Motion because Framer Motion messes up the z-index for child components */}
       <div className="my-10 grid w-full max-w-screen-xl animate-[slide-down-fade_0.5s_ease-in-out] grid-cols-1 gap-5 px-5 md:grid-cols-3 xl:px-0">
         <div className={""}>
+          <ConnectWallet />
           <p>content</p>
+          <Products submitTarget="/cart" enabled />
         </div>
         {features.map(({ title, description, demo, large }) => (
           <Card

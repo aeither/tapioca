@@ -1,4 +1,7 @@
 import ms from "ms";
+import { ParsedUrlQuery } from "querystring";
+import BigNumber from "bignumber.js";
+import { products } from "./data/products";
 
 export const timeAgo = (timestamp: Date, timeOnly?: boolean): string => {
   if (!timestamp) return "never";
@@ -61,3 +64,17 @@ export const truncate = (str: string, length: number) => {
   if (!str || str.length <= length) return str;
   return `${str.slice(0, length)}...`;
 };
+
+export function calculatePrice(query: ParsedUrlQuery): BigNumber {
+  let amount = new BigNumber(0);
+  for (const [id, quantity] of Object.entries(query)) {
+    const product = products.find((p) => p.id === id);
+    if (!product) continue;
+
+    const price = product.priceSol;
+    const productQuantity = new BigNumber(quantity as string);
+    amount = amount.plus(productQuantity.multipliedBy(price));
+  }
+
+  return amount;
+}
