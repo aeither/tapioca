@@ -7,6 +7,8 @@ interface AddLinkProps {
   amount: number;
   reference: string;
   userId: string;
+  payer: string;
+  receiver: string;
 }
 
 export async function checkIfKeyExists(reference: string) {

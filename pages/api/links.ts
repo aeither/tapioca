@@ -16,8 +16,6 @@ export default async function handler(
     res.status(401).json({ message: "You must be logged in." });
     return;
   }
-  console.log("session: ", session);
-  console.log("body: ", req.body);
 
   // GET /api/links – get all dub.sh links created by the user
   if (req.method === "GET") {

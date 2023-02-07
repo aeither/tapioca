@@ -1,5 +1,4 @@
-import Cart from "@/components/home/cart";
-import { ConnectWallet } from "@/components/home/wallet";
+import ExtensionPay from "@/components/checkout/extension-pay";
 import Layout from "@/components/layout";
 import { motion } from "framer-motion";
 import { useRouter } from "next/router";
@@ -20,8 +19,7 @@ export default function Home() {
       <div className="my-10 grid w-full max-w-screen-xl animate-[slide-down-fade_0.5s_ease-in-out] grid-cols-1 gap-5 px-5 md:grid-cols-3 xl:px-0">
         <div className={""}>
           <p>content</p>
-          {/* <ConnectWallet /> */}
-          {/* <Cart /> */}
+          <ExtensionPay reference={reference as string} />
         </div>
       </div>
     </Layout>

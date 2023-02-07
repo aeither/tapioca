@@ -1,34 +1,34 @@
 import Card from "@/components/home/card";
-import Layout from "@/components/layout";
-import Balancer from "react-wrap-balancer";
-import { motion } from "framer-motion";
-import { DEPLOY_URL, FADE_DOWN_ANIMATION_VARIANTS } from "@/lib/constants";
-import { Github, Twitter } from "@/components/shared/icons";
-import WebVitals from "@/components/home/web-vitals";
 import ComponentGrid from "@/components/home/component-grid";
-import Image from "next/image";
-import { ConnectWallet } from "@/components/home/wallet";
 import Products from "@/components/home/products";
-import { addLink } from "@/lib/api/links";
-import { mutate } from "swr";
-import { Keypair, LAMPORTS_PER_SOL } from "@solana/web3.js";
-import useSWR from "swr";
+import { ConnectWallet } from "@/components/home/wallet";
+import WebVitals from "@/components/home/web-vitals";
+import Layout from "@/components/layout";
+import { DEPLOY_URL } from "@/lib/constants";
 import { fetcher } from "@/lib/utils";
 import { Prisma } from "@prisma/client";
-import { SubmitHandler, useForm, FieldValues } from "react-hook-form";
+import { motion } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { useCopyToClipboard } from "react-use";
+import Balancer from "react-wrap-balancer";
+import useSWR, { mutate } from "swr";
 
 interface FormInput {
   title: string;
   description: string;
   amount: string;
+  receiver: string;
 }
 
 export default function Home() {
+  const [state, copyToClipboard] = useCopyToClipboard();
+
   const { data: links } = useSWR<Prisma.LinkSelect[]>(`/api/links`, fetcher);
   const { register, handleSubmit } = useForm<FormInput>();
   const onSubmit: SubmitHandler<FormInput> = (data) => {
-    const { amount, description, title } = data;
+    const { amount, description, title, receiver } = data;
 
     fetch("/api/links", {
       method: "POST",
@@ -39,6 +39,7 @@ export default function Home() {
         title,
         description,
         amount: parseFloat(amount),
+        receiver,
       }),
     }).then((res) => {
       console.log(res), mutate("/api/links");
@@ -62,6 +63,7 @@ export default function Home() {
           <form onSubmit={handleSubmit(onSubmit)}>
             <h3>link to db</h3>
             <input defaultValue="brownie" {...register("title")} />
+            <input defaultValue="receiver" {...register("receiver")} />
             <input
               defaultValue="a chocolate brownie"
               {...register("description")}
@@ -83,6 +85,15 @@ export default function Home() {
                 <p>Reference: {link.reference}</p>
                 <p>Status: {link.status}</p>
                 <Link href={`/link/${link.reference}`}>Open</Link>
+                <button
+                  onClick={() =>
+                    copyToClipboard(
+                      window.location.host + "/link/" + link.reference,
+                    )
+                  }
+                >
+                  copy
+                </button>
               </div>
             ))}
         </div>

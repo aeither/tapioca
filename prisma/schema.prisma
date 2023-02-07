@@ -70,8 +70,10 @@ model Link {
 
   title       String // OG title for the link (e.g. Dub - Open-Source Bitly Alternative)
   status      PaymentStatus @default(PENDING)
-  amount      Float
   reference   String        @unique
+  amount      Float
+  receiver    String
+  payer       String?
   description String?       @db.VarChar(280) // OG description for the link (e.g. An open-source link management tool for modern marketing teams to create, share, and track short links.)
   notes       String?
   image       String? // OG image for the link (e.g. https://dub.sh/og-image.png)
