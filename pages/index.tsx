@@ -16,6 +16,7 @@ import useSWR from "swr";
 import { fetcher } from "@/lib/utils";
 import { Prisma } from "@prisma/client";
 import { SubmitHandler, useForm, FieldValues } from "react-hook-form";
+import Link from "next/link";
 
 interface FormInput {
   title: string;
@@ -81,6 +82,7 @@ export default function Home() {
                 <p>Amount: {link.amount}</p>
                 <p>Reference: {link.reference}</p>
                 <p>Status: {link.status}</p>
+                <Link href={`/link/${link.reference}`}>Open</Link>
               </div>
             ))}
         </div>
