@@ -48,28 +48,26 @@ export default async function handler(
     }
     return res.status(200).json(response);
 
-    // PUT /api/links – update a new link
-  } else if (req.method === "PUT") {
+    // PATCH /api/links – update a new link
+  } else if (req.method === "PATCH") {
     const { reference } = req.query as {
       reference?: string;
     };
     const { status } = req.body as {
-      status: PaymentStatus;
+      status?: PaymentStatus;
     };
 
-    console.log(
-      "🚀 ~ file: links.ts:63 ~ req.body",
-      reference,
-      " and: ",
-      status,
-    );
-    const response = prisma.link.findFirst({
+    if (reference === undefined) {
+      return res.status(400).json({ error: "Reference not found in query" });
+    }
+
+    const response = await prisma.link.update({
       where: {
-        reference,
+        reference: String(reference),
       },
-      // data: {
-      //   description: new Date().getTime().toString(),
-      // },
+      data: {
+        status: status,
+      },
     });
     console.log("🚀 ~ file: links.ts:74 ~ response", response);
 
@@ -78,7 +76,7 @@ export default async function handler(
     }
     return res.status(200).json(response);
   } else {
-    res.setHeader("Allow", ["GET", "POST"]);
+    res.setHeader("Allow", ["GET", "POST", "PATCH"]);
     return res.status(405).json({ error: `Method ${req.method} Not Allowed` });
   }
 }

@@ -83,12 +83,6 @@ export default function Home() {
               Create Link
             </button>
           </form>
-          <button
-            onClick={() => console.log(" hello")}
-            className="rounded bg-cyan-300 px-4 py-2"
-          >
-            test update
-          </button>
           {links &&
             links.map((link, i) => (
               <div key={i} className="flex gap-4">

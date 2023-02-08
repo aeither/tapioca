@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import useSWR from "swr";
 
 import { MakeTransactionOutputData } from "@/pages/api/makeTransaction";
+import { PaymentStatus } from "@prisma/client";
 
 export default function useMakeTx({
   reference,
@@ -49,14 +50,6 @@ export default function useMakeTx({
   }
   useEffect(() => {
     getTransaction();
-
-    // // Refresh Tx to include latest block
-    // const interval = setInterval(async () => {
-    //   getTransaction();
-    // }, 5000);
-    // return () => {
-    //   clearInterval(interval);
-    // };
   }, [publicKey, reference]);
 
   // Send the fetched transaction to the connected wallet
@@ -66,8 +59,21 @@ export default function useMakeTx({
     }
     try {
       const tx = await sendTransaction(transaction, connection);
+
+      const result = await connection.getSignatureStatus(tx);
+      const res = await fetch(`/api/links?reference=${reference}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          status: PaymentStatus.SUCCEEDED,
+        }),
+      }).then((res) => res.json());
+
       console.log("reference =>", reference);
       console.log("tx =>", tx);
+      console.log("status =>", result.value?.confirmationStatus);
     } catch (e) {
       console.error(e);
     }
@@ -87,43 +93,6 @@ export default function useMakeTx({
     { refreshInterval: 2000 },
   );
   console.log("🚀 ~ file: use-maketx.ts:84 ~ sig", sig);
-
-  // Check every 0.5s if the transaction is completed
-  // useEffect(() => {
-  //   const interval = setInterval(async () => {
-  //     try {
-  //       // Check if there is any transaction for the reference
-  //       if (_reference) {
-  //         const signatureInfo = await findReference(connection, _reference);
-
-  //         setHasPaid(true);
-  //         clearInterval(interval);
-
-  //         // update payment status
-  //         const res = await fetch(`/api/links?reference=${reference}`, {
-  //           method: "PUT",
-  //           headers: {
-  //             "Content-Type": "application/json",
-  //           },
-  //           body: JSON.stringify({
-  //             status: PaymentStatus.SUCCEEDED,
-  //           }),
-  //         }).then((res) => res.json());
-  //         console.log("They paid!!!");
-  //         console.log("Update status: ", res);
-  //       }
-  //     } catch (e) {
-  //       if (e instanceof FindReferenceError) {
-  //         // No transaction found yet, ignore this error
-  //         return;
-  //       }
-  //       console.error("Unknown error", e);
-  //     }
-  //   }, 500);
-  //   return () => {
-  //     clearInterval(interval);
-  //   };
-  // }, []);
 
   return {
     trySendTransaction,
