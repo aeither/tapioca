@@ -100,6 +100,25 @@ export default function Home() {
                   Open
                 </Link>
                 <button
+                  onClick={() => {
+                    if (navigator.share) {
+                      navigator
+                        .share({
+                          title: "WebShare API Demo",
+                          url: `https://${window.location.host}/link/${link.reference}/?reference=${link.reference}`,
+                        })
+                        .then(() => {
+                          console.log("Thanks for sharing!");
+                        })
+                        .catch(console.error);
+                    } else {
+                      // show modal
+                    }
+                  }}
+                >
+                  Share
+                </button>
+                <button
                   onClick={() =>
                     copyToClipboard(
                       window.location.host + "/link/" + link.reference,
