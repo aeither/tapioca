@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { addLink } from "@/lib/api/links";
 
 import { authOptions } from "pages/api/auth/[...nextauth]";
-import { getServerSession } from "next-auth/next";
+import { unstable_getServerSession } from "next-auth/next";
 import prisma from "@/lib/prisma";
 import { Keypair } from "@solana/web3.js";
 
@@ -10,7 +10,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  const session = await getServerSession(req, res, authOptions);
+  const session = await unstable_getServerSession(req, res, authOptions);
 
   if (!session) {
     res.status(401).json({ message: "You must be logged in." });
