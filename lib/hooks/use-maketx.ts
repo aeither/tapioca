@@ -1,13 +1,10 @@
-import { findReference, FindReferenceError } from "@solana/pay";
+import { findReference } from "@solana/pay";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { PublicKey, Transaction } from "@solana/web3.js";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import useSWR from "swr";
 
-import {
-  MakeTransactionInputData,
-  MakeTransactionOutputData,
-} from "@/pages/api/makeTransaction";
-import { PaymentStatus } from "@prisma/client";
+import { MakeTransactionOutputData } from "@/pages/api/makeTransaction";
 
 export default function useMakeTx({
   reference,
@@ -76,43 +73,57 @@ export default function useMakeTx({
     }
   }
 
+  const _reference = useMemo(() => {
+    if (reference) return new PublicKey(reference);
+  }, [reference]);
+  const { data: sig } = useSWR(
+    [`check is completed`, _reference],
+    async ([key, _reference]) => {
+      if (!_reference) return;
+      const signatureInfo = await findReference(connection, _reference);
+      setHasPaid(true);
+      return signatureInfo;
+    },
+    { refreshInterval: 2000 },
+  );
+  console.log("🚀 ~ file: use-maketx.ts:84 ~ sig", sig);
+
   // Check every 0.5s if the transaction is completed
-  useEffect(() => {
-    const interval = setInterval(async () => {
-      try {
-        // Check if there is any transaction for the reference
-        const signatureInfo = await findReference(
-          connection,
-          new PublicKey(reference || ""),
-        );
+  // useEffect(() => {
+  //   const interval = setInterval(async () => {
+  //     try {
+  //       // Check if there is any transaction for the reference
+  //       if (_reference) {
+  //         const signatureInfo = await findReference(connection, _reference);
 
-        setHasPaid(true);
-        clearInterval(interval);
+  //         setHasPaid(true);
+  //         clearInterval(interval);
 
-        // update payment status
-        const res = await fetch(`/api/links?reference=${reference}`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            status: PaymentStatus.SUCCEEDED,
-          }),
-        }).then((res) => res.json());
-        console.log("They paid!!!", signatureInfo);
-        console.log("Update!!!", res);
-      } catch (e) {
-        if (e instanceof FindReferenceError) {
-          // No transaction found yet, ignore this error
-          return;
-        }
-        console.error("Unknown error", e);
-      }
-    }, 500);
-    return () => {
-      clearInterval(interval);
-    };
-  }, []);
+  //         // update payment status
+  //         const res = await fetch(`/api/links?reference=${reference}`, {
+  //           method: "PUT",
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //           },
+  //           body: JSON.stringify({
+  //             status: PaymentStatus.SUCCEEDED,
+  //           }),
+  //         }).then((res) => res.json());
+  //         console.log("They paid!!!");
+  //         console.log("Update status: ", res);
+  //       }
+  //     } catch (e) {
+  //       if (e instanceof FindReferenceError) {
+  //         // No transaction found yet, ignore this error
+  //         return;
+  //       }
+  //       console.error("Unknown error", e);
+  //     }
+  //   }, 500);
+  //   return () => {
+  //     clearInterval(interval);
+  //   };
+  // }, []);
 
   return {
     trySendTransaction,

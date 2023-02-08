@@ -63,14 +63,15 @@ export default async function handler(
       " and: ",
       status,
     );
-    const response = prisma.link.update({
+    const response = prisma.link.findFirst({
       where: {
         reference,
       },
-      data: {
-        status: PaymentStatus.SUCCEEDED,
-      },
+      // data: {
+      //   description: new Date().getTime().toString(),
+      // },
     });
+    console.log("🚀 ~ file: links.ts:74 ~ response", response);
 
     if (response === null) {
       return res.status(403).json({ error: "Key already exists" });

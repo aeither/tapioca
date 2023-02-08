@@ -22,7 +22,6 @@ export default function ExtensionPay({ reference }: { reference: string }) {
         </div>
 
         <ConnectWallet />
-
         <p>You need to connect your wallet to make transactions</p>
       </div>
     );

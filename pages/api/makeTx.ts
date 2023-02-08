@@ -41,7 +41,6 @@ export default async function handler(
         reference,
       },
     });
-    console.log("🚀 ~ file: makeTx.ts:44 ~ link", reference, "and link", link);
 
     if (!reference)
       return res.status(400).json({ error: "reference not found" });
