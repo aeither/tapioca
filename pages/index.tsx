@@ -4,6 +4,7 @@ import Products from "@/components/home/products";
 import { ConnectWallet } from "@/components/home/wallet";
 import WebVitals from "@/components/home/web-vitals";
 import Layout from "@/components/layout";
+import Tooltip from "@/components/shared/tooltip";
 import { DEPLOY_URL } from "@/lib/constants";
 import { fetcher } from "@/lib/utils";
 import { Prisma } from "@prisma/client";
@@ -42,7 +43,11 @@ export default function Home() {
         receiver,
       }),
     }).then((res) => {
-      console.log(res), mutate("/api/links");
+      if (res.statusText === "Unauthorized") {
+        alert("Require sign in");
+      } else {
+        mutate("/api/links");
+      }
     });
   };
 
@@ -84,7 +89,16 @@ export default function Home() {
                 <p>Amount: {link.amount}</p>
                 <p>Reference: {link.reference}</p>
                 <p>Status: {link.status}</p>
-                <Link href={`/link/${link.reference}`}>Open</Link>
+                <Tooltip
+                  content={`Clicks \n ${link.clicks} \n Receiver \n ${link.receiver}`}
+                >
+                  <p>Info</p>
+                </Tooltip>
+                <Link
+                  href={`/link/${link.reference}/?reference=${link.reference}`}
+                >
+                  Open
+                </Link>
                 <button
                   onClick={() =>
                     copyToClipboard(

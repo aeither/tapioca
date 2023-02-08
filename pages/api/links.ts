@@ -5,6 +5,7 @@ import { authOptions } from "pages/api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
 import prisma from "@/lib/prisma";
 import { Keypair } from "@solana/web3.js";
+import { PaymentStatus } from "@prisma/client";
 
 export default async function handler(
   req: NextApiRequest,
@@ -40,6 +41,35 @@ export default async function handler(
       ...req.body,
       reference: new Keypair().publicKey.toBase58(),
       userId: (session.user as any).id as string,
+    });
+
+    if (response === null) {
+      return res.status(403).json({ error: "Key already exists" });
+    }
+    return res.status(200).json(response);
+
+    // PUT /api/links – update a new link
+  } else if (req.method === "PUT") {
+    const { reference } = req.query as {
+      reference?: string;
+    };
+    const { status } = req.body as {
+      status: PaymentStatus;
+    };
+
+    console.log(
+      "🚀 ~ file: links.ts:63 ~ req.body",
+      reference,
+      " and: ",
+      status,
+    );
+    const response = prisma.link.update({
+      where: {
+        reference,
+      },
+      data: {
+        status: PaymentStatus.SUCCEEDED,
+      },
     });
 
     if (response === null) {

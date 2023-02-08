@@ -1,13 +1,18 @@
 import { useWallet } from "@solana/wallet-adapter-react";
-import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 import Link from "next/link";
 
 import useMakeTx from "@/lib/hooks/use-maketx";
-import { PublicKey } from "@solana/web3.js";
+import { ConnectWallet } from "../home/wallet";
 
 export default function ExtensionPay({ reference }: { reference: string }) {
   const { publicKey } = useWallet();
-  const { message, transaction, trySendTransaction } = useMakeTx({ reference });
+  const { message, transaction, trySendTransaction, hasPaid } = useMakeTx({
+    reference,
+  });
+
+  if (hasPaid) {
+    return <p>Have been paid successfully</p>;
+  }
 
   if (!publicKey) {
     return (
@@ -16,7 +21,7 @@ export default function ExtensionPay({ reference }: { reference: string }) {
           <Link href={"/"}>Cancel</Link>
         </div>
 
-        <WalletMultiButton />
+        <ConnectWallet />
 
         <p>You need to connect your wallet to make transactions</p>
       </div>
@@ -31,10 +36,10 @@ export default function ExtensionPay({ reference }: { reference: string }) {
 
       <button
         onClick={() => trySendTransaction()}
-        style={{ backgroundColor: "blue" }}
+        className="rounded border border-slate-400 bg-slate-200 px-4 py-2"
         disabled={!transaction}
       >
-        Pay
+        Pay now
       </button>
 
       {message ? (
