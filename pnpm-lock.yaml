@@ -6,6 +6,7 @@ specifiers:
   '@prisma/client': ^4.8.1
   '@radix-ui/react-popover': ^1.0.2
   '@radix-ui/react-tooltip': ^1.0.2
+  '@rive-app/react-canvas': ^3.0.35
   '@solana/pay': ^0.2.4
   '@solana/spl-token': ^0.3.7
   '@solana/wallet-adapter-base': ^0.9.20
@@ -57,6 +58,7 @@ dependencies:
   '@prisma/client': 4.9.0_prisma@4.9.0
   '@radix-ui/react-popover': 1.0.3_ib3m5ricvtkl2cll7qpr2f6lvq
   '@radix-ui/react-tooltip': 1.0.3_ib3m5ricvtkl2cll7qpr2f6lvq
+  '@rive-app/react-canvas': 3.0.35_react@18.2.0
   '@solana/pay': 0.2.4
   '@solana/spl-token': 0.3.7_@solana+web3.js@1.73.2
   '@solana/wallet-adapter-base': 0.9.20_@solana+web3.js@1.73.2
@@ -2620,6 +2622,19 @@ packages:
   /@resvg/resvg-wasm/2.0.0-alpha.4:
     resolution: {integrity: sha512-pWIG9a/x1ky8gXKRhPH1OPKpHFoMN1ISLbJ+O+gPXQHIAKhNd5I28RlWf7q576hAOQA9JZTlo3p/M2uyLzJmmw==}
     engines: {node: '>= 10'}
+    dev: false
+
+  /@rive-app/canvas/1.0.98:
+    resolution: {integrity: sha512-dBsiM6ObIBHCUA/8RwCBDwlOSJ7+K3m4M0/OgPpgmvQ4Qw7d63ouSoOJxiwBeysu9dSqIVEXk9zR/pdqhAVCVQ==}
+    dev: false
+
+  /@rive-app/react-canvas/3.0.35_react@18.2.0:
+    resolution: {integrity: sha512-215d3bw57OZundZXnuLWWr8mtRW5iomzNZ6TdQ4+MaLxKKKX91cSI0ef8g0Tq9khgNTCyRt1morNOTDXMLbDZg==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      '@rive-app/canvas': 1.0.98
+      react: 18.2.0
     dev: false
 
   /@rushstack/eslint-patch/1.2.0:

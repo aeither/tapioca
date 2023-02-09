@@ -3,15 +3,28 @@ import Link from "next/link";
 
 import useMakeTx from "@/lib/hooks/use-maketx";
 import { ConnectWallet } from "../home/wallet";
+import { useSuccessModal } from "@/components/home/success-modal";
+import { useEffect } from "react";
 
 export default function ExtensionPay({ reference }: { reference: string }) {
   const { publicKey } = useWallet();
   const { message, transaction, trySendTransaction, hasPaid } = useMakeTx({
     reference,
   });
+  const { Modal: SucessModal, setShowModal: setShowSuccessModal } =
+    useSuccessModal();
+
+  useEffect(() => {
+    hasPaid && setShowSuccessModal(true);
+  }, [hasPaid]);
 
   if (hasPaid) {
-    return <p>Have been paid successfully</p>;
+    return (
+      <>
+        <SucessModal />
+        <p>Have been paid successfully</p>;
+      </>
+    );
   }
 
   if (!publicKey) {
