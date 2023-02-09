@@ -69,9 +69,7 @@ export default function Home() {
                       </Tooltip>
                     </td>
                     <td>
-                      <Link
-                        href={`/link/${link.reference}/?reference=${link.reference}`}
-                      >
+                      <Link href={`/link?reference=${link.reference}`}>
                         Open
                       </Link>
                     </td>
@@ -82,7 +80,7 @@ export default function Home() {
                             navigator
                               .share({
                                 title: "WebShare API Demo",
-                                url: `https://${window.location.host}/link/${link.reference}/?reference=${link.reference}`,
+                                url: `https://${window.location.host}/link?reference=${link.reference}`,
                               })
                               .then(() => {
                                 console.log("Thanks for sharing!");

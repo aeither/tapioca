@@ -29,7 +29,6 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<MakeTransactionOutputData | ErrorOutput>,
 ) {
-  // GET /api/links – get all dub.sh links created by the user
   if (req.method === "GET") {
     console.log("🚀 ~ file: makeTx.ts:35 ~ req.query", req.query);
     const { reference, payer } = req.query as {

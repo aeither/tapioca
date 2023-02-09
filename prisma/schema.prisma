@@ -87,15 +87,15 @@ model Link {
   archived  Boolean   @default(false) // whether the link is archived or not
   expiresAt DateTime? // when the link expires – stored on Redis via ttl
 
-  title       String // OG title for the link (e.g. Dub - Open-Source Bitly Alternative)
+  title       String
   status      PaymentStatus @default(PENDING)
   reference   String        @unique
   amount      Float
   receiver    String
   payer       String?
-  description String?       @db.VarChar(280) // OG description for the link (e.g. An open-source link management tool for modern marketing teams to create, share, and track short links.)
+  description String?
   notes       String?
-  image       String? // OG image for the link (e.g. https://dub.sh/og-image.png)
+  image       String?
 
   // UTM parameters
   utm_source   String? // UTM source for the link (e.g. youtube.com)

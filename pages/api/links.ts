@@ -18,7 +18,6 @@ export default async function handler(
     return;
   }
 
-  // GET /api/links – get all dub.sh links created by the user
   if (req.method === "GET") {
     const { status, sort } = req.query as {
       status?: string;

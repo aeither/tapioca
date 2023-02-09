@@ -1,11 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { addLink } from "@/lib/api/links";
 
-import { authOptions } from "pages/api/auth/[...nextauth]";
-import { unstable_getServerSession } from "next-auth/next";
 import prisma from "@/lib/prisma";
-import { Keypair } from "@solana/web3.js";
-import { PaymentStatus } from "@prisma/client";
+import { unstable_getServerSession } from "next-auth/next";
+import { authOptions } from "pages/api/auth/[...nextauth]";
 
 export default async function handler(
   req: NextApiRequest,
@@ -18,7 +15,6 @@ export default async function handler(
     return;
   }
 
-  // GET /api/links – get all dub.sh links created by the user
   if (req.method === "GET") {
     const { reference } = req.query as {
       reference?: string;

@@ -23,7 +23,10 @@ export default function Products() {
         address: typeof _shop === "string" ? _shop : _shop[0],
       },
     });
-  const { data: links } = useSWR<Prisma.LinkSelect[]>(`/api/links`, fetcher);
+  const { data: products } = useSWR<Prisma.LinkSelect[]>(
+    `/api/product`,
+    fetcher,
+  );
   return (
     <Layout>
       <NewProductModal />
