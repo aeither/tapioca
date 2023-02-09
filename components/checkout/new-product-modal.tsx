@@ -32,9 +32,9 @@ const NewProductModal = ({
 }) => {
   const { register, handleSubmit } = useForm<FormInput>();
   const onSubmit: SubmitHandler<FormInput> = (data) => {
-    const { amount, description, title, receiver } = data;
+    const { amount, description, title } = data;
 
-    const promise = fetch("/api/links", {
+    const promise = fetch("/api/product", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -42,14 +42,13 @@ const NewProductModal = ({
       body: JSON.stringify({
         title,
         description,
-        amount: parseFloat(amount),
-        receiver,
+        price: parseFloat(amount),
       }),
     }).then((res) => {
       if (res.statusText === "Unauthorized") {
         alert("Require sign in");
       } else {
-        mutate("/api/links");
+        mutate("/api/product");
       }
 
       setShowModal(false);
@@ -57,7 +56,7 @@ const NewProductModal = ({
 
     toast.promise(promise, {
       loading: "creating...",
-      success: "Created link",
+      success: "Created",
       error: "Error when, failed to create",
     });
   };
@@ -81,17 +80,6 @@ const NewProductModal = ({
                   defaultValue="title"
                   className="col-span-3"
                   {...register("title")}
-                />
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="receiver" className="text-right">
-                  Receiver
-                </Label>
-                <Input
-                  id="receiver"
-                  defaultValue="receiver"
-                  className="col-span-3"
-                  {...register("receiver")}
                 />
               </div>
               <div className="grid grid-cols-4 items-center gap-4">
@@ -119,9 +107,7 @@ const NewProductModal = ({
                 />
               </div>
             </div>
-            <DialogFooter>
-              <Button type="submit">Add Product</Button>
-            </DialogFooter>
+            <Button type="submit">Add Product</Button>
           </form>
         </div>
       </div>
