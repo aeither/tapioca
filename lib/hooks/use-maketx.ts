@@ -68,6 +68,7 @@ export default function useMakeTx({
         },
         body: JSON.stringify({
           status: PaymentStatus.SUCCEEDED,
+          payer: publicKey?.toBase58(),
         }),
       }).then((res) => res.json());
 

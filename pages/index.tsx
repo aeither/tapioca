@@ -13,9 +13,9 @@ import { Prisma } from "@prisma/client";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import toast from "react-hot-toast";
 import Balancer from "react-wrap-balancer";
 import useSWR from "swr";
-import toast, { Toaster } from "react-hot-toast";
 
 interface FormInput {
   title: string;

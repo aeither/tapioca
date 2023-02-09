@@ -1,10 +1,10 @@
 import { FADE_IN_ANIMATION_SETTINGS } from "@/lib/constants";
+import useScroll from "@/lib/hooks/use-scroll";
 import { AnimatePresence, motion } from "framer-motion";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { ReactNode } from "react";
-import useScroll from "@/lib/hooks/use-scroll";
 import Meta from "./meta";
 import { useSignInModal } from "./sign-in-modal";
 import UserDropdown from "./user-dropdown";
@@ -63,7 +63,7 @@ export default function Layout({
           </div>
         </div>
       </div>
-      <main className="flex w-full flex-col items-center justify-center py-32">
+      <main className="container mx-auto px-2 md:px-4 flex w-full flex-col items-center justify-center py-32">
         {children}
       </main>
       <div className="absolute w-full border-t border-gray-200 bg-white py-5 text-center">
