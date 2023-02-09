@@ -1,6 +1,7 @@
 import Card from "@/components/home/card";
 import ComponentGrid from "@/components/home/component-grid";
 import Products from "@/components/home/products";
+import QrCodeCell from "@/components/home/qrcode-cell";
 import { ConnectWallet } from "@/components/home/wallet";
 import WebVitals from "@/components/home/web-vitals";
 import Layout from "@/components/layout";
@@ -12,7 +13,6 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useCopyToClipboard } from "react-use";
 import Balancer from "react-wrap-balancer";
 import useSWR, { mutate } from "swr";
 
@@ -24,8 +24,6 @@ interface FormInput {
 }
 
 export default function Home() {
-  const [state, copyToClipboard] = useCopyToClipboard();
-
   const { data: links } = useSWR<Prisma.LinkSelect[]>(`/api/links`, fetcher);
   const { register, handleSubmit } = useForm<FormInput>();
   const onSubmit: SubmitHandler<FormInput> = (data) => {
@@ -138,15 +136,9 @@ export default function Home() {
                       </button>
                     </td>
                     <td>
-                      <button
-                        onClick={() =>
-                          copyToClipboard(
-                            window.location.host + "/link/" + link.reference,
-                          )
-                        }
-                      >
-                        Copy
-                      </button>
+                      <QrCodeCell
+                        reference={link.reference as unknown as string}
+                      />
                     </td>
                   </tr>
                 ))}
