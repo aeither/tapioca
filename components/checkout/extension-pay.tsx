@@ -5,6 +5,9 @@ import useMakeTx from "@/lib/hooks/use-maketx";
 import { ConnectWallet } from "../home/wallet";
 import { useSuccessModal } from "@/components/home/success-modal";
 import { useEffect } from "react";
+import { Prisma } from "@prisma/client";
+import { fetcher } from "@/lib/utils";
+import useSWR from "swr";
 
 export default function ExtensionPay({ reference }: { reference: string }) {
   const { publicKey } = useWallet();
@@ -13,6 +16,10 @@ export default function ExtensionPay({ reference }: { reference: string }) {
   });
   const { Modal: SucessModal, setShowModal: setShowSuccessModal } =
     useSuccessModal();
+
+  const { data: link } = useSWR<Prisma.LinkSelect>(`/api/link`, fetcher);
+
+  console.log("🚀 ~ file: extension-pay.tsx:22 ~ ExtensionPay ~ link", link);
 
   useEffect(() => {
     hasPaid && setShowSuccessModal(true);
@@ -55,7 +62,16 @@ export default function ExtensionPay({ reference }: { reference: string }) {
       </button>
 
       {message ? (
-        <p>{message} Please approve the transaction using your wallet</p>
+        <>
+          <p>{message} Please approve the transaction using your wallet</p>
+          {link && (
+            <>
+              <p>Title: {link.title}</p>
+              <p>Description: {link.description}</p>
+              <p>Shop: {link.receiver}</p>
+            </>
+          )}
+        </>
       ) : (
         <p>Creating transaction...</p>
       )}

@@ -9,7 +9,6 @@ export default function Home() {
   const { query } = useRouter();
   const { reference } = query;
   const [debouncedReference] = useDebounce(reference, 500);
-  console.log("🚀 ~ file: [reference].tsx:10 ~ Home ~ query", query);
 
   return (
     <Layout>
@@ -17,13 +16,7 @@ export default function Home() {
         <Balancer>Building blocks for your Next project</Balancer>
       </motion.h1>
 
-      {/* here we are animating with Tailwind instead of Framer Motion because Framer Motion messes up the z-index for child components */}
-      <div className="my-10 grid w-full max-w-screen-xl animate-[slide-down-fade_0.5s_ease-in-out] grid-cols-1 gap-5 px-5 md:grid-cols-3 xl:px-0">
-        <div className={""}>
-          <p>content</p>
-          <ExtensionPay reference={debouncedReference as string} />
-        </div>
-      </div>
+      <ExtensionPay reference={debouncedReference as string} />
     </Layout>
   );
 }
