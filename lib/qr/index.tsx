@@ -190,7 +190,6 @@ export function QRCodeCanvas(props: QRPropsCanvas) {
   // We're just using this state to trigger rerenders when images load. We
   // Don't actually read the value anywhere. A smarter use of useEffect would
   // depend on this value.
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isImgLoaded, setIsImageLoaded] = useState(false);
 
   useEffect(() => {
@@ -475,7 +474,7 @@ export async function getQRAsCanvas(
   const image = new Image();
   image.crossOrigin = "anonymous";
   if (calculatedImageSettings) {
-    await waitUntilImageLoaded(image, imageSettings.src);
+    await waitUntilImageLoaded(image, imageSettings ? imageSettings.src : "");
     if (calculatedImageSettings.excavation != null) {
       cells = excavateModules(cells, calculatedImageSettings.excavation);
     }
@@ -484,40 +483,43 @@ export async function getQRAsCanvas(
   const pixelRatio = window.devicePixelRatio || 1;
   canvas.height = canvas.width = size * pixelRatio;
   const scale = (size / numCells) * pixelRatio;
-  ctx.scale(scale, scale);
 
-  // Draw solid background, only paint dark modules.
-  ctx.fillStyle = bgColor;
-  ctx.fillRect(0, 0, numCells, numCells);
+  if (ctx) {
+    ctx.scale(scale, scale);
 
-  ctx.fillStyle = fgColor;
-  if (SUPPORTS_PATH2D) {
-    // $FlowFixMe: Path2D c'tor doesn't support args yet.
-    ctx.fill(new Path2D(generatePath(cells, margin)));
-  } else {
-    cells.forEach(function (row, rdx) {
-      row.forEach(function (cell, cdx) {
-        if (cell) {
-          ctx.fillRect(cdx + margin, rdx + margin, 1, 1);
-        }
+    // Draw solid background, only paint dark modules.
+    ctx.fillStyle = bgColor;
+    ctx.fillRect(0, 0, numCells, numCells);
+
+    ctx.fillStyle = fgColor;
+    if (SUPPORTS_PATH2D) {
+      // $FlowFixMe: Path2D c'tor doesn't support args yet.
+      ctx.fill(new Path2D(generatePath(cells, margin)));
+    } else {
+      cells.forEach(function (row, rdx) {
+        row.forEach(function (cell, cdx) {
+          if (cell) {
+            ctx.fillRect(cdx + margin, rdx + margin, 1, 1);
+          }
+        });
       });
-    });
-  }
+    }
 
-  const haveImageToRender =
-    calculatedImageSettings != null &&
-    image !== null &&
-    image.complete &&
-    image.naturalHeight !== 0 &&
-    image.naturalWidth !== 0;
-  if (haveImageToRender) {
-    ctx.drawImage(
-      image,
-      calculatedImageSettings.x + margin,
-      calculatedImageSettings.y + margin,
-      calculatedImageSettings.w,
-      calculatedImageSettings.h,
-    );
+    const haveImageToRender =
+      calculatedImageSettings != null &&
+      image !== null &&
+      image.complete &&
+      image.naturalHeight !== 0 &&
+      image.naturalWidth !== 0;
+    if (haveImageToRender) {
+      ctx.drawImage(
+        image,
+        calculatedImageSettings.x + margin,
+        calculatedImageSettings.y + margin,
+        calculatedImageSettings.w,
+        calculatedImageSettings.h,
+      );
+    }
   }
 
   if (getCanvas) return canvas;

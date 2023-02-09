@@ -1,5 +1,6 @@
 import Card from "@/components/home/card";
 import ComponentGrid from "@/components/home/component-grid";
+import { CreateLinkModal } from "@/components/home/create-link-modal";
 import Products from "@/components/home/products";
 import QrCodeCell from "@/components/home/qrcode-cell";
 import { ConnectWallet } from "@/components/home/wallet";
@@ -12,9 +13,9 @@ import { Prisma } from "@prisma/client";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { SubmitHandler, useForm } from "react-hook-form";
 import Balancer from "react-wrap-balancer";
-import useSWR, { mutate } from "swr";
+import useSWR from "swr";
+import toast, { Toaster } from "react-hot-toast";
 
 interface FormInput {
   title: string;
@@ -25,29 +26,6 @@ interface FormInput {
 
 export default function Home() {
   const { data: links } = useSWR<Prisma.LinkSelect[]>(`/api/links`, fetcher);
-  const { register, handleSubmit } = useForm<FormInput>();
-  const onSubmit: SubmitHandler<FormInput> = (data) => {
-    const { amount, description, title, receiver } = data;
-
-    fetch("/api/links", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        title,
-        description,
-        amount: parseFloat(amount),
-        receiver,
-      }),
-    }).then((res) => {
-      if (res.statusText === "Unauthorized") {
-        alert("Require sign in");
-      } else {
-        mutate("/api/links");
-      }
-    });
-  };
 
   return (
     <Layout>
@@ -62,25 +40,8 @@ export default function Home() {
           <Products submitTarget="/cart" enabled />
         </div>
         <div className={""}>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <h3>link to db</h3>
-            <input defaultValue="brownie" {...register("title")} />
-            <input defaultValue="receiver" {...register("receiver")} />
-            <input
-              defaultValue="a chocolate brownie"
-              {...register("description")}
-            />
-            <input
-              type="number"
-              defaultValue={0.01}
-              step={0.01}
-              {...register("amount")}
-            />
-            <button type="submit" className="rounded bg-slate-300 p-4">
-              Create Link
-            </button>
-          </form>
-
+          <button onClick={() => toast("hello world")}>toast</button>
+          <CreateLinkModal />
           <table className="table-auto">
             <thead>
               <tr>
