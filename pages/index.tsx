@@ -61,7 +61,6 @@ export default function Home() {
       <div className="my-10 grid w-full max-w-screen-xl animate-[slide-down-fade_0.5s_ease-in-out] grid-cols-1 gap-5 px-5 md:grid-cols-3 xl:px-0">
         <div className={""}>
           <ConnectWallet />
-          <p>content</p>
           <Products submitTarget="/cart" enabled />
         </div>
         <div className={""}>
@@ -83,52 +82,76 @@ export default function Home() {
               Create Link
             </button>
           </form>
-          {links &&
-            links.map((link, i) => (
-              <div key={i} className="flex gap-4">
-                <p>Amount: {link.amount}</p>
-                <p>Reference: {link.reference}</p>
-                <p>Status: {link.status}</p>
-                <Tooltip
-                  content={`Clicks \n ${link.clicks} \n Receiver \n ${link.receiver}`}
-                >
-                  <p>Info</p>
-                </Tooltip>
-                <Link
-                  href={`/link/${link.reference}/?reference=${link.reference}`}
-                >
-                  Open
-                </Link>
-                <button
-                  onClick={() => {
-                    if (navigator.share) {
-                      navigator
-                        .share({
-                          title: "WebShare API Demo",
-                          url: `https://${window.location.host}/link/${link.reference}/?reference=${link.reference}`,
-                        })
-                        .then(() => {
-                          console.log("Thanks for sharing!");
-                        })
-                        .catch(console.error);
-                    } else {
-                      // show modal
-                    }
-                  }}
-                >
-                  Share
-                </button>
-                <button
-                  onClick={() =>
-                    copyToClipboard(
-                      window.location.host + "/link/" + link.reference,
-                    )
-                  }
-                >
-                  copy
-                </button>
-              </div>
-            ))}
+
+          <table className="table-auto">
+            <thead>
+              <tr>
+                <th>Amount</th>
+                <th>Reference</th>
+                <th>Status</th>
+                <th>Info</th>
+                <th>Page</th>
+                <th>Share</th>
+                <th>Copy</th>
+              </tr>
+            </thead>
+            <tbody>
+              {links &&
+                links.map((link, i) => (
+                  <tr key={i}>
+                    <td>{link.amount}</td>
+                    <td>{link.reference}</td>
+                    <td>{link.status}</td>
+                    <td>
+                      <Tooltip
+                        content={`Clicks \n ${link.clicks} \n Receiver \n ${link.receiver}`}
+                      >
+                        <p>Info</p>
+                      </Tooltip>
+                    </td>
+                    <td>
+                      <Link
+                        href={`/link/${link.reference}/?reference=${link.reference}`}
+                      >
+                        Open
+                      </Link>
+                    </td>
+                    <td>
+                      <button
+                        onClick={() => {
+                          if (navigator.share) {
+                            navigator
+                              .share({
+                                title: "WebShare API Demo",
+                                url: `https://${window.location.host}/link/${link.reference}/?reference=${link.reference}`,
+                              })
+                              .then(() => {
+                                console.log("Thanks for sharing!");
+                              })
+                              .catch(console.error);
+                          } else {
+                            // show modal
+                          }
+                        }}
+                      >
+                        Share
+                      </button>
+                    </td>
+                    <td>
+                      <button
+                        onClick={() =>
+                          copyToClipboard(
+                            window.location.host + "/link/" + link.reference,
+                          )
+                        }
+                      >
+                        Copy
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
         </div>
         {features.map(({ title, description, demo, large }) => (
           <Card
