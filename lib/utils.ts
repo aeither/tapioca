@@ -1,7 +1,9 @@
-import ms from "ms";
-import { ParsedUrlQuery } from "querystring";
 import BigNumber from "bignumber.js";
+import { ClassValue, clsx } from "clsx";
+import ms from "ms";
 import { customAlphabet } from "nanoid";
+import { ParsedUrlQuery } from "querystring";
+import { twMerge } from "tailwind-merge";
 import { products } from "./data/products";
 
 export const nanoid = customAlphabet(
@@ -83,4 +85,8 @@ export function calculatePrice(query: ParsedUrlQuery): BigNumber {
   }
 
   return amount;
+}
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
 }
