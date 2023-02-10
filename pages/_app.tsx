@@ -10,6 +10,7 @@ import { SessionProvider } from "next-auth/react";
 import type { AppProps } from "next/app";
 import { Toaster } from "react-hot-toast";
 import { Provider as RWBProvider } from "react-wrap-balancer";
+import Script from "next/script";
 
 const sfPro = localFont({
   src: "../styles/SF-Pro-Display-Medium.otf",
@@ -31,7 +32,9 @@ export default function MyApp({
         <div className={cx(sfPro.variable, inter.variable)}>
           <AnanasConfig network="devnet">
             <ClientOnly>
+              <Script src="https://terminal.jup.ag/main.js" />
               <Toaster />
+
               <Component {...pageProps} />
             </ClientOnly>
           </AnanasConfig>

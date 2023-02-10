@@ -1,8 +1,8 @@
-import Cart from "@/components/home/cart";
 import { ConnectWallet } from "@/components/home/wallet";
 import Layout from "@/components/layout";
 import { motion } from "framer-motion";
 import Balancer from "react-wrap-balancer";
+import { TOKEN_LIST_URL } from "@jup-ag/core";
 
 export default function Home() {
   return (
@@ -11,12 +11,34 @@ export default function Home() {
         <Balancer>Building blocks for your Next project</Balancer>
       </motion.h1>
 
-      {/* here we are animating with Tailwind instead of Framer Motion because Framer Motion messes up the z-index for child components */}
       <div className="my-10 grid w-full max-w-screen-xl animate-[slide-down-fade_0.5s_ease-in-out] grid-cols-1 gap-5 px-5 md:grid-cols-3 xl:px-0">
         <div className={""}>
           <ConnectWallet />
-          <p>content</p>
-          <Cart />
+
+          <button
+            onClick={() => {
+              const w = window as any;
+              if (w.Jupiter._instance) {
+                w.Jupiter.resume();
+              } else {
+                w.Jupiter.init({
+                  mode: "default",
+                  displayMode: "modal",
+                  endpoint: process.env.NEXT_PUBLIC_SOLANA_RPC,
+                });
+              }
+            }}
+          >
+            click me
+          </button>
+
+          <div style={{ fontWeight: "600", fontSize: 16, marginTop: 24 }}>
+            Hook example
+          </div>
+          <div>Number of tokens:</div>
+          <div>Number of input tokens</div>
+          <div>Possible number of routes:</div>
+          <div>Best quote:</div>
         </div>
       </div>
     </Layout>
