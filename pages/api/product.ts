@@ -56,7 +56,34 @@ export default async function handler(
     }
     return res.status(200).json(response);
 
-    // PATCH /api/links – update a new link
+    // PATCH
+  } else if (req.method === "PATCH") {
+    const { id, price, description, title } = req.body;
+
+    if (
+      typeof description !== "string" ||
+      typeof title !== "string" ||
+      typeof price !== "number"
+    )
+      return res
+        .status(400)
+        .json({ error: "Query description, title or price error" });
+
+    const response = await prisma.product.update({
+      where: {
+        id: id,
+      },
+      data: {
+        title: title,
+        description: description,
+        price: Number(price),
+      },
+    });
+
+    if (response === null) {
+      return res.status(403).json({ error: "Key already exists" });
+    }
+    return res.status(200).json(response);
   } else {
     res.setHeader("Allow", ["GET"]);
     return res.status(405).json({ error: `Method ${req.method} Not Allowed` });
