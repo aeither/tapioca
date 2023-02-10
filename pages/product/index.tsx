@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { fetcher } from "@/lib/utils";
 import { Product } from "@prisma/client";
 import { motion } from "framer-motion";
+import { Loader2 } from "lucide-react";
 import { useRouter } from "next/router";
 import Balancer from "react-wrap-balancer";
 import useSWR from "swr";
@@ -14,7 +15,10 @@ export default function Products() {
   const { shop } = query;
   const _shop = shop || "DEMO_SHOP";
 
-  const { data: products } = useSWR<Product[]>(`/api/product`, fetcher);
+  const { data: products, isLoading } = useSWR<Product[]>(
+    `/api/product`,
+    fetcher,
+  );
   const { Modal: NewProductModal, setShowModal: setShowNewProductModal } =
     useNewProductModal({
       props: {
@@ -34,6 +38,17 @@ export default function Products() {
         </Button>
       </div>
 
+      {isLoading && (
+        <>
+          <div className="mx-auto mt-20 h-24 w-60">
+            <div className="flex h-full animate-pulse flex-row items-center justify-center space-x-5">
+              <div className="animate-spin text-slate-700">
+                <Loader2 size={48} />
+              </div>
+            </div>
+          </div>
+        </>
+      )}
       <div className="grid  w-full grid-cols-1 gap-4 md:grid-cols-3">
         {products &&
           products.map(({ id, title, description, imageUrl, price }) => (
