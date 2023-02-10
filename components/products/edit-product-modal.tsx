@@ -30,7 +30,12 @@ const EditProductModal = ({
   setShowModal: Dispatch<SetStateAction<boolean>>;
   props: { productId: string };
 }) => {
-  const { register, handleSubmit } = useForm<FormInput>();
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm<FormInput>();
+
   const onSubmit: SubmitHandler<FormInput> = (data) => {
     const { amount, description, title } = data;
 
@@ -108,7 +113,12 @@ const EditProductModal = ({
                 />
               </div>
             </div>
-            <Button type="submit">Update Product</Button>
+            <div className="flex justify-between gap-4">
+              <div />
+              <Button type="submit" disabled={isSubmitting}>
+                Update Product
+              </Button>
+            </div>
           </form>
         </div>
       </div>
@@ -116,7 +126,11 @@ const EditProductModal = ({
   );
 };
 
-export function useEditProductModal({ props }: { props: { productId: string } }) {
+export function useEditProductModal({
+  props,
+}: {
+  props: { productId: string };
+}) {
   const [showModal, setShowModal] = useState(false);
 
   const ModalCallback = useCallback(() => {

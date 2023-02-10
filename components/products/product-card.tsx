@@ -1,4 +1,6 @@
+import toast from "react-hot-toast";
 import Balancer from "react-wrap-balancer";
+import { mutate } from "swr";
 import { useEditProductModal } from "./edit-product-modal";
 
 export default function ProductCard({
@@ -17,6 +19,32 @@ export default function ProductCard({
   const { Modal, setShowModal } = useEditProductModal({
     props: { productId: productId },
   });
+
+  const remove = () => {
+    const promise = fetch("/api/product", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: productId,
+      }),
+    }).then((res) => {
+      if (res.statusText === "Unauthorized") {
+        alert("Require sign in");
+      } else {
+        mutate("/api/product");
+      }
+
+      setShowModal(false);
+    });
+
+    toast.promise(promise, {
+      loading: "deleting...",
+      success: "Deleted",
+      error: "Error when, failed to delete",
+    });
+  };
 
   return (
     <div
@@ -37,6 +65,12 @@ export default function ProductCard({
         className="absolute top-0 right-0 cursor-pointer py-4 px-6 transition md:opacity-0 md:group-hover:opacity-100"
       >
         Edit
+      </div>
+      <div
+        onClick={remove}
+        className="absolute bottom-0 right-0 cursor-pointer py-4 px-6 text-red-500 transition md:opacity-0 md:group-hover:opacity-100"
+      >
+        Remove
       </div>
     </div>
   );
