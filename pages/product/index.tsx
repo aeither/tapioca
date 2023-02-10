@@ -5,7 +5,7 @@ import ProductCard from "@/components/products/product-card";
 import { Button } from "@/components/ui/button";
 import { DEPLOY_URL } from "@/lib/constants";
 import { fetcher } from "@/lib/utils";
-import { Prisma } from "@prisma/client";
+import { Product } from "@prisma/client";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -23,10 +23,8 @@ export default function Products() {
         address: typeof _shop === "string" ? _shop : _shop[0],
       },
     });
-  const { data: products } = useSWR<Prisma.LinkSelect[]>(
-    `/api/product`,
-    fetcher,
-  );
+
+  const { data: products } = useSWR<Product[]>(`/api/product`, fetcher);
   return (
     <Layout>
       <NewProductModal />
@@ -39,10 +37,17 @@ export default function Products() {
         </Button>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-        {features.map(({ title, description, demo, large }) => (
-          <ProductCard key={title} title={title} description={description} />
-        ))}
+      <div className="grid  w-full grid-cols-1 gap-4 md:grid-cols-3">
+        {products &&
+          products.map(({ id, title, description, imageUrl, price }) => (
+            <ProductCard
+              key={id}
+              productId={id}
+              title={title}
+              description={description}
+              price={price}
+            />
+          ))}
       </div>
     </Layout>
   );

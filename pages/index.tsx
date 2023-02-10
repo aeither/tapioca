@@ -9,7 +9,7 @@ import Layout from "@/components/layout";
 import Tooltip from "@/components/shared/tooltip";
 import { DEPLOY_URL } from "@/lib/constants";
 import { fetcher } from "@/lib/utils";
-import { Prisma } from "@prisma/client";
+import { Link as PrismaLinkType } from "@prisma/client";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -17,15 +17,8 @@ import toast from "react-hot-toast";
 import Balancer from "react-wrap-balancer";
 import useSWR from "swr";
 
-interface FormInput {
-  title: string;
-  description: string;
-  amount: string;
-  receiver: string;
-}
-
 export default function Home() {
-  const { data: links } = useSWR<Prisma.LinkSelect[]>(`/api/links`, fetcher);
+  const { data: links } = useSWR<PrismaLinkType[]>(`/api/links`, fetcher);
 
   return (
     <Layout>
