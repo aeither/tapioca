@@ -3,6 +3,7 @@ lockfileVersion: 5.4
 specifiers:
   '@emotion/react': ^11.10.6
   '@emotion/styled': ^11.10.6
+  '@fontsource/roboto': ^4.5.8
   '@jup-ag/core': 4.0.0-beta.9
   '@jup-ag/react-hook': 4.0.0-beta.9
   '@mui/material': ^5.11.12
@@ -64,6 +65,7 @@ specifiers:
   focus-trap-react: ^10.0.2
   framer-motion: ^8.4.2
   html-escaper: ^3.0.3
+  install: ^0.13.0
   jsbi: ^4.3.0
   lucide-react: 0.105.0-alpha.4
   ms: ^2.1.3
@@ -92,6 +94,7 @@ specifiers:
 dependencies:
   '@emotion/react': 11.10.6_kzbn2opkn2327fwg5yzwzya5o4
   '@emotion/styled': 11.10.6_qry7xzgsc55pr5ngbiorqn3fpa
+  '@fontsource/roboto': 4.5.8
   '@jup-ag/core': 4.0.0-beta.9_gbj7ye4slrwojorm54gcam33su
   '@jup-ag/react-hook': 4.0.0-beta.9_7hbnzkk77xm4t7a2o3wwxtzwpi
   '@mui/material': 5.11.12_pte7igy7nwbxlzeccvq7hpzi4q
@@ -146,6 +149,7 @@ dependencies:
   focus-trap-react: 10.0.2_v2m5e27vhdewzwhryxwfaorcca
   framer-motion: 8.5.5_biqbaboplfbrettd7655fr4n2y
   html-escaper: 3.0.3
+  install: 0.13.0
   jsbi: 4.3.0
   lucide-react: 0.105.0-alpha.4_react@18.2.0
   ms: 2.1.3
@@ -1835,6 +1839,10 @@ packages:
       use-isomorphic-layout-effect: 1.1.2_kzbn2opkn2327fwg5yzwzya5o4
     transitivePeerDependencies:
       - '@types/react'
+    dev: false
+
+  /@fontsource/roboto/4.5.8:
+    resolution: {integrity: sha512-CnD7zLItIzt86q4Sj3kZUiLcBk1dSk81qcqgMGaZe7SQ1P8hFNxhMl5AZthK1zrDM5m74VVhaOpuMGIL4gagaA==}
     dev: false
 
   /@fractalwagmi/popup-connection/1.0.21_biqbaboplfbrettd7655fr4n2y:
@@ -9570,6 +9578,11 @@ packages:
     dependencies:
       css-in-js-utils: 3.1.0
       fast-loops: 1.1.3
+    dev: false
+
+  /install/0.13.0:
+    resolution: {integrity: sha512-zDml/jzr2PKU9I8J/xyZBQn8rPCAY//UOYNmR01XwNwyfhEWObo2SWfSl1+0tm1u6PhxLwDnfsT/6jB7OUxqFA==}
+    engines: {node: '>= 0.10'}
     dev: false
 
   /internal-slot/1.0.4:
