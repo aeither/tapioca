@@ -15,8 +15,10 @@ import Typography from "@mui/material/Typography";
 import * as React from "react";
 import { MenuIcon } from "lucide-react";
 import { HAMBURGERS } from "@/lib/constants/hamburgers";
+import CheckoutDrawer from "@/components/ordering/checkout-drawer";
+import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2
 
-const drawerWidth = 240;
+const drawerWidth = 200;
 
 interface Props {
   /**
@@ -82,7 +84,6 @@ export default function ResponsiveDrawer(props: Props) {
       <Box
         component="nav"
         sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
-        aria-label="mailbox folders"
       >
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Drawer
@@ -122,16 +123,18 @@ export default function ResponsiveDrawer(props: Props) {
         sx={{
           flexGrow: 1,
           p: 3,
-          width: { sm: `calc(100% - ${drawerWidth}px)` },
         }}
       >
         <Toolbar />
-        {HAMBURGERS.map((item) => (
-          <>
-            <ProductCard {...item} />
-          </>
-        ))}
+        <Grid container spacing={2}>
+          {HAMBURGERS.map((item) => (
+            <Grid key={item.id} xs={6}>
+              <ProductCard {...item} />
+            </Grid>
+          ))}
+        </Grid>
       </Box>
+      <CheckoutDrawer />
     </Box>
   );
 }
