@@ -1,4 +1,4 @@
-import { MENU_ITEMS } from "@/lib/datas";
+import { MENU_ITEMS } from "@/lib/constants/datas";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import Divider from "@mui/material/Divider";

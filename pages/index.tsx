@@ -7,7 +7,7 @@ import { ConnectWallet } from "@/components/home/wallet";
 import WebVitals from "@/components/home/web-vitals";
 import Layout from "@/components/layout";
 import Tooltip from "@/components/shared/tooltip";
-import { DEPLOY_URL } from "@/lib/constants";
+import { DEPLOY_URL } from "@/lib/constants/constants";
 import { fetcher } from "@/lib/utils";
 import { Link as PrismaLinkType } from "@prisma/client";
 import { motion } from "framer-motion";
