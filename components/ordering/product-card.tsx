@@ -10,6 +10,7 @@ type ProductCardProps = {
   name: string;
   description?: string;
   ingredients: string[];
+  price: number;
 };
 
 export default function ProductCard(props: ProductCardProps) {
@@ -23,12 +24,13 @@ export default function ProductCard(props: ProductCardProps) {
           alt={props.name}
           sx={{ objectFit: "cover", height: "180px", width: "100%" }}
         />
-        <CardContent>
+        <CardContent className="flex h-full flex-col justify-between">
           <Typography gutterBottom variant="h5" height={"60px"} component="div">
             {props.name}
           </Typography>
-          <Typography variant="body2" color="text.secondary"></Typography>
-
+          <Typography variant="body1" fontWeight={"bold"} color="text.accent">
+            {props.price} USDC
+          </Typography>
           <div className="flex flex-wrap gap-2">
             {props.ingredients.map((ingredient, i) => (
               <Chip key={i} label={ingredient} size="small" />

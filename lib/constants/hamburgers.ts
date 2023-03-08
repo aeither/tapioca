@@ -14,6 +14,7 @@ export const HAMBURGERS = [
       "onion",
       "lettuce",
     ],
+    price: 7,
   },
   {
     id: 1,
@@ -22,6 +23,7 @@ export const HAMBURGERS = [
     name: "Pulled Mooshie",
     description: "Spicy vegan burger with jackfruit",
     ingredients: ["jackfruit", "coleslaw", "gluten free bun"],
+    price: 7,
   },
   {
     id: 3,
@@ -38,6 +40,7 @@ export const HAMBURGERS = [
       "onions",
       "cheese",
     ],
+    price: 8,
   },
   {
     id: 4,
@@ -57,6 +60,7 @@ export const HAMBURGERS = [
       "lettuce",
       "jalapeño mayonnaise",
     ],
+    price: 7,
   },
   {
     id: 5,
@@ -73,6 +77,7 @@ export const HAMBURGERS = [
       "barbie hummus",
       "barbie mayo",
     ],
+    price: 8,
   },
 
   {
@@ -90,6 +95,7 @@ export const HAMBURGERS = [
       "onion",
       "Veggies",
     ],
+    price: 8,
   },
   {
     id: 9,
@@ -106,6 +112,7 @@ export const HAMBURGERS = [
       "tomato",
       "cranberry sauce",
     ],
+    price: 8,
   },
   {
     id: 10,
@@ -124,6 +131,7 @@ export const HAMBURGERS = [
       "onion",
       "gerkins",
     ],
+    price: 7,
   },
   {
     id: 11,
@@ -143,6 +151,7 @@ export const HAMBURGERS = [
       "onion",
       "gerkins",
     ],
+    price: 6,
   },
   {
     id: 12,
@@ -157,6 +166,7 @@ export const HAMBURGERS = [
       "Red onions",
       "Blue cheese sauce",
     ],
+    price: 7,
   },
   {
     id: 13,
@@ -173,6 +183,7 @@ export const HAMBURGERS = [
       "mayonnaise",
       "mustard",
     ],
+    price: 6,
   },
   {
     id: 14,
@@ -191,6 +202,7 @@ export const HAMBURGERS = [
       "truffle vegan cheese fondue",
       "truffle vegan mayo",
     ],
+    price: 8,
   },
   {
     id: 15,
@@ -205,6 +217,7 @@ export const HAMBURGERS = [
       "shredded lettuce",
       "potato roll",
     ],
+    price: 7,
   },
   {
     id: 16,
@@ -214,5 +227,6 @@ export const HAMBURGERS = [
     description:
       "Juicy beef patty glazed with tangy BBQ sauce, topped with crispy onion rings and creamy coleslaw",
     ingredients: ["beef patty", "BBQ sauce", "onion rings", "coleslaw"],
+    price: 6,
   },
 ];
