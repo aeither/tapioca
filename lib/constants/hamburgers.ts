@@ -26,7 +26,7 @@ export const HAMBURGERS = [
   {
     id: 3,
     image:
-      "https://image.lexica.art/full_jpg/11534545-2a1d-42a6-b3a1-32acd3e91dcd",
+      "https://image.lexica.art/full_jpg/094fd9e2-964a-4905-9cb7-14ca6977cb8a",
     name: "The Good Burger",
     description:
       "Welcome to Good Burger, home of the Good Burger, can I take your order?",
@@ -42,7 +42,7 @@ export const HAMBURGERS = [
   {
     id: 4,
     image:
-      "https://image.lexica.art/full_jpg/11534545-2a1d-42a6-b3a1-32acd3e91dcd",
+      "https://image.lexica.art/full_jpg/9db01c0d-de32-41da-a4f9-68abb23b83f2",
     name: "Crunchy Nacho Burger",
     description:
       "The best combination of crunchiness and softness, all in one single burger",
@@ -61,7 +61,7 @@ export const HAMBURGERS = [
   {
     id: 5,
     image:
-      "https://image.lexica.art/full_jpg/11534545-2a1d-42a6-b3a1-32acd3e91dcd",
+      "https://image.lexica.art/full_jpg/984902a9-9af7-42eb-8a46-9f5bce745b6b",
     name: "Barbie Burger",
     description:
       "From a pink explosion was born Barbie Burger, a special edition in partnership with Mattel",
@@ -78,7 +78,7 @@ export const HAMBURGERS = [
   {
     id: 8,
     image:
-      "https://image.lexica.art/full_jpg/11534545-2a1d-42a6-b3a1-32acd3e91dcd",
+      "https://image.lexica.art/full_jpg/7771d2a6-429c-407f-b719-e0229a6ac5f4",
     name: "Vegetarian Burger (Indian Style)",
     description:
       "With summer around the corner, I had to share a vegetarian burger recipe with you guys. Actually I plan to share more in the next month but I thought I will start with this Indian style Vegetarian Burger aka Masala Burger!",
@@ -94,7 +94,7 @@ export const HAMBURGERS = [
   {
     id: 9,
     image:
-      "https://image.lexica.art/full_jpg/11534545-2a1d-42a6-b3a1-32acd3e91dcd",
+      "https://image.lexica.art/full_jpg/0665ac86-0834-46d5-8bac-bfeb479134d2",
     name: "Fat Santa",
     description: "A Christmas themed burger",
     ingredients: [
@@ -110,7 +110,7 @@ export const HAMBURGERS = [
   {
     id: 10,
     image:
-      "https://image.lexica.art/full_jpg/11534545-2a1d-42a6-b3a1-32acd3e91dcd",
+      "https://image.lexica.art/full_jpg/9d192396-44ab-4794-9b4e-30c4a5e574e7",
     name: "Blondie",
     description: "Delicious steak burger",
     ingredients: [
@@ -128,7 +128,7 @@ export const HAMBURGERS = [
   {
     id: 11,
     image:
-      "https://image.lexica.art/full_jpg/11534545-2a1d-42a6-b3a1-32acd3e91dcd",
+      "https://image.lexica.art/full_jpg/424bb188-29d5-4991-b854-289af2179508",
     name: "Monster Burger",
     description: "Massive meaty burger - the size of a dinner plate",
     ingredients: [
@@ -147,7 +147,7 @@ export const HAMBURGERS = [
   {
     id: 12,
     image:
-      "https://image.lexica.art/full_jpg/11534545-2a1d-42a6-b3a1-32acd3e91dcd",
+      "https://image.lexica.art/full_jpg/8511c2e7-4e44-433b-92d3-de96e5ae12ff",
     name: "Buffalo chicken burger",
     description: "Large, messy, super tasty buffalo chicken burger",
     ingredients: [
@@ -161,7 +161,7 @@ export const HAMBURGERS = [
   {
     id: 13,
     image:
-      "https://image.lexica.art/full_jpg/11534545-2a1d-42a6-b3a1-32acd3e91dcd",
+      "https://image.lexica.art/full_jpg/20a2bbd7-7654-4e35-aaa4-4a3af952bdab",
     name: "Cheatday Burger",
     description: "Perfect when you need a day off from your workout routine",
     ingredients: [
@@ -195,7 +195,7 @@ export const HAMBURGERS = [
   {
     id: 15,
     image:
-      "https://image.lexica.art/full_jpg/11534545-2a1d-42a6-b3a1-32acd3e91dcd",
+      "https://image.lexica.art/full_jpg/0d80d3a5-0263-4f3f-a16a-567efcfac7d7",
     name: "Aloette Buger",
     description: "Haute cuisine meets cravings for cheeseburgers.",
     ingredients: [
@@ -209,7 +209,7 @@ export const HAMBURGERS = [
   {
     id: 16,
     image:
-      "https://image.lexica.art/full_jpg/11534545-2a1d-42a6-b3a1-32acd3e91dcd",
+      "https://image.lexica.art/full_jpg/b907286f-e454-4c63-912b-945f39083411",
     name: "BBQ Burger",
     description:
       "Juicy beef patty glazed with tangy BBQ sauce, topped with crispy onion rings and creamy coleslaw",
