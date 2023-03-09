@@ -17,6 +17,7 @@ import { MenuIcon } from "lucide-react";
 import { HAMBURGERS } from "@/lib/constants/hamburgers";
 import CheckoutDrawer from "@/components/ordering/checkout-drawer";
 import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2
+import ProductDialog from "@/components/ordering/product-dialog";
 
 const drawerWidth = 200;
 
@@ -52,7 +53,7 @@ export default function ResponsiveDrawer(props: Props) {
       </List>
     </div>
   );
-
+  // loop through an object and map it to an array. the object keys are name: string, day: number
   const container =
     window !== undefined ? () => window().document.body : undefined;
 
@@ -129,7 +130,7 @@ export default function ResponsiveDrawer(props: Props) {
         <Grid container spacing={2}>
           {HAMBURGERS.map((item) => (
             <Grid key={item.id} xs={6}>
-              <ProductCard {...item} />
+              <ProductDialog {...item} />
             </Grid>
           ))}
         </Grid>
