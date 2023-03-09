@@ -2,10 +2,11 @@ import * as React from 'react'
 import Stack from '@mui/material/Stack'
 import Button from '@mui/material/Button'
 import { useDB, useProducts, useOrderTotal } from '@/libs/hooks/use-db'
+import { useStore } from '@/libs/store'
 
 export default function BasicButtons() {
   const { addProduct, createNewOrder } = useDB()
-  const [orderId, setOrderId] = React.useState<string>()
+  const { orderId, setOrderId } = useStore()
   const products = useProducts({ orderId })
   const orderTotal = useOrderTotal({ orderId })
   console.log('🚀 ~ file: products.tsx:9 ~ BasicButtons ~ orderId:', orderId)

@@ -1,4 +1,5 @@
 import { useDB } from '@/libs/hooks/use-db'
+import { useStore } from '@/libs/store'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Paper from '@mui/material/Paper'
@@ -86,7 +87,8 @@ const steps = [
 export default function MenuStepper(props: Omit<ProductCardProps, 'handleClickOpen'>) {
   const queryClient = useQueryClient()
   const { addProduct, createNewOrder } = useDB()
-  const [orderId, setOrderId] = React.useState<string>()
+  const orderId = useStore((state) => state.orderId)
+  const setOrderId = useStore((state) => state.setOrderId)
 
   const [activeStep, setActiveStep] = React.useState(0)
   const defaultValues: FormProps = {
@@ -116,49 +118,36 @@ export default function MenuStepper(props: Omit<ProductCardProps, 'handleClickOp
 
     // create order if no order, if exist then add order
 
+    console.log('orderId', orderId)
     if (orderId) {
       const promises = Promise.all([
-        addProduct.mutateAsync(
-          {
-            orderId: orderId,
-            price: data.price,
-            title: data.name,
-          },
-          {
-            onSuccess(data, variables, context) {
-              queryClient.refetchQueries()
-              console.log('refetch all')
-            },
-          },
-        ),
+        addProduct.mutateAsync({
+          orderId: orderId,
+          price: data.price,
+          title: data.name,
+        }),
       ])
       toast.promise(promises, {
         loading: 'Loading...',
-        success: (data: Product) => {
-          return `${data.title} has been added!`
+        success: (data: [Product]) => {
+          console.log('success data', data)
+          return `${data[0].title} has been added!`
         },
         error: 'Error',
       })
     } else {
       const promises = Promise.all([createNewOrder.mutateAsync()]).then(([{ id }]) => {
         setOrderId(id)
-        return addProduct.mutateAsync(
-          {
-            orderId: id,
-            price: data.price,
-            title: data.name,
-          },
-          {
-            onSuccess(data, variables, context) {
-              queryClient.refetchQueries()
-              console.log('refetch all')
-            },
-          },
-        )
+        return addProduct.mutateAsync({
+          orderId: id,
+          price: data.price,
+          title: data.name,
+        })
       })
       toast.promise(promises, {
         loading: 'Loading...',
         success: (data: Product) => {
+          console.log('success data', data)
           return `${data.title} has been added!`
         },
         error: 'Error',

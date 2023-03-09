@@ -84,7 +84,7 @@ model Product {
 }
 
 model Order {
-  id String @id @default(cuid())
-
+  id       String    @id @default(cuid())
+  total    Float
   products Product[]
 }

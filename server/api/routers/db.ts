@@ -41,7 +41,9 @@ export const dbRouter = createTRPCRouter({
 
   createNewOrder: publicProcedure.mutation(async ({ ctx }) => {
     return await ctx.prisma.order.create({
-      data: {},
+      data: {
+        total: 0,
+      },
     })
   }),
 

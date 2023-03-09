@@ -1,5 +1,6 @@
-import toast from 'sonner'
+import { toast } from 'sonner'
 import { api } from '../api'
+import { useQueryClient } from '@tanstack/react-query'
 
 export const useOrderTotal = ({ orderId }: { orderId: string | undefined }) => {
   const orderTotal = api.db.orderTotal.useQuery(
@@ -26,6 +27,8 @@ export const useProducts = ({ orderId }: { orderId: string | undefined }) => {
 }
 
 export function useDB() {
+  const queryClient = useQueryClient()
+
   const createNewOrder = api.db.createNewOrder.useMutation({
     onError: ({ data }: any) => {
       console.error(data)
@@ -34,6 +37,10 @@ export function useDB() {
   })
 
   const addProduct = api.db.addProduct.useMutation({
+    onSuccess(data, variables, context) {
+      queryClient.refetchQueries()
+      console.log('refetch all')
+    },
     onError: ({ data }: any) => {
       console.error(data)
       toast.error('mutation error')

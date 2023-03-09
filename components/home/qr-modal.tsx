@@ -9,7 +9,7 @@ import {
 } from 'react'
 import Clipboard from '@/components/shared/icons/clipboard'
 import { getQRAsCanvas, QRCodeSVG } from '@/libs/qr'
-import toast from 'sonner'
+import { toast } from 'sonner'
 
 const QrModal = ({
   showModal,
