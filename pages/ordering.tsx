@@ -1,41 +1,41 @@
-import ProductCard from "@/components/ordering/product-card";
-import { MENU_ITEMS } from "@/lib/constants/datas";
-import { AppBar, IconButton } from "@mui/material";
-import Box from "@mui/material/Box";
-import CssBaseline from "@mui/material/CssBaseline";
-import Divider from "@mui/material/Divider";
-import Drawer from "@mui/material/Drawer";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import * as React from "react";
-import { MenuIcon } from "lucide-react";
-import { HAMBURGERS } from "@/lib/constants/hamburgers";
-import CheckoutDrawer from "@/components/ordering/checkout-drawer";
-import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2
-import ProductDialog from "@/components/ordering/product-dialog";
+import ProductCard from '@/components/ordering/product-card'
+import { MENU_ITEMS } from '@/lib/constants/datas'
+import { AppBar, IconButton } from '@mui/material'
+import Box from '@mui/material/Box'
+import CssBaseline from '@mui/material/CssBaseline'
+import Divider from '@mui/material/Divider'
+import Drawer from '@mui/material/Drawer'
+import List from '@mui/material/List'
+import ListItem from '@mui/material/ListItem'
+import ListItemButton from '@mui/material/ListItemButton'
+import ListItemIcon from '@mui/material/ListItemIcon'
+import ListItemText from '@mui/material/ListItemText'
+import Toolbar from '@mui/material/Toolbar'
+import Typography from '@mui/material/Typography'
+import * as React from 'react'
+import { MenuIcon } from 'lucide-react'
+import { HAMBURGERS } from '@/lib/constants/hamburgers'
+import CheckoutDrawer from '@/components/ordering/checkout-drawer'
+import Grid from '@mui/material/Unstable_Grid2' // Grid version 2
+import ProductDialog from '@/components/ordering/product-dialog'
 
-const drawerWidth = 200;
+const drawerWidth = 200
 
 interface Props {
   /**
    * Injected by the documentation to work in an iframe.
    * You won't need it on your project.
    */
-  window?: () => Window;
+  window?: () => Window
 }
 
 export default function ResponsiveDrawer(props: Props) {
-  const { window } = props;
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const { window } = props
+  const [mobileOpen, setMobileOpen] = React.useState(false)
 
   const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
+    setMobileOpen(!mobileOpen)
+  }
 
   const drawer = (
     <div>
@@ -52,13 +52,12 @@ export default function ResponsiveDrawer(props: Props) {
         ))}
       </List>
     </div>
-  );
+  )
   // loop through an object and map it to an array. the object keys are name: string, day: number
-  const container =
-    window !== undefined ? () => window().document.body : undefined;
+  const container = window !== undefined ? () => window().document.body : undefined
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <AppBar
         position="fixed"
@@ -73,7 +72,7 @@ export default function ResponsiveDrawer(props: Props) {
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: "none" } }}
+            sx={{ mr: 2, display: { sm: 'none' } }}
           >
             <MenuIcon />
           </IconButton>
@@ -82,10 +81,7 @@ export default function ResponsiveDrawer(props: Props) {
           </Typography>
         </Toolbar>
       </AppBar>
-      <Box
-        component="nav"
-        sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
-      >
+      <Box component="nav" sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}>
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Drawer
           container={container}
@@ -96,9 +92,9 @@ export default function ResponsiveDrawer(props: Props) {
             keepMounted: true, // Better open performance on mobile.
           }}
           sx={{
-            display: { xs: "block", sm: "none" },
-            "& .MuiDrawer-paper": {
-              boxSizing: "border-box",
+            display: { xs: 'block', sm: 'none' },
+            '& .MuiDrawer-paper': {
+              boxSizing: 'border-box',
               width: drawerWidth,
             },
           }}
@@ -108,9 +104,9 @@ export default function ResponsiveDrawer(props: Props) {
         <Drawer
           variant="permanent"
           sx={{
-            display: { xs: "none", sm: "block" },
-            "& .MuiDrawer-paper": {
-              boxSizing: "border-box",
+            display: { xs: 'none', sm: 'block' },
+            '& .MuiDrawer-paper': {
+              boxSizing: 'border-box',
               width: drawerWidth,
             },
           }}
@@ -137,5 +133,5 @@ export default function ResponsiveDrawer(props: Props) {
       </Box>
       <CheckoutDrawer />
     </Box>
-  );
+  )
 }

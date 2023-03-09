@@ -13,7 +13,7 @@ import { Link as PrismaLinkType } from "@prisma/client";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import toast from "react-hot-toast";
+import toast from "sonner";
 import Balancer from "react-wrap-balancer";
 import useSWR from "swr";
 

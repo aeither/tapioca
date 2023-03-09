@@ -88,10 +88,10 @@ specifiers:
   react-dom: 18.2.0
   react-hook-form: ^7.43.1
   react-hook-form-mui: ^5.15.1
-  react-hot-toast: ^2.4.0
   react-markdown: ^8.0.4
   react-use: ^17.4.0
   react-wrap-balancer: ^0.3.0
+  sonner: ^0.2.0
   superjson: ^1.12.2
   swr: ^2.0.3
   tailwind-merge: ^1.9.1
@@ -178,10 +178,10 @@ dependencies:
   react-dom: 18.2.0_react@18.2.0
   react-hook-form: 7.43.1_react@18.2.0
   react-hook-form-mui: 5.15.1_myhouejqc6qifne4mvidzdwhcy
-  react-hot-toast: 2.4.0_owo25xnefcwdq3zjgtohz6dbju
   react-markdown: 8.0.5_kzbn2opkn2327fwg5yzwzya5o4
   react-use: 17.4.0_biqbaboplfbrettd7655fr4n2y
   react-wrap-balancer: 0.3.0_react@18.2.0
+  sonner: 0.2.0_biqbaboplfbrettd7655fr4n2y
   superjson: 1.12.2
   swr: 2.0.3_react@18.2.0
   tailwind-merge: 1.9.1
@@ -9587,14 +9587,6 @@ packages:
     resolution: {integrity: sha512-uHJgbwAMwNFf5mLst7IWLNg14x1CkeqglJb/K3doi4dw6q2IvAAmM/Y81kevy83wP+Sst+nutFTYOGg3d1lsxg==}
     dev: false
 
-  /goober/2.1.12_csstype@3.1.1:
-    resolution: {integrity: sha512-yXHAvO08FU1JgTXX6Zn6sYCUFfB/OJSX8HHjDSgerZHZmFKAb08cykp5LBw5QnmyMcZyPRMqkdyHUSSzge788Q==}
-    peerDependencies:
-      csstype: ^3.0.10
-    dependencies:
-      csstype: 3.1.1
-    dev: false
-
   /gopd/1.0.1:
     resolution: {integrity: sha512-d65bNlIadxvpb/A2abVdlqKqV563juRnZ1Wtk6s1sIR8uNsXR70xqIzVqxVf1eTqDunwT2MkczEeaezCKTZhwA==}
     dependencies:
@@ -12547,20 +12539,6 @@ packages:
       react: 18.2.0
     dev: false
 
-  /react-hot-toast/2.4.0_owo25xnefcwdq3zjgtohz6dbju:
-    resolution: {integrity: sha512-qnnVbXropKuwUpriVVosgo8QrB+IaPJCpL8oBI6Ov84uvHZ5QQcTp2qg6ku2wNfgJl6rlQXJIQU5q+5lmPOutA==}
-    engines: {node: '>=10'}
-    peerDependencies:
-      react: '>=16'
-      react-dom: '>=16'
-    dependencies:
-      goober: 2.1.12_csstype@3.1.1
-      react: 18.2.0
-      react-dom: 18.2.0_react@18.2.0
-    transitivePeerDependencies:
-      - csstype
-    dev: false
-
   /react-is/16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
     dev: false
@@ -13481,6 +13459,16 @@ packages:
     dependencies:
       atomic-sleep: 1.0.0
       flatstr: 1.0.12
+    dev: false
+
+  /sonner/0.2.0_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-wxOkuIRoyF7nsXbz7JcpexGtSw58C9XZik6kVtKNxKpEEnfFsGyR08HQMabqEzAd0a8ARNuDH06UnEit4tvO+w==}
+    peerDependencies:
+      react: ^18.0.0
+      react-dom: ^18.0.0
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
     dev: false
 
   /source-map-js/1.0.2:

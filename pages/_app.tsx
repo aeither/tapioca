@@ -15,7 +15,7 @@ import type { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import type { AppProps } from "next/app";
 import Script from "next/script";
-import { Toaster } from "react-hot-toast";
+import { Toaster } from "sonner";
 import { Provider as RWBProvider } from "react-wrap-balancer";
 import { api } from "@/lib/api";
 
