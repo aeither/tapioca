@@ -41,7 +41,7 @@ function MyApp({
             <AnanasConfig network="devnet">
               <ClientOnly>
                 <Script src="https://terminal.jup.ag/main.js" />
-                <Toaster />
+                <Toaster richColors />
 
                 <Component {...pageProps} />
               </ClientOnly>

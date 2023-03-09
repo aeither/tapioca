@@ -116,13 +116,14 @@ export default function MenuStepper(props: Omit<ProductCardProps, 'handleClickOp
     console.log(data)
 
     // create order if no order, if exist then add order
+
     if (orderId) {
       const promises = Promise.all([
         addProduct.mutateAsync(
           {
             orderId: orderId,
-            price: 0.001,
-            title: 'Burger 1',
+            price: data.price,
+            title: data.name,
           },
           {
             onSuccess(data, variables, context) {
@@ -134,8 +135,8 @@ export default function MenuStepper(props: Omit<ProductCardProps, 'handleClickOp
       ])
       toast.promise(promises, {
         loading: 'Loading...',
-        success: (data) => {
-          return `${data.name} has been added!`
+        success: (data: Product) => {
+          return `${data.title} has been added!`
         },
         error: 'Error',
       })
@@ -144,8 +145,8 @@ export default function MenuStepper(props: Omit<ProductCardProps, 'handleClickOp
         addProduct.mutateAsync(
           {
             orderId: id,
-            price: 0.001,
-            title: 'Burger 1',
+            price: data.price,
+            title: data.name,
           },
           {
             onSuccess(data, variables, context) {
@@ -156,9 +157,11 @@ export default function MenuStepper(props: Omit<ProductCardProps, 'handleClickOp
         ),
       )
       toast.promise(promises, {
-        success: '',
-        loading: '',
-        error: '',
+        loading: 'Loading...',
+        success: (data: Product) => {
+          return `${data.title} has been added!`
+        },
+        error: 'Error',
       })
     }
 
