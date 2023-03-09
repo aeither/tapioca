@@ -1,5 +1,5 @@
-import { dbRouter } from "./routers/db";
-import { createTRPCRouter } from "./trpc";
+import { dbRouter } from './routers/db'
+import { createTRPCRouter } from './trpc'
 
 /**
  * This is the primary router for your server.
@@ -8,7 +8,7 @@ import { createTRPCRouter } from "./trpc";
  */
 export const appRouter = createTRPCRouter({
   db: dbRouter,
-});
+})
 
 // export type definition of API
-export type AppRouter = typeof appRouter;
+export type AppRouter = typeof appRouter

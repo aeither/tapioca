@@ -1,4 +1,4 @@
-import Modal from "@/components/shared/modal";
+import Modal from '@/components/shared/modal'
 import {
   useState,
   Dispatch,
@@ -6,29 +6,29 @@ import {
   useCallback,
   useMemo,
   useEffect,
-} from "react";
-import { useRive } from "@rive-app/react-canvas";
+} from 'react'
+import { useRive } from '@rive-app/react-canvas'
 
 const SucessModal = ({
   showModal,
   setShowModal,
 }: {
-  showModal: boolean;
-  setShowModal: Dispatch<SetStateAction<boolean>>;
+  showModal: boolean
+  setShowModal: Dispatch<SetStateAction<boolean>>
 }) => {
   const { RiveComponent, rive } = useRive({
-    src: "/assets/success.riv",
+    src: '/assets/success.riv',
     autoplay: true,
-  });
+  })
 
   useEffect(() => {
     if (showModal) {
-      console.log("showmodal");
-      setTimeout(() => setShowModal(false), 2300);
+      console.log('showmodal')
+      setTimeout(() => setShowModal(false), 2300)
     } else {
-      console.log("else");
+      console.log('else')
     }
-  }, [showModal]);
+  }, [showModal])
 
   return (
     <Modal showModal={showModal} setShowModal={setShowModal}>
@@ -40,24 +40,24 @@ const SucessModal = ({
             <RiveComponent />
           </div>
           <p className="text-sm text-gray-500">
-            Precedent is an opinionated collection of components, hooks, and
-            utilities for your Next.js project.
+            Precedent is an opinionated collection of components, hooks, and utilities for
+            your Next.js project.
           </p>
         </div>
       </div>
     </Modal>
-  );
-};
+  )
+}
 
 export function useSuccessModal() {
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(false)
 
   const ModalCallback = useCallback(() => {
-    return <SucessModal showModal={showModal} setShowModal={setShowModal} />;
-  }, [showModal, setShowModal]);
+    return <SucessModal showModal={showModal} setShowModal={setShowModal} />
+  }, [showModal, setShowModal])
 
   return useMemo(
     () => ({ setShowModal, Modal: ModalCallback }),
     [setShowModal, ModalCallback],
-  );
+  )
 }

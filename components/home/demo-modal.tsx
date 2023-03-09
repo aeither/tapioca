@@ -1,19 +1,13 @@
-import Modal from "@/components/shared/modal";
-import {
-  useState,
-  Dispatch,
-  SetStateAction,
-  useCallback,
-  useMemo,
-} from "react";
-import Image from "next/image";
+import Modal from '@/components/shared/modal'
+import { useState, Dispatch, SetStateAction, useCallback, useMemo } from 'react'
+import Image from 'next/image'
 
 const DemoModal = ({
   showDemoModal,
   setShowDemoModal,
 }: {
-  showDemoModal: boolean;
-  setShowDemoModal: Dispatch<SetStateAction<boolean>>;
+  showDemoModal: boolean
+  setShowDemoModal: Dispatch<SetStateAction<boolean>>
 }) => {
   return (
     <Modal showModal={showDemoModal} setShowModal={setShowDemoModal}>
@@ -30,29 +24,24 @@ const DemoModal = ({
           </a>
           <h3 className="font-display text-2xl font-bold">Precedent</h3>
           <p className="text-sm text-gray-500">
-            Precedent is an opinionated collection of components, hooks, and
-            utilities for your Next.js project.
+            Precedent is an opinionated collection of components, hooks, and utilities for
+            your Next.js project.
           </p>
         </div>
       </div>
     </Modal>
-  );
-};
+  )
+}
 
 export function useDemoModal() {
-  const [showDemoModal, setShowDemoModal] = useState(false);
+  const [showDemoModal, setShowDemoModal] = useState(false)
 
   const DemoModalCallback = useCallback(() => {
-    return (
-      <DemoModal
-        showDemoModal={showDemoModal}
-        setShowDemoModal={setShowDemoModal}
-      />
-    );
-  }, [showDemoModal, setShowDemoModal]);
+    return <DemoModal showDemoModal={showDemoModal} setShowDemoModal={setShowDemoModal} />
+  }, [showDemoModal, setShowDemoModal])
 
   return useMemo(
     () => ({ setShowDemoModal, DemoModal: DemoModalCallback }),
     [setShowDemoModal, DemoModalCallback],
-  );
+  )
 }

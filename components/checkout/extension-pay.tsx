@@ -1,29 +1,28 @@
-import { useWallet } from "@solana/wallet-adapter-react";
-import Link from "next/link";
+import { useWallet } from '@solana/wallet-adapter-react'
+import Link from 'next/link'
 
-import useMakeTx from "@/lib/hooks/use-maketx";
-import { ConnectWallet } from "../home/wallet";
-import { useSuccessModal } from "@/components/home/success-modal";
-import { useEffect } from "react";
-import { Prisma } from "@prisma/client";
-import { fetcher } from "@/lib/utils";
-import useSWR from "swr";
+import useMakeTx from '@/lib/hooks/use-maketx'
+import { ConnectWallet } from '../home/wallet'
+import { useSuccessModal } from '@/components/home/success-modal'
+import { useEffect } from 'react'
+import { Prisma } from '@prisma/client'
+import { fetcher } from '@/lib/utils'
+import useSWR from 'swr'
 
 export default function ExtensionPay({ reference }: { reference: string }) {
-  const { publicKey } = useWallet();
+  const { publicKey } = useWallet()
   const { message, transaction, trySendTransaction, hasPaid } = useMakeTx({
     reference,
-  });
-  const { Modal: SucessModal, setShowModal: setShowSuccessModal } =
-    useSuccessModal();
+  })
+  const { Modal: SucessModal, setShowModal: setShowSuccessModal } = useSuccessModal()
 
-  const { data: link } = useSWR<Prisma.LinkSelect>(`/api/link`, fetcher);
+  const { data: link } = useSWR<Prisma.LinkSelect>(`/api/link`, fetcher)
 
-  console.log("🚀 ~ file: extension-pay.tsx:22 ~ ExtensionPay ~ link", link);
+  console.log('🚀 ~ file: extension-pay.tsx:22 ~ ExtensionPay ~ link', link)
 
   useEffect(() => {
-    hasPaid && setShowSuccessModal(true);
-  }, [hasPaid]);
+    hasPaid && setShowSuccessModal(true)
+  }, [hasPaid])
 
   if (hasPaid) {
     return (
@@ -31,26 +30,26 @@ export default function ExtensionPay({ reference }: { reference: string }) {
         <SucessModal />
         <p>Have been paid successfully</p>;
       </>
-    );
+    )
   }
 
   if (!publicKey) {
     return (
       <div className="flex flex-col items-center gap-8">
         <div>
-          <Link href={"/"}>Cancel</Link>
+          <Link href={'/'}>Cancel</Link>
         </div>
 
         <ConnectWallet />
         <p>You need to connect your wallet to make transactions</p>
       </div>
-    );
+    )
   }
 
   return (
     <div className="flex flex-col items-center gap-8">
       <div>
-        <Link href={"/"}>Cancel</Link>
+        <Link href={'/'}>Cancel</Link>
       </div>
 
       <button
@@ -76,5 +75,5 @@ export default function ExtensionPay({ reference }: { reference: string }) {
         <p>Creating transaction...</p>
       )}
     </div>
-  );
+  )
 }

@@ -1,24 +1,18 @@
-import Modal from "@/components/shared/modal";
-import { Button } from "@/components/ui/button";
-import { DialogFooter } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Dispatch,
-  SetStateAction,
-  useCallback,
-  useMemo,
-  useState,
-} from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { toast } from "sonner";
-import { mutate } from "swr";
+import Modal from '@/components/shared/modal'
+import { Button } from '@/components/ui/button'
+import { DialogFooter } from '@/components/ui/dialog'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Dispatch, SetStateAction, useCallback, useMemo, useState } from 'react'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { toast } from 'sonner'
+import { mutate } from 'swr'
 
 interface FormInput {
-  title: string;
-  description: string;
-  amount: string;
-  receiver: string;
+  title: string
+  description: string
+  amount: string
+  receiver: string
 }
 
 const NewProductModal = ({
@@ -26,18 +20,18 @@ const NewProductModal = ({
   setShowModal,
   props,
 }: {
-  showModal: boolean;
-  setShowModal: Dispatch<SetStateAction<boolean>>;
-  props: { address: string };
+  showModal: boolean
+  setShowModal: Dispatch<SetStateAction<boolean>>
+  props: { address: string }
 }) => {
-  const { register, handleSubmit } = useForm<FormInput>();
+  const { register, handleSubmit } = useForm<FormInput>()
   const onSubmit: SubmitHandler<FormInput> = (data) => {
-    const { amount, description, title } = data;
+    const { amount, description, title } = data
 
-    const promise = fetch("/api/product", {
-      method: "POST",
+    const promise = fetch('/api/product', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         title,
@@ -45,23 +39,23 @@ const NewProductModal = ({
         price: parseFloat(amount),
       }),
     }).then((res) => {
-      if (res.statusText === "Unauthorized") {
-        alert("Require sign in");
+      if (res.statusText === 'Unauthorized') {
+        alert('Require sign in')
       } else {
-        mutate("/api/product");
+        mutate('/api/product')
       }
 
-      setShowModal(false);
-    });
+      setShowModal(false)
+    })
 
     toast.promise(promise, {
-      loading: "creating...",
-      success: "Created",
-      error: "Error when, failed to create",
-    });
-  };
+      loading: 'creating...',
+      success: 'Created',
+      error: 'Error when, failed to create',
+    })
+  }
 
-  console.log("the address is", props.address);
+  console.log('the address is', props.address)
 
   return (
     <Modal showModal={showModal} setShowModal={setShowModal}>
@@ -79,7 +73,7 @@ const NewProductModal = ({
                   id="title"
                   defaultValue="title"
                   className="col-span-3"
-                  {...register("title")}
+                  {...register('title')}
                 />
               </div>
               <div className="grid grid-cols-4 items-center gap-4">
@@ -90,7 +84,7 @@ const NewProductModal = ({
                   id="description"
                   defaultValue="description"
                   className="col-span-3"
-                  {...register("description")}
+                  {...register('description')}
                 />
               </div>
               <div className="grid grid-cols-4 items-center gap-4">
@@ -103,7 +97,7 @@ const NewProductModal = ({
                   defaultValue={0.01}
                   step={0.01}
                   className="col-span-3"
-                  {...register("amount")}
+                  {...register('amount')}
                 />
               </div>
             </div>
@@ -112,24 +106,20 @@ const NewProductModal = ({
         </div>
       </div>
     </Modal>
-  );
-};
+  )
+}
 
 export function useNewProductModal({ props }: { props: { address: string } }) {
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(false)
 
   const ModalCallback = useCallback(() => {
     return (
-      <NewProductModal
-        showModal={showModal}
-        setShowModal={setShowModal}
-        props={props}
-      />
-    );
-  }, [showModal, setShowModal, props]);
+      <NewProductModal showModal={showModal} setShowModal={setShowModal} props={props} />
+    )
+  }, [showModal, setShowModal, props])
 
   return useMemo(
     () => ({ setShowModal, Modal: ModalCallback }),
     [setShowModal, ModalCallback],
-  );
+  )
 }

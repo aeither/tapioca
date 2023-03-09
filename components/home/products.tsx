@@ -1,14 +1,14 @@
-import { products } from "@/lib/data/products";
-import { useRef } from "react";
-import NumberInput from "./number-input";
+import { products } from '@/lib/data/products'
+import { useRef } from 'react'
+import NumberInput from './number-input'
 
 interface Props {
-  submitTarget: string;
-  enabled: boolean;
+  submitTarget: string
+  enabled: boolean
 }
 
 export default function Products({ submitTarget, enabled }: Props) {
-  const formRef = useRef<HTMLFormElement>(null);
+  const formRef = useRef<HTMLFormElement>(null)
 
   return (
     <form method="get" action={submitTarget} ref={formRef}>
@@ -16,28 +16,20 @@ export default function Products({ submitTarget, enabled }: Props) {
         <div className="grid grid-cols-2 gap-8">
           {products.map((product) => {
             return (
-              <div
-                className="rounded-md bg-white p-8 text-left"
-                key={product.id}
-              >
+              <div className="rounded-md bg-white p-8 text-left" key={product.id}>
                 <h3 className="text-2xl font-bold">{product.name}</h3>
                 <p className="text-sm text-gray-800">{product.description}</p>
                 <p className="my-4">
-                  <span className="mt-4 text-xl font-bold">
-                    {product.priceSol} SOL
-                  </span>
+                  <span className="mt-4 text-xl font-bold">{product.priceSol} SOL</span>
                   {product.unitName && (
-                    <span className="text-sm text-gray-800">
-                      {" "}
-                      /{product.unitName}
-                    </span>
+                    <span className="text-sm text-gray-800"> /{product.unitName}</span>
                   )}
                 </p>
                 <div className="mt-1">
                   <NumberInput name={product.id} formRef={formRef} />
                 </div>
               </div>
-            );
+            )
           })}
         </div>
 
@@ -49,5 +41,5 @@ export default function Products({ submitTarget, enabled }: Props) {
         </button>
       </div>
     </form>
-  );
+  )
 }

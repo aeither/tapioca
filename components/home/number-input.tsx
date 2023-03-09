@@ -1,33 +1,33 @@
-import { useState } from "react";
+import { useState } from 'react'
 
 interface Props {
-  name: string;
-  formRef: React.RefObject<HTMLFormElement>;
+  name: string
+  formRef: React.RefObject<HTMLFormElement>
 }
 
 export default function NumberInput({ name, formRef }: Props) {
-  const [number, setNumber] = useState(0);
+  const [number, setNumber] = useState(0)
 
   function decrement() {
-    setNumber((n) => (n > 0 ? n - 1 : 0));
+    setNumber((n) => (n > 0 ? n - 1 : 0))
   }
 
   function increment() {
-    setNumber((n) => n + 1);
+    setNumber((n) => n + 1)
   }
 
   function handleKeyboard(e: React.KeyboardEvent<HTMLButtonElement>) {
-    if (e.key === "ArrowDown") {
-      e.preventDefault();
-      decrement();
+    if (e.key === 'ArrowDown') {
+      e.preventDefault()
+      decrement()
     }
-    if (e.key === "ArrowUp") {
-      e.preventDefault();
-      increment();
+    if (e.key === 'ArrowUp') {
+      e.preventDefault()
+      increment()
     }
-    if (e.key === "Enter") {
-      e.preventDefault();
-      formRef.current?.submit();
+    if (e.key === 'Enter') {
+      e.preventDefault()
+      formRef.current?.submit()
     }
   }
 
@@ -60,5 +60,5 @@ export default function NumberInput({ name, formRef }: Props) {
         <span className="m-auto text-2xl font-thin">+</span>
       </button>
     </div>
-  );
+  )
 }

@@ -1,4 +1,4 @@
-import Modal from "@/components/shared/modal";
+import Modal from '@/components/shared/modal'
 import {
   useState,
   Dispatch,
@@ -6,42 +6,42 @@ import {
   useCallback,
   useMemo,
   useEffect,
-} from "react";
-import Clipboard from "@/components/shared/icons/clipboard";
-import { getQRAsCanvas, QRCodeSVG } from "@/lib/qr";
-import toast from "sonner";
+} from 'react'
+import Clipboard from '@/components/shared/icons/clipboard'
+import { getQRAsCanvas, QRCodeSVG } from '@/lib/qr'
+import toast from 'sonner'
 
 const QrModal = ({
   showModal,
   setShowModal,
   props,
 }: {
-  showModal: boolean;
-  setShowModal: Dispatch<SetStateAction<boolean>>;
-  props: { url: string };
+  showModal: boolean
+  setShowModal: Dispatch<SetStateAction<boolean>>
+  props: { url: string }
 }) => {
   const qrData = useMemo(
     () => ({
       value: props.url,
-      bgColor: "#ffffff",
+      bgColor: '#ffffff',
       size: 1024,
-      level: "Q", // QR Code error correction level: https://blog.qrstuff.com/general/qr-code-error-correction
+      level: 'Q', // QR Code error correction level: https://blog.qrstuff.com/general/qr-code-error-correction
     }),
     [props],
-  );
+  )
 
   const copyToClipboard = async () => {
     try {
-      const canvas = await getQRAsCanvas(qrData, "image/png", true);
-      (canvas as HTMLCanvasElement).toBlob(async function (blob) {
-        if (!blob) return;
-        const item = new ClipboardItem({ "image/png": blob });
-        await navigator.clipboard.write([item]);
-      });
+      const canvas = await getQRAsCanvas(qrData, 'image/png', true)
+      ;(canvas as HTMLCanvasElement).toBlob(async function (blob) {
+        if (!blob) return
+        const item = new ClipboardItem({ 'image/png': blob })
+        await navigator.clipboard.write([item])
+      })
     } catch (e) {
-      throw e;
+      throw e
     }
-  };
+  }
 
   return (
     <Modal showModal={showModal} setShowModal={setShowModal}>
@@ -63,10 +63,10 @@ const QrModal = ({
             <button
               onClick={async () => {
                 toast.promise(copyToClipboard(), {
-                  loading: "Copying...",
-                  success: "Copied!",
-                  error: "Failed to copy",
-                });
+                  loading: 'Copying...',
+                  success: 'Copied!',
+                  error: 'Failed to copy',
+                })
               }}
               className="flex items-center justify-center gap-2 rounded-md border border-black bg-black py-1.5 px-5 text-sm text-white transition-all hover:bg-white hover:text-black"
             >
@@ -76,24 +76,18 @@ const QrModal = ({
         </div>
       </div>
     </Modal>
-  );
-};
+  )
+}
 
 export function useQrModal({ props }: { props: { url: string } }) {
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(false)
 
   const ModalCallback = useCallback(() => {
-    return (
-      <QrModal
-        showModal={showModal}
-        setShowModal={setShowModal}
-        props={props}
-      />
-    );
-  }, [showModal, setShowModal, props]);
+    return <QrModal showModal={showModal} setShowModal={setShowModal} props={props} />
+  }, [showModal, setShowModal, props])
 
   return useMemo(
     () => ({ setShowModal, Modal: ModalCallback }),
     [setShowModal, ModalCallback],
-  );
+  )
 }

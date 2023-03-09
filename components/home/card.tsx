@@ -1,6 +1,6 @@
-import { ReactNode } from "react";
-import ReactMarkdown from "react-markdown";
-import Balancer from "react-wrap-balancer";
+import { ReactNode } from 'react'
+import ReactMarkdown from 'react-markdown'
+import Balancer from 'react-wrap-balancer'
 
 export default function Card({
   title,
@@ -8,15 +8,15 @@ export default function Card({
   demo,
   large,
 }: {
-  title: string;
-  description: string;
-  demo: ReactNode;
-  large?: boolean;
+  title: string
+  description: string
+  demo: ReactNode
+  large?: boolean
 }) {
   return (
     <div
       className={`relative col-span-1 h-96 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-md ${
-        large ? "md:col-span-2" : ""
+        large ? 'md:col-span-2' : ''
       }`}
     >
       <div className="flex h-60 items-center justify-center">{demo}</div>
@@ -52,5 +52,5 @@ export default function Card({
         </div>
       </div>
     </div>
-  );
+  )
 }

@@ -1,24 +1,18 @@
-import Modal from "@/components/shared/modal";
-import { Button } from "@/components/ui/button";
-import { DialogFooter } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Dispatch,
-  SetStateAction,
-  useCallback,
-  useMemo,
-  useState,
-} from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { toast } from "sonner";
-import { mutate } from "swr";
+import Modal from '@/components/shared/modal'
+import { Button } from '@/components/ui/button'
+import { DialogFooter } from '@/components/ui/dialog'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Dispatch, SetStateAction, useCallback, useMemo, useState } from 'react'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { toast } from 'sonner'
+import { mutate } from 'swr'
 
 interface FormInput {
-  title: string;
-  description: string;
-  amount: string;
-  receiver: string;
+  title: string
+  description: string
+  amount: string
+  receiver: string
 }
 
 const EditProductModal = ({
@@ -26,23 +20,23 @@ const EditProductModal = ({
   setShowModal,
   props,
 }: {
-  showModal: boolean;
-  setShowModal: Dispatch<SetStateAction<boolean>>;
-  props: { productId: string };
+  showModal: boolean
+  setShowModal: Dispatch<SetStateAction<boolean>>
+  props: { productId: string }
 }) => {
   const {
     register,
     handleSubmit,
     formState: { isSubmitting },
-  } = useForm<FormInput>();
+  } = useForm<FormInput>()
 
   const onSubmit: SubmitHandler<FormInput> = (data) => {
-    const { amount, description, title } = data;
+    const { amount, description, title } = data
 
-    const promise = fetch("/api/product", {
-      method: "PATCH",
+    const promise = fetch('/api/product', {
+      method: 'PATCH',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         id: props.productId,
@@ -51,23 +45,23 @@ const EditProductModal = ({
         price: parseFloat(amount),
       }),
     }).then((res) => {
-      if (res.statusText === "Unauthorized") {
-        alert("Require sign in");
+      if (res.statusText === 'Unauthorized') {
+        alert('Require sign in')
       } else {
-        mutate("/api/product");
+        mutate('/api/product')
       }
 
-      setShowModal(false);
-    });
+      setShowModal(false)
+    })
 
     toast.promise(promise, {
-      loading: "updating...",
-      success: "Updated",
-      error: "Error when, failed to update",
-    });
-  };
+      loading: 'updating...',
+      success: 'Updated',
+      error: 'Error when, failed to update',
+    })
+  }
 
-  console.log("the address is", props.productId);
+  console.log('the address is', props.productId)
 
   return (
     <Modal showModal={showModal} setShowModal={setShowModal}>
@@ -85,7 +79,7 @@ const EditProductModal = ({
                   id="title"
                   defaultValue="title"
                   className="col-span-3"
-                  {...register("title")}
+                  {...register('title')}
                 />
               </div>
               <div className="grid grid-cols-4 items-center gap-4">
@@ -96,7 +90,7 @@ const EditProductModal = ({
                   id="description"
                   defaultValue="description"
                   className="col-span-3"
-                  {...register("description")}
+                  {...register('description')}
                 />
               </div>
               <div className="grid grid-cols-4 items-center gap-4">
@@ -109,7 +103,7 @@ const EditProductModal = ({
                   defaultValue={0.01}
                   step={0.01}
                   className="col-span-3"
-                  {...register("amount")}
+                  {...register('amount')}
                 />
               </div>
             </div>
@@ -123,28 +117,20 @@ const EditProductModal = ({
         </div>
       </div>
     </Modal>
-  );
-};
+  )
+}
 
-export function useEditProductModal({
-  props,
-}: {
-  props: { productId: string };
-}) {
-  const [showModal, setShowModal] = useState(false);
+export function useEditProductModal({ props }: { props: { productId: string } }) {
+  const [showModal, setShowModal] = useState(false)
 
   const ModalCallback = useCallback(() => {
     return (
-      <EditProductModal
-        showModal={showModal}
-        setShowModal={setShowModal}
-        props={props}
-      />
-    );
-  }, [showModal, setShowModal, props]);
+      <EditProductModal showModal={showModal} setShowModal={setShowModal} props={props} />
+    )
+  }, [showModal, setShowModal, props])
 
   return useMemo(
     () => ({ setShowModal, Modal: ModalCallback }),
     [setShowModal, ModalCallback],
-  );
+  )
 }

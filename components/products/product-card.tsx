@@ -1,7 +1,7 @@
-import toast from "sonner";
-import Balancer from "react-wrap-balancer";
-import { mutate } from "swr";
-import { useEditProductModal } from "./edit-product-modal";
+import toast from 'sonner'
+import Balancer from 'react-wrap-balancer'
+import { mutate } from 'swr'
+import { useEditProductModal } from './edit-product-modal'
 
 export default function ProductCard({
   productId,
@@ -10,46 +10,46 @@ export default function ProductCard({
   price,
   imageUrl,
 }: {
-  productId: string;
-  title: string;
-  description: string;
-  price: number;
-  imageUrl?: string;
+  productId: string
+  title: string
+  description: string
+  price: number
+  imageUrl?: string
 }) {
   const { Modal, setShowModal } = useEditProductModal({
     props: { productId: productId },
-  });
+  })
 
   const remove = () => {
-    const promise = fetch("/api/product", {
-      method: "DELETE",
+    const promise = fetch('/api/product', {
+      method: 'DELETE',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         id: productId,
       }),
     }).then((res) => {
-      if (res.statusText === "Unauthorized") {
-        alert("Require sign in");
+      if (res.statusText === 'Unauthorized') {
+        alert('Require sign in')
       } else {
-        mutate("/api/product");
+        mutate('/api/product')
       }
 
-      setShowModal(false);
-    });
+      setShowModal(false)
+    })
 
     toast.promise(promise, {
-      loading: "deleting...",
-      success: "Deleted",
-      error: "Error when, failed to delete",
-    });
-  };
+      loading: 'deleting...',
+      success: 'Deleted',
+      error: 'Error when, failed to delete',
+    })
+  }
 
   return (
     <div
       className={
-        "group relative col-span-1 flex h-36 flex-col justify-start overflow-hidden rounded-xl border border-gray-200 bg-white p-4 shadow-md"
+        'group relative col-span-1 flex h-36 flex-col justify-start overflow-hidden rounded-xl border border-gray-200 bg-white p-4 shadow-md'
       }
     >
       <Modal />
@@ -73,5 +73,5 @@ export default function ProductCard({
         Remove
       </div>
     </div>
-  );
+  )
 }

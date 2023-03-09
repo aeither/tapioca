@@ -1,6 +1,6 @@
-"use client";
+'use client'
 
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button'
 import {
   Dialog,
   DialogContent,
@@ -9,32 +9,32 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { toast } from "sonner";
-import { mutate } from "swr";
+} from '@/components/ui/dialog'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { useState } from 'react'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { toast } from 'sonner'
+import { mutate } from 'swr'
 
 interface FormInput {
-  title: string;
-  description: string;
-  amount: string;
-  receiver: string;
+  title: string
+  description: string
+  amount: string
+  receiver: string
 }
 
 export function CreateLinkModal() {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false)
 
-  const { register, handleSubmit } = useForm<FormInput>();
+  const { register, handleSubmit } = useForm<FormInput>()
   const onSubmit: SubmitHandler<FormInput> = (data) => {
-    const { amount, description, title, receiver } = data;
+    const { amount, description, title, receiver } = data
 
-    const promise = fetch("/api/links", {
-      method: "POST",
+    const promise = fetch('/api/links', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         title,
@@ -43,21 +43,21 @@ export function CreateLinkModal() {
         receiver,
       }),
     }).then((res) => {
-      if (res.statusText === "Unauthorized") {
-        alert("Require sign in");
+      if (res.statusText === 'Unauthorized') {
+        alert('Require sign in')
       } else {
-        mutate("/api/links");
+        mutate('/api/links')
       }
 
-      setOpen(false);
-    });
+      setOpen(false)
+    })
 
     toast.promise(promise, {
-      loading: "creating...",
-      success: "Created link",
-      error: "Error when, failed to create",
-    });
-  };
+      loading: 'creating...',
+      success: 'Created link',
+      error: 'Error when, failed to create',
+    })
+  }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -81,7 +81,7 @@ export function CreateLinkModal() {
                 id="title"
                 defaultValue="title"
                 className="col-span-3"
-                {...register("title")}
+                {...register('title')}
               />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
@@ -92,7 +92,7 @@ export function CreateLinkModal() {
                 id="receiver"
                 defaultValue="receiver"
                 className="col-span-3"
-                {...register("receiver")}
+                {...register('receiver')}
               />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
@@ -103,7 +103,7 @@ export function CreateLinkModal() {
                 id="description"
                 defaultValue="description"
                 className="col-span-3"
-                {...register("description")}
+                {...register('description')}
               />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
@@ -116,7 +116,7 @@ export function CreateLinkModal() {
                 defaultValue={0.01}
                 step={0.01}
                 className="col-span-3"
-                {...register("amount")}
+                {...register('amount')}
               />
             </div>
           </div>
@@ -126,5 +126,5 @@ export function CreateLinkModal() {
         </form>
       </DialogContent>
     </Dialog>
-  );
+  )
 }

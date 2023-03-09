@@ -1,10 +1,10 @@
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import { useWatch } from "react-hook-form-mui";
+import Button from '@mui/material/Button'
+import Typography from '@mui/material/Typography'
+import { useWatch } from 'react-hook-form-mui'
 export default function LastStepContent(props: { handleReset: () => void }) {
   const [name, price, drink, sauce, dressing] = useWatch({
-    name: ["name", "price", "drink", "sauce", "dressing"],
-  });
+    name: ['name', 'price', 'drink', 'sauce', 'dressing'],
+  })
 
   return (
     <>
@@ -26,5 +26,5 @@ export default function LastStepContent(props: { handleReset: () => void }) {
         </Button>
       </div>
     </>
-  );
+  )
 }
