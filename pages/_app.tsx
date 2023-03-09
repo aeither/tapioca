@@ -17,6 +17,7 @@ import type { AppProps } from "next/app";
 import Script from "next/script";
 import { Toaster } from "react-hot-toast";
 import { Provider as RWBProvider } from "react-wrap-balancer";
+import { api } from "@/lib/api";
 
 const sfPro = localFont({
   src: "../styles/SF-Pro-Display-Medium.otf",
@@ -28,7 +29,7 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
-export default function MyApp({
+function MyApp({
   Component,
   pageProps: { session, ...pageProps },
 }: AppProps<{ session: Session }>) {
@@ -52,3 +53,5 @@ export default function MyApp({
     </ThemeProvider>
   );
 }
+
+export default api.withTRPC(MyApp);
