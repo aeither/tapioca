@@ -6,19 +6,17 @@ import QrCodeCell from '@/components/home/qrcode-cell'
 import { ConnectWallet } from '@/components/home/wallet'
 import WebVitals from '@/components/home/web-vitals'
 import Layout from '@/components/layout'
-import Tooltip from '@/components/shared/tooltip'
 import { DEPLOY_URL } from '@/libs/constants/constants'
-import { fetcher } from '@/libs/utils'
-import { Link as PrismaLinkType } from '@prisma/client'
+import { useDB } from '@/libs/hooks/use-db'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
-import { toast } from 'sonner'
 import Balancer from 'react-wrap-balancer'
-import useSWR from 'swr'
+import { toast } from 'sonner'
 
 export default function Home() {
-  const { data: links } = useSWR<PrismaLinkType[]>(`/api/links`, fetcher)
+  // const { data: links } = useSWR<PrismaLinkType[]>(`/api/links`, fetcher)
+  const { orders } = useDB()
 
   return (
     <Layout>
@@ -34,6 +32,7 @@ export default function Home() {
         </div>
         <div className={''}>
           <button onClick={() => toast('hello world')}>toast</button>
+          {/* CreateLinkModal -> CreateOrder */}
           <CreateLinkModal />
           <table className="table-auto">
             <thead>
@@ -48,18 +47,14 @@ export default function Home() {
               </tr>
             </thead>
             <tbody>
-              {links &&
-                links.map((link, i) => (
+              {orders.data &&
+                orders.data.map((link, i) => (
                   <tr key={i}>
                     <td>{link.amount}</td>
                     <td>{link.reference}</td>
                     <td>{link.status}</td>
                     <td>
-                      <Tooltip
-                        content={`Clicks \n ${link.clicks} \n Receiver \n ${link.receiver}`}
-                      >
-                        <p>Info</p>
-                      </Tooltip>
+                      <p>Info</p>
                     </td>
                     <td>
                       <Link href={`/link?reference=${link.reference}`}>Open</Link>

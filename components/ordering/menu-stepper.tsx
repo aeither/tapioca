@@ -1,3 +1,4 @@
+import { shopAddress } from '@/libs/constants/constants'
 import { useDB } from '@/libs/hooks/use-db'
 import { useStore } from '@/libs/store'
 import Box from '@mui/material/Box'
@@ -9,7 +10,6 @@ import StepLabel from '@mui/material/StepLabel'
 import Stepper from '@mui/material/Stepper'
 import Typography from '@mui/material/Typography'
 import { Product } from '@prisma/client'
-import { useQueryClient } from '@tanstack/react-query'
 import * as React from 'react'
 import { FormContainer, RadioButtonGroup } from 'react-hook-form-mui'
 import { toast } from 'sonner'
@@ -85,7 +85,6 @@ const steps = [
 ]
 
 export default function MenuStepper(props: Omit<ProductCardProps, 'handleClickOpen'>) {
-  const queryClient = useQueryClient()
   const { addProduct, createNewOrder } = useDB()
   const orderId = useStore((state) => state.orderId)
   const setOrderId = useStore((state) => state.setOrderId)
@@ -98,6 +97,10 @@ export default function MenuStepper(props: Omit<ProductCardProps, 'handleClickOp
     sauce: '',
     dressing: '',
   }
+
+  React.useEffect(() => {
+    console.log('orderId', orderId)
+  }, [orderId])
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1)
@@ -117,8 +120,6 @@ export default function MenuStepper(props: Omit<ProductCardProps, 'handleClickOp
     console.log(data)
 
     // create order if no order, if exist then add order
-
-    console.log('orderId', orderId)
     if (orderId) {
       const promises = Promise.all([
         addProduct.mutateAsync({
@@ -136,7 +137,12 @@ export default function MenuStepper(props: Omit<ProductCardProps, 'handleClickOp
         error: 'Error',
       })
     } else {
-      const promises = Promise.all([createNewOrder.mutateAsync()]).then(([{ id }]) => {
+      const promises = Promise.all([
+        createNewOrder.mutateAsync({
+          amount: data.price,
+          shopAddress: shopAddress.toBase58(),
+        }),
+      ]).then(([{ id }]) => {
         setOrderId(id)
         return addProduct.mutateAsync({
           orderId: id,
