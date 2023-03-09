@@ -1,8 +1,8 @@
-import { ConnectWallet } from "@/components/home/wallet";
-import Layout from "@/components/layout";
-import { motion } from "framer-motion";
-import Balancer from "react-wrap-balancer";
-import { TOKEN_LIST_URL } from "@jup-ag/core";
+import { ConnectWallet } from '@/components/home/wallet'
+import Layout from '@/components/layout'
+import { motion } from 'framer-motion'
+import Balancer from 'react-wrap-balancer'
+import { TOKEN_LIST_URL } from '@jup-ag/core'
 
 export default function Home() {
   return (
@@ -12,27 +12,27 @@ export default function Home() {
       </motion.h1>
 
       <div className="my-10 grid w-full max-w-screen-xl animate-[slide-down-fade_0.5s_ease-in-out] grid-cols-1 gap-5 px-5 md:grid-cols-3 xl:px-0">
-        <div className={""}>
+        <div className={''}>
           <ConnectWallet />
 
           <button
             onClick={() => {
-              const w = window as any;
+              const w = window as any
               if (w.Jupiter._instance) {
-                w.Jupiter.resume();
+                w.Jupiter.resume()
               } else {
                 w.Jupiter.init({
-                  mode: "default",
-                  displayMode: "modal",
+                  mode: 'default',
+                  displayMode: 'modal',
                   endpoint: process.env.NEXT_PUBLIC_SOLANA_RPC,
-                });
+                })
               }
             }}
           >
             click me
           </button>
 
-          <div style={{ fontWeight: "600", fontSize: 16, marginTop: 24 }}>
+          <div style={{ fontWeight: '600', fontSize: 16, marginTop: 24 }}>
             Hook example
           </div>
           <div>Number of tokens:</div>
@@ -42,5 +42,5 @@ export default function Home() {
         </div>
       </div>
     </Layout>
-  );
+  )
 }

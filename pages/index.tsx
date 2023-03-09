@@ -1,24 +1,24 @@
-import Card from "@/components/home/card";
-import ComponentGrid from "@/components/home/component-grid";
-import { CreateLinkModal } from "@/components/home/create-link-modal";
-import Products from "@/components/home/products";
-import QrCodeCell from "@/components/home/qrcode-cell";
-import { ConnectWallet } from "@/components/home/wallet";
-import WebVitals from "@/components/home/web-vitals";
-import Layout from "@/components/layout";
-import Tooltip from "@/components/shared/tooltip";
-import { DEPLOY_URL } from "@/lib/constants/constants";
-import { fetcher } from "@/lib/utils";
-import { Link as PrismaLinkType } from "@prisma/client";
-import { motion } from "framer-motion";
-import Image from "next/image";
-import Link from "next/link";
-import toast from "sonner";
-import Balancer from "react-wrap-balancer";
-import useSWR from "swr";
+import Card from '@/components/home/card'
+import ComponentGrid from '@/components/home/component-grid'
+import { CreateLinkModal } from '@/components/home/create-link-modal'
+import Products from '@/components/home/products'
+import QrCodeCell from '@/components/home/qrcode-cell'
+import { ConnectWallet } from '@/components/home/wallet'
+import WebVitals from '@/components/home/web-vitals'
+import Layout from '@/components/layout'
+import Tooltip from '@/components/shared/tooltip'
+import { DEPLOY_URL } from '@/lib/constants/constants'
+import { fetcher } from '@/lib/utils'
+import { Link as PrismaLinkType } from '@prisma/client'
+import { motion } from 'framer-motion'
+import Image from 'next/image'
+import Link from 'next/link'
+import toast from 'sonner'
+import Balancer from 'react-wrap-balancer'
+import useSWR from 'swr'
 
 export default function Home() {
-  const { data: links } = useSWR<PrismaLinkType[]>(`/api/links`, fetcher);
+  const { data: links } = useSWR<PrismaLinkType[]>(`/api/links`, fetcher)
 
   return (
     <Layout>
@@ -28,12 +28,12 @@ export default function Home() {
 
       {/* here we are animating with Tailwind instead of Framer Motion because Framer Motion messes up the z-index for child components */}
       <div className="my-10 grid w-full max-w-screen-xl animate-[slide-down-fade_0.5s_ease-in-out] grid-cols-1 gap-5 px-5 md:grid-cols-3 xl:px-0">
-        <div className={""}>
+        <div className={''}>
           <ConnectWallet />
           <Products submitTarget="/cart" enabled />
         </div>
-        <div className={""}>
-          <button onClick={() => toast("hello world")}>toast</button>
+        <div className={''}>
+          <button onClick={() => toast('hello world')}>toast</button>
           <CreateLinkModal />
           <table className="table-auto">
             <thead>
@@ -62,9 +62,7 @@ export default function Home() {
                       </Tooltip>
                     </td>
                     <td>
-                      <Link href={`/link?reference=${link.reference}`}>
-                        Open
-                      </Link>
+                      <Link href={`/link?reference=${link.reference}`}>Open</Link>
                     </td>
                     <td>
                       <button
@@ -72,13 +70,13 @@ export default function Home() {
                           if (navigator.share) {
                             navigator
                               .share({
-                                title: "WebShare API Demo",
+                                title: 'WebShare API Demo',
                                 url: `https://${window.location.host}/link?reference=${link.reference}`,
                               })
                               .then(() => {
-                                console.log("Thanks for sharing!");
+                                console.log('Thanks for sharing!')
                               })
-                              .catch(console.error);
+                              .catch(console.error)
                           } else {
                             // show modal
                           }
@@ -88,9 +86,7 @@ export default function Home() {
                       </button>
                     </td>
                     <td>
-                      <QrCodeCell
-                        reference={link.reference as unknown as string}
-                      />
+                      <QrCodeCell reference={link.reference as unknown as string} />
                     </td>
                   </tr>
                 ))}
@@ -102,53 +98,43 @@ export default function Home() {
             key={title}
             title={title}
             description={description}
-            demo={
-              title === "Beautiful, reusable components" ? (
-                <ComponentGrid />
-              ) : (
-                demo
-              )
-            }
+            demo={title === 'Beautiful, reusable components' ? <ComponentGrid /> : demo}
             large={large}
           />
         ))}
       </div>
     </Layout>
-  );
+  )
 }
 
 const features = [
   {
-    title: "Beautiful, reusable components",
+    title: 'Beautiful, reusable components',
     description:
-      "Pre-built beautiful, a11y-first components, powered by [Tailwind CSS](https://tailwindcss.com/), [Radix UI](https://www.radix-ui.com/), and [Framer Motion](https://framer.com/motion)",
+      'Pre-built beautiful, a11y-first components, powered by [Tailwind CSS](https://tailwindcss.com/), [Radix UI](https://www.radix-ui.com/), and [Framer Motion](https://framer.com/motion)',
     large: true,
   },
   {
-    title: "Performance first",
+    title: 'Performance first',
     description:
-      "Built on [Next.js](https://nextjs.org/) primitives like `@next/font` and `next/image` for stellar performance.",
+      'Built on [Next.js](https://nextjs.org/) primitives like `@next/font` and `next/image` for stellar performance.',
     demo: <WebVitals />,
   },
   {
-    title: "One-click Deploy",
+    title: 'One-click Deploy',
     description:
-      "Jumpstart your next project by deploying Precedent to [Vercel](https://vercel.com/) in one click.",
+      'Jumpstart your next project by deploying Precedent to [Vercel](https://vercel.com/) in one click.',
     demo: (
       <a href={DEPLOY_URL}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="https://vercel.com/button"
-          alt="Deploy with Vercel"
-          width={120}
-        />
+        <img src="https://vercel.com/button" alt="Deploy with Vercel" width={120} />
       </a>
     ),
   },
   {
-    title: "Built-in Auth + Database",
+    title: 'Built-in Auth + Database',
     description:
-      "Precedent comes with authentication and database via [Auth.js](https://authjs.dev/) + [Prisma](https://prisma.io/)",
+      'Precedent comes with authentication and database via [Auth.js](https://authjs.dev/) + [Prisma](https://prisma.io/)',
     demo: (
       <div className="flex items-center justify-center space-x-20">
         <Image alt="Auth.js logo" src="/authjs.webp" width={50} height={50} />
@@ -157,9 +143,8 @@ const features = [
     ),
   },
   {
-    title: "Hooks, utilities, and more",
-    description:
-      "Precedent offers a collection of hooks, utilities, and `@vercel/og`",
+    title: 'Hooks, utilities, and more',
+    description: 'Precedent offers a collection of hooks, utilities, and `@vercel/og`',
     demo: (
       <div className="grid grid-flow-col grid-rows-3 gap-10 p-10">
         <span className="font-mono font-semibold">useIntersectionObserver</span>
@@ -171,4 +156,4 @@ const features = [
       </div>
     ),
   },
-];
+]

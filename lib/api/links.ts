@@ -1,14 +1,14 @@
-import prisma from "@/lib/prisma";
+import prisma from '@/lib/prisma'
 
 interface AddLinkProps {
-  expiresAt?: Date;
-  title: string;
-  description: string;
-  amount: number;
-  reference: string;
-  userId: string;
-  payer: string;
-  receiver: string;
+  expiresAt?: Date
+  title: string
+  description: string
+  amount: number
+  reference: string
+  userId: string
+  payer: string
+  receiver: string
 }
 
 export async function checkIfKeyExists(reference: string) {
@@ -16,18 +16,18 @@ export async function checkIfKeyExists(reference: string) {
     where: {
       reference,
     },
-  });
-  return !!link;
+  })
+  return !!link
 }
 
 export async function addLink(link: AddLinkProps) {
-  const { expiresAt, title, description, amount, reference } = link;
+  const { expiresAt, title, description, amount, reference } = link
 
   // add qstash update on expiry
-  const exat = expiresAt ? new Date(expiresAt).getTime() / 1000 : null;
+  const exat = expiresAt ? new Date(expiresAt).getTime() / 1000 : null
 
-  const exists = await checkIfKeyExists(reference);
-  if (exists) return null;
+  const exists = await checkIfKeyExists(reference)
+  if (exists) return null
 
   let [response] = await Promise.all([
     prisma.link.create({
@@ -39,6 +39,6 @@ export async function addLink(link: AddLinkProps) {
         amount,
       },
     }),
-  ]);
-  return response;
+  ])
+  return response
 }

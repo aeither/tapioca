@@ -1,30 +1,27 @@
-import { useNewProductModal } from "@/components/checkout/new-product-modal";
-import Layout from "@/components/layout";
-import ProductCard from "@/components/products/product-card";
-import { Button } from "@/components/ui/button";
-import { fetcher } from "@/lib/utils";
-import { Product } from "@prisma/client";
-import { motion } from "framer-motion";
-import { Loader2 } from "lucide-react";
-import { useRouter } from "next/router";
-import Balancer from "react-wrap-balancer";
-import useSWR from "swr";
+import { useNewProductModal } from '@/components/checkout/new-product-modal'
+import Layout from '@/components/layout'
+import ProductCard from '@/components/products/product-card'
+import { Button } from '@/components/ui/button'
+import { fetcher } from '@/lib/utils'
+import { Product } from '@prisma/client'
+import { motion } from 'framer-motion'
+import { Loader2 } from 'lucide-react'
+import { useRouter } from 'next/router'
+import Balancer from 'react-wrap-balancer'
+import useSWR from 'swr'
 
 export default function Products() {
-  const { query } = useRouter();
-  const { shop } = query;
-  const _shop = shop || "DEMO_SHOP";
+  const { query } = useRouter()
+  const { shop } = query
+  const _shop = shop || 'DEMO_SHOP'
 
-  const { data: products, isLoading } = useSWR<Product[]>(
-    `/api/product`,
-    fetcher,
-  );
+  const { data: products, isLoading } = useSWR<Product[]>(`/api/product`, fetcher)
   const { Modal: NewProductModal, setShowModal: setShowNewProductModal } =
     useNewProductModal({
       props: {
-        address: typeof _shop === "string" ? _shop : _shop[0],
+        address: typeof _shop === 'string' ? _shop : _shop[0],
       },
-    });
+    })
 
   return (
     <Layout>
@@ -33,9 +30,7 @@ export default function Products() {
         <motion.h1 className="font-display text-xl font-bold tracking-[-0.02em] drop-shadow-sm md:text-4xl md:leading-[5rem]">
           <Balancer>Products</Balancer>
         </motion.h1>
-        <Button onClick={() => setShowNewProductModal(true)}>
-          Add product
-        </Button>
+        <Button onClick={() => setShowNewProductModal(true)}>Add product</Button>
       </div>
 
       {isLoading && (
@@ -62,5 +57,5 @@ export default function Products() {
           ))}
       </div>
     </Layout>
-  );
+  )
 }

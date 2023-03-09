@@ -1,33 +1,33 @@
-import { AnanasConfig } from "@/components/home/wallet";
-import { ClientOnly } from "@/components/layout/client-only";
-import "@/styles/globals.css";
-import { theme } from "@/styles/theme";
-import "@fontsource/roboto/300.css";
-import "@fontsource/roboto/400.css";
-import "@fontsource/roboto/500.css";
-import "@fontsource/roboto/700.css";
-import { ThemeProvider } from "@mui/material/styles";
-import { Inter } from "@next/font/google";
-import localFont from "@next/font/local";
-import { Analytics } from "@vercel/analytics/react";
-import cx from "classnames";
-import type { Session } from "next-auth";
-import { SessionProvider } from "next-auth/react";
-import type { AppProps } from "next/app";
-import Script from "next/script";
-import { Toaster } from "sonner";
-import { Provider as RWBProvider } from "react-wrap-balancer";
-import { api } from "@/lib/api";
+import { AnanasConfig } from '@/components/home/wallet'
+import { ClientOnly } from '@/components/layout/client-only'
+import '@/styles/globals.css'
+import { theme } from '@/styles/theme'
+import '@fontsource/roboto/300.css'
+import '@fontsource/roboto/400.css'
+import '@fontsource/roboto/500.css'
+import '@fontsource/roboto/700.css'
+import { ThemeProvider } from '@mui/material/styles'
+import { Inter } from '@next/font/google'
+import localFont from '@next/font/local'
+import { Analytics } from '@vercel/analytics/react'
+import cx from 'classnames'
+import type { Session } from 'next-auth'
+import { SessionProvider } from 'next-auth/react'
+import type { AppProps } from 'next/app'
+import Script from 'next/script'
+import { Toaster } from 'sonner'
+import { Provider as RWBProvider } from 'react-wrap-balancer'
+import { api } from '@/lib/api'
 
 const sfPro = localFont({
-  src: "../styles/SF-Pro-Display-Medium.otf",
-  variable: "--font-sf",
-});
+  src: '../styles/SF-Pro-Display-Medium.otf',
+  variable: '--font-sf',
+})
 
 const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-});
+  variable: '--font-inter',
+  subsets: ['latin'],
+})
 
 function MyApp({
   Component,
@@ -51,7 +51,7 @@ function MyApp({
         <Analytics />
       </SessionProvider>
     </ThemeProvider>
-  );
+  )
 }
 
-export default api.withTRPC(MyApp);
+export default api.withTRPC(MyApp)

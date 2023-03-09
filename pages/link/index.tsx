@@ -1,14 +1,14 @@
-import ExtensionPay from "@/components/checkout/extension-pay";
-import Layout from "@/components/layout";
-import { motion } from "framer-motion";
-import { useRouter } from "next/router";
-import Balancer from "react-wrap-balancer";
-import { useDebounce } from "use-debounce";
+import ExtensionPay from '@/components/checkout/extension-pay'
+import Layout from '@/components/layout'
+import { motion } from 'framer-motion'
+import { useRouter } from 'next/router'
+import Balancer from 'react-wrap-balancer'
+import { useDebounce } from 'use-debounce'
 
 export default function Home() {
-  const { query } = useRouter();
-  const { reference } = query;
-  const [debouncedReference] = useDebounce(reference, 500);
+  const { query } = useRouter()
+  const { reference } = query
+  const [debouncedReference] = useDebounce(reference, 500)
 
   return (
     <Layout>
@@ -18,5 +18,5 @@ export default function Home() {
 
       <ExtensionPay reference={debouncedReference as string} />
     </Layout>
-  );
+  )
 }

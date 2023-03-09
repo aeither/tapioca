@@ -8,47 +8,47 @@ import {
   Tapas,
   Icecream,
   Cake,
-} from "@mui/icons-material";
+} from '@mui/icons-material'
 
 export const MENU_ITEMS = [
   {
-    name: "Appetizers",
-    category: "appetizers",
+    name: 'Appetizers',
+    category: 'appetizers',
     icon: <Tapas />,
   },
   {
-    name: "Soup",
-    category: "soup",
+    name: 'Soup',
+    category: 'soup',
     icon: <SoupKitchen />,
   },
   {
-    name: "Salad",
-    category: "salad",
+    name: 'Salad',
+    category: 'salad',
     icon: <RestaurantMenu />,
   },
   {
-    name: "Pizza",
-    category: "pizza",
+    name: 'Pizza',
+    category: 'pizza',
     icon: <LocalPizza />,
   },
   {
-    name: "Pasta",
-    category: "pasta",
+    name: 'Pasta',
+    category: 'pasta',
     icon: <RamenDining />,
   },
   {
-    name: "Burgers",
-    category: "burgers",
+    name: 'Burgers',
+    category: 'burgers',
     icon: <Fastfood />,
   },
   {
-    name: "Sandwiches",
-    category: "sandwiches",
+    name: 'Sandwiches',
+    category: 'sandwiches',
     icon: <LunchDining />,
   },
   {
-    name: "Desserts",
-    category: "desserts",
+    name: 'Desserts',
+    category: 'desserts',
     icon: <Icecream />,
   },
-];
+]
