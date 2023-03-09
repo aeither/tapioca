@@ -1,7 +1,7 @@
-import { TRPCError } from '@trpc/server'
+import { Keypair } from '@solana/web3.js'
 import { z } from 'zod'
-
-import { createTRPCRouter, publicProcedure, protectedProcedure } from '../trpc'
+import { createTRPCRouter, publicProcedure } from '../trpc'
+import { PaymentStatus } from '@prisma/client'
 
 export const dbRouter = createTRPCRouter({
   products: publicProcedure
@@ -39,13 +39,44 @@ export const dbRouter = createTRPCRouter({
       })
     }),
 
-  createNewOrder: publicProcedure.mutation(async ({ ctx }) => {
-    return await ctx.prisma.order.create({
-      data: {
-        total: 0,
-      },
-    })
+  orders: publicProcedure.query(async ({ ctx, input }) => {
+    return await ctx.prisma.order.findMany()
   }),
+
+  createNewOrder: publicProcedure
+    .input(
+      z.object({
+        amount: z.number(),
+        shopAddress: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.prisma.order.create({
+        data: {
+          amount: input.amount,
+          reference: new Keypair().publicKey.toBase58(),
+          shopAddress: input.shopAddress,
+        },
+      })
+    }),
+
+  updateOrder: publicProcedure
+    .input(
+      z.object({
+        orderId: z.string(),
+        status: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.prisma.order.update({
+        where: {
+          id: input.orderId,
+        },
+        data: {
+          status: input.status as PaymentStatus,
+        },
+      })
+    }),
 
   addProduct: publicProcedure
     .input(

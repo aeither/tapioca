@@ -29,6 +29,11 @@ export const useProducts = ({ orderId }: { orderId: string | undefined }) => {
 export function useDB() {
   const queryClient = useQueryClient()
 
+  const orders = api.db.orders.useQuery(undefined, {
+    staleTime: Infinity,
+    cacheTime: Infinity,
+  })
+
   const createNewOrder = api.db.createNewOrder.useMutation({
     onError: ({ data }: any) => {
       console.error(data)
@@ -37,7 +42,7 @@ export function useDB() {
   })
 
   const addProduct = api.db.addProduct.useMutation({
-    onSuccess(data, variables, context) {
+    onSuccess() {
       queryClient.refetchQueries()
       console.log('refetch all')
     },
@@ -48,6 +53,7 @@ export function useDB() {
   })
 
   return {
+    orders,
     createNewOrder,
     addProduct,
   }
