@@ -1,13 +1,21 @@
-import * as React from 'react'
+import { useOrderTotal, useProducts } from '@/libs/hooks/use-db'
+import { useStore } from '@/libs/store'
 import { Global } from '@emotion/react'
-import { styled } from '@mui/material/styles'
-import CssBaseline from '@mui/material/CssBaseline'
-import { grey } from '@mui/material/colors'
-import Button from '@mui/material/Button'
+import { Payment } from '@mui/icons-material'
+import Fastfood from '@mui/icons-material/Fastfood'
 import Box from '@mui/material/Box'
-import Skeleton from '@mui/material/Skeleton'
-import Typography from '@mui/material/Typography'
+import Button from '@mui/material/Button'
+import ButtonGroup from '@mui/material/ButtonGroup'
+import { grey } from '@mui/material/colors'
+import CssBaseline from '@mui/material/CssBaseline'
+import List from '@mui/material/List'
+import ListItem from '@mui/material/ListItem'
+import ListItemIcon from '@mui/material/ListItemIcon'
+import ListItemText from '@mui/material/ListItemText'
+import { styled } from '@mui/material/styles'
 import SwipeableDrawer from '@mui/material/SwipeableDrawer'
+import Typography from '@mui/material/Typography'
+import * as React from 'react'
 
 const drawerBleeding = 56
 
@@ -42,6 +50,10 @@ const Puller = styled(Box)(({ theme }) => ({
 export default function CheckoutDrawer(props: Props) {
   const { window } = props
   const [open, setOpen] = React.useState(false)
+
+  const { orderId } = useStore()
+  const products = useProducts({ orderId })
+  const orderTotal = useOrderTotal({ orderId })
 
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen)
@@ -89,8 +101,19 @@ export default function CheckoutDrawer(props: Props) {
           }}
         >
           <Puller />
-          <div className="flex">
-            <Typography sx={{ p: 2, color: 'text.secondary' }}>51 results</Typography>
+          <div className="flex w-full justify-between px-4">
+            <div className="flex gap-1 items-center">
+              <Payment />
+              <Typography sx={{ p: 2, color: 'text.secondary' }}>
+                Swipe up to checktout
+              </Typography>
+            </div>
+            <Typography sx={{ p: 2 }}>
+              {orderTotal.data && orderTotal.data._sum.price
+                ? orderTotal.data._sum.price.toFixed(2)
+                : 0}{' '}
+              $
+            </Typography>
           </div>
         </StyledBox>
         <StyledBox
@@ -101,7 +124,32 @@ export default function CheckoutDrawer(props: Props) {
             overflow: 'auto',
           }}
         >
-          <Skeleton variant="rectangular" height="100%" />
+          <List dense className="flex flex-col items-center justify-center">
+            {products.data &&
+              orderTotal.data &&
+              products.data.map((product) => (
+                <ListItem key={product.id} className="max-w-md">
+                  <ListItemIcon>
+                    <Fastfood />
+                  </ListItemIcon>
+                  <ListItemText>{product.title}</ListItemText>
+                  <ListItemText className="text-end">{product.price}</ListItemText>
+                </ListItem>
+              ))}
+          </List>
+          <div className="flex justify-center w-full">
+            <ButtonGroup
+              className="max-w-md flex justify-center w-full"
+              aria-label="outlined primary button group"
+            >
+              <Button className="w-full" variant="outlined">
+                Cancel
+              </Button>
+              <Button className="w-full" variant="contained">
+                Pay
+              </Button>
+            </ButtonGroup>
+          </div>
         </StyledBox>
       </SwipeableDrawer>
     </Root>
