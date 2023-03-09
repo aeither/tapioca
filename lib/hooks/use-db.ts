@@ -1,8 +1,8 @@
 import toast from 'react-hot-toast'
 import { api } from '../api'
 
-export const useProducts = ({ orderId }: { orderId: string | undefined }) => {
-  const orderTotal = api.db.products.useQuery(
+export const useOrderTotal = ({ orderId }: { orderId: string | undefined }) => {
+  const orderTotal = api.db.orderTotal.useQuery(
     { orderId: orderId! },
     {
       enabled: !!orderId,
@@ -11,6 +11,18 @@ export const useProducts = ({ orderId }: { orderId: string | undefined }) => {
     },
   )
   return orderTotal
+}
+
+export const useProducts = ({ orderId }: { orderId: string | undefined }) => {
+  const products = api.db.products.useQuery(
+    { orderId: orderId! },
+    {
+      enabled: !!orderId,
+      staleTime: Infinity,
+      cacheTime: Infinity,
+    },
+  )
+  return products
 }
 
 export function useDB() {
