@@ -10,7 +10,7 @@ import {
 import BigNumber from 'bignumber.js'
 import { NextApiRequest, NextApiResponse } from 'next'
 
-import prisma from '@/lib/prisma'
+import prisma from '@/libs/prisma'
 
 export type MakeTransactionInputData = {
   account: string

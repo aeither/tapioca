@@ -1,4 +1,4 @@
-import { products } from '@/lib/data/products'
+import { products } from '@/libs/data/products'
 import { useRef } from 'react'
 import NumberInput from './number-input'
 

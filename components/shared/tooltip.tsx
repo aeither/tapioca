@@ -1,4 +1,4 @@
-import useWindowSize from '@/lib/hooks/use-window-size'
+import useWindowSize from '@/libs/hooks/use-window-size'
 import * as TooltipPrimitive from '@radix-ui/react-tooltip'
 import { ReactNode, useState } from 'react'
 import Leaflet from './leaflet'

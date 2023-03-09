@@ -17,7 +17,7 @@ import type { AppProps } from 'next/app'
 import Script from 'next/script'
 import { Toaster } from 'sonner'
 import { Provider as RWBProvider } from 'react-wrap-balancer'
-import { api } from '@/lib/api'
+import { api } from '@/libs/api'
 
 const sfPro = localFont({
   src: '../styles/SF-Pro-Display-Medium.otf',
@@ -41,7 +41,7 @@ function MyApp({
             <AnanasConfig network="devnet">
               <ClientOnly>
                 <Script src="https://terminal.jup.ag/main.js" />
-                <Toaster richColors />
+                <Toaster position="top-center" richColors />
 
                 <Component {...pageProps} />
               </ClientOnly>

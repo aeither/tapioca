@@ -1,7 +1,7 @@
 import * as React from 'react'
 import Stack from '@mui/material/Stack'
 import Button from '@mui/material/Button'
-import { useDB, useProducts, useOrderTotal } from '@/lib/hooks/use-db'
+import { useDB, useProducts, useOrderTotal } from '@/libs/hooks/use-db'
 
 export default function BasicButtons() {
   const { addProduct, createNewOrder } = useDB()

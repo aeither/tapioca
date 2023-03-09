@@ -8,7 +8,7 @@ import {
   useEffect,
 } from 'react'
 import Clipboard from '@/components/shared/icons/clipboard'
-import { getQRAsCanvas, QRCodeSVG } from '@/lib/qr'
+import { getQRAsCanvas, QRCodeSVG } from '@/libs/qr'
 import toast from 'sonner'
 
 const QrModal = ({

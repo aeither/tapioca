@@ -1,12 +1,12 @@
 import { useWallet } from '@solana/wallet-adapter-react'
 import Link from 'next/link'
 
-import useMakeTx from '@/lib/hooks/use-maketx'
+import useMakeTx from '@/libs/hooks/use-maketx'
 import { ConnectWallet } from '../home/wallet'
 import { useSuccessModal } from '@/components/home/success-modal'
 import { useEffect } from 'react'
 import { Prisma } from '@prisma/client'
-import { fetcher } from '@/lib/utils'
+import { fetcher } from '@/libs/utils'
 import useSWR from 'swr'
 
 export default function ExtensionPay({ reference }: { reference: string }) {

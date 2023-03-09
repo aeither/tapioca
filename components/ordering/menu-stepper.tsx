@@ -1,3 +1,4 @@
+import { useDB } from '@/libs/hooks/use-db'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Paper from '@mui/material/Paper'
@@ -6,15 +7,13 @@ import StepContent from '@mui/material/StepContent'
 import StepLabel from '@mui/material/StepLabel'
 import Stepper from '@mui/material/Stepper'
 import Typography from '@mui/material/Typography'
+import { Product } from '@prisma/client'
+import { useQueryClient } from '@tanstack/react-query'
 import * as React from 'react'
-import { FormContainer, RadioButtonGroup, useForm, useWatch } from 'react-hook-form-mui'
+import { FormContainer, RadioButtonGroup } from 'react-hook-form-mui'
+import { toast } from 'sonner'
 import LastStepContent from './last-step-content'
 import { ProductCardProps } from './product-card'
-import { useDB, useProducts, useOrderTotal } from '@/lib/hooks/use-db'
-import { getFetch, getQueryKey } from '@trpc/react-query'
-import { useIsFetching, useQueryClient } from '@tanstack/react-query'
-import { Product } from '@prisma/client'
-import { toast } from 'sonner'
 
 export type FormProps = {
   name: string
@@ -141,8 +140,9 @@ export default function MenuStepper(props: Omit<ProductCardProps, 'handleClickOp
         error: 'Error',
       })
     } else {
-      const promises = Promise.all([createNewOrder.mutateAsync()]).then(([{ id }]) =>
-        addProduct.mutateAsync(
+      const promises = Promise.all([createNewOrder.mutateAsync()]).then(([{ id }]) => {
+        setOrderId(id)
+        return addProduct.mutateAsync(
           {
             orderId: id,
             price: data.price,
@@ -154,8 +154,8 @@ export default function MenuStepper(props: Omit<ProductCardProps, 'handleClickOp
               console.log('refetch all')
             },
           },
-        ),
-      )
+        )
+      })
       toast.promise(promises, {
         loading: 'Loading...',
         success: (data: Product) => {

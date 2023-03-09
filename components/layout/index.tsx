@@ -1,5 +1,5 @@
-import { FADE_IN_ANIMATION_SETTINGS } from '@/lib/constants/constants'
-import useScroll from '@/lib/hooks/use-scroll'
+import { FADE_IN_ANIMATION_SETTINGS } from '@/libs/constants/constants'
+import useScroll from '@/libs/hooks/use-scroll'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useSession } from 'next-auth/react'
 import Image from 'next/image'

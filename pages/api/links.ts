@@ -1,9 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { addLink } from '@/lib/api/links'
+import { addLink } from '@/libs/api/links'
 
 import { authOptions } from 'pages/api/auth/[...nextauth]'
 import { unstable_getServerSession } from 'next-auth/next'
-import prisma from '@/lib/prisma'
+import prisma from '@/libs/prisma'
 import { Keypair } from '@solana/web3.js'
 import { PaymentStatus } from '@prisma/client'
 
