@@ -1,5 +1,6 @@
-import { useOrderTotal, useProducts } from '@/libs/hooks/use-db'
+import { useDB, useOrderTotal, useProducts } from '@/libs/hooks/use-db'
 import { useStore } from '@/libs/store'
+import { trpc } from '@/libs/utils/trpc'
 import { Global } from '@emotion/react'
 import { Payment } from '@mui/icons-material'
 import Fastfood from '@mui/icons-material/Fastfood'
@@ -16,6 +17,7 @@ import { styled } from '@mui/material/styles'
 import SwipeableDrawer from '@mui/material/SwipeableDrawer'
 import Typography from '@mui/material/Typography'
 import * as React from 'react'
+import { FormContainer, TextFieldElement } from 'react-hook-form-mui'
 import { toast } from 'sonner'
 import PaymentDialog from './payment-dialog'
 
@@ -51,12 +53,20 @@ const Puller = styled(Box)(({ theme }) => ({
 
 export default function CheckoutDrawer(props: Props) {
   const { window } = props
+  const utils = trpc.useContext()
+
   const [open, setOpen] = React.useState(false)
+  const [tableNum, setTableNum] = React.useState<number>()
 
   const orderId = useStore((state) => state.orderId)
   const setOrderId = useStore((state) => state.setOrderId)
   const products = useProducts({ orderId })
   const orderTotal = useOrderTotal({ orderId })
+  const { updateOrder } = useDB()
+
+  const defaultValues: { table: undefined | number } = {
+    table: undefined,
+  }
 
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen)
@@ -140,26 +150,73 @@ export default function CheckoutDrawer(props: Props) {
                 </ListItem>
               ))}
           </List>
-          <div className="flex justify-center w-full">
-            <ButtonGroup
-              className="max-w-md flex justify-center w-full"
-              aria-label="outlined primary button group"
+          {tableNum ? (
+            <div className="flex flex-col items-center justify-center py-4 gap-2">
+              <Typography sx={{ p: 2, color: 'text.secondary' }}>
+                Table Number: {tableNum}
+              </Typography>
+            </div>
+          ) : (
+            <FormContainer
+              defaultValues={defaultValues}
+              onSuccess={async (data, e) => {
+                e?.preventDefault()
+                if (orderId) {
+                  const order = await updateOrder.mutateAsync({
+                    orderId,
+                    table: data.table,
+                  })
+                  await utils.db.orderById.invalidate({ orderId })
+                  if (order && order.table) setTableNum(order.table)
+                }
+              }}
             >
-              <Button
-                className="w-full"
-                variant="outlined"
-                onClick={() => {
-                  setOrderId(undefined)
-                  toggleDrawer(false)
-                  toast('Order Canceled')
-                }}
+              <div className="flex flex-col items-center justify-center py-4 gap-2">
+                <Typography sx={{ p: 2, color: 'text.secondary' }}>
+                  Introduce the number you see on the table.
+                </Typography>
+                <TextFieldElement
+                  type={'number'}
+                  name="table"
+                  label="Table Number"
+                  className=""
+                  required
+                />
+                <Button type={'submit'} color={'primary'} variant={'contained'}>
+                  Add Number
+                </Button>
+              </div>
+            </FormContainer>
+          )}
+
+          {products.data && orderTotal.data ? (
+            <div className="flex justify-center w-full">
+              <ButtonGroup
+                className="max-w-md flex justify-center w-full"
+                aria-label="outlined primary button group"
               >
-                Cancel
-              </Button>
-              {/* Go to scan QR pay Button */}
-              <PaymentDialog />
-            </ButtonGroup>
-          </div>
+                <Button
+                  className="w-full"
+                  variant="outlined"
+                  onClick={() => {
+                    setOrderId(undefined)
+                    toggleDrawer(false)
+                    toast('Order Canceled')
+                  }}
+                >
+                  Cancel
+                </Button>
+                {/* Go to scan QR pay Button */}
+                <PaymentDialog />
+              </ButtonGroup>
+            </div>
+          ) : (
+            <div className="flex justify-center w-full">
+              <Typography sx={{ p: 2, color: 'text.secondary' }}>
+                Empty. Start ordering something.
+              </Typography>
+            </div>
+          )}
         </StyledBox>
       </SwipeableDrawer>
     </Root>

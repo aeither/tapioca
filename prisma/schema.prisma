@@ -91,6 +91,7 @@ model Order {
   products        Product[]
   reference       String?       @unique
   shopAddress     String
+  table           Int?
   customerAddress String?
   notes           String?
   archived        Boolean       @default(false) // whether the link is archived or not
@@ -98,4 +99,6 @@ model Order {
   updatedAt       DateTime      @updatedAt
   User            User?         @relation(fields: [userId], references: [id])
   userId          String?
+
+  @@index([userId])
 }

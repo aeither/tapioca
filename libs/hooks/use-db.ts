@@ -53,7 +53,14 @@ export function useDB() {
     },
     onError: ({ data }: any) => {
       console.error(data)
-      toast.error('mutation error')
+      toast.error('createNewOrder error')
+    },
+  })
+
+  const updateOrder = api.db.updateOrder.useMutation({
+    onError: ({ data }: any) => {
+      console.error(data)
+      toast.error('updateOrder error')
     },
   })
 
@@ -63,13 +70,14 @@ export function useDB() {
     },
     onError: ({ data }: any) => {
       console.error(data)
-      toast.error('mutation error')
+      toast.error('addProduct error')
     },
   })
 
   return {
     orders,
     createNewOrder,
+    updateOrder,
     addProduct,
   }
 }

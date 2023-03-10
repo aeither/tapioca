@@ -2,6 +2,7 @@ import { Keypair } from '@solana/web3.js'
 import { z } from 'zod'
 import { createTRPCRouter, publicProcedure } from '../trpc'
 import { PaymentStatus } from '@prisma/client'
+import { TRPCError } from '@trpc/server'
 
 export const dbRouter = createTRPCRouter({
   products: publicProcedure
@@ -78,16 +79,34 @@ export const dbRouter = createTRPCRouter({
     .input(
       z.object({
         orderId: z.string(),
-        status: z.string(),
+        status: z.string().optional(),
+        table: z.number().optional(),
+        customerAddress: z.string().optional(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
+      const order = await ctx.prisma.order.findFirst({
+        where: {
+          id: input.orderId,
+        },
+      })
+      if (!order) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: 'Order not found in database.',
+        })
+      }
+
       return await ctx.prisma.order.update({
         where: {
           id: input.orderId,
         },
         data: {
-          status: input.status as PaymentStatus,
+          status: input.status ? (input.status as PaymentStatus) : order.status,
+          table: input.table ? input.table : order.table,
+          customerAddress: input.customerAddress
+            ? input.customerAddress
+            : order.customerAddress,
         },
       })
     }),

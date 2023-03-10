@@ -1,6 +1,6 @@
 import { useOrderById } from '@/libs/hooks/use-db'
 import { useStore } from '@/libs/store'
-import { Button } from '@mui/material'
+import { Button, Typography } from '@mui/material'
 import Dialog from '@mui/material/Dialog'
 import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
@@ -65,21 +65,29 @@ export default function PaymentDialog() {
       <Dialog open={open} onClose={handleClose} fullWidth>
         <DialogTitle>Checkout</DialogTitle>
         <DialogContent>
-          <div className="flex flex-col justify-center items-center">
-            <div className="flex gap-2">
-              <Button>Pay with Credit Card</Button>
-              <Button
-                color="secondary"
-                variant="contained"
-                onClick={() => createPayment()}
-              >
-                Pay with SolanaPay
-              </Button>
+          {order.data && order.data.table ? (
+            <div className="flex flex-col justify-center items-center">
+              <div className="flex gap-2">
+                <Button>Pay with Credit Card</Button>
+                <Button
+                  color="secondary"
+                  variant="contained"
+                  onClick={() => createPayment()}
+                >
+                  Pay with SolanaPay
+                </Button>
+              </div>
+              <div className="rounded-2xl">
+                <div ref={qrRef} />
+              </div>
             </div>
-            <div className="rounded-2xl">
-              <div ref={qrRef} />
+          ) : (
+            <div className="flex flex-col justify-center items-center">
+              <Typography sx={{ p: 2, color: 'text.secondary' }}>
+                Table Number is missing. Go back and add it.
+              </Typography>
             </div>
-          </div>
+          )}
         </DialogContent>
       </Dialog>
     </>
