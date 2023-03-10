@@ -87,7 +87,6 @@ const steps = [
 export default function MenuStepper(props: Omit<ProductCardProps, 'handleClickOpen'>) {
   const { addProduct, createNewOrder } = useDB()
   const orderId = useStore((state) => state.orderId)
-  const setOrderId = useStore((state) => state.setOrderId)
 
   const [activeStep, setActiveStep] = React.useState(0)
   const defaultValues: FormProps = {
@@ -143,7 +142,6 @@ export default function MenuStepper(props: Omit<ProductCardProps, 'handleClickOp
           shopAddress: shopAddress.toBase58(),
         }),
       ]).then(([{ id }]) => {
-        setOrderId(id)
         return addProduct.mutateAsync({
           orderId: id,
           price: data.price,
