@@ -6,10 +6,7 @@ import { useConnection, useWallet } from '@solana/wallet-adapter-react'
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui'
 import { Keypair, Transaction } from '@solana/web3.js'
 
-import {
-  MakeTransactionInputData,
-  MakeTransactionOutputData,
-} from '@/pages/api/makeTransaction'
+import { MakeTransactionInputData, MakeTransactionOutputData } from '@/pages/api/makeTx'
 
 export default function Cart() {
   const router = useRouter()
