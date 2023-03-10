@@ -16,6 +16,7 @@ import { styled } from '@mui/material/styles'
 import SwipeableDrawer from '@mui/material/SwipeableDrawer'
 import Typography from '@mui/material/Typography'
 import * as React from 'react'
+import { toast } from 'sonner'
 import PaymentDialog from './payment-dialog'
 
 const drawerBleeding = 56
@@ -53,6 +54,7 @@ export default function CheckoutDrawer(props: Props) {
   const [open, setOpen] = React.useState(false)
 
   const orderId = useStore((state) => state.orderId)
+  const setOrderId = useStore((state) => state.setOrderId)
   const products = useProducts({ orderId })
   const orderTotal = useOrderTotal({ orderId })
 
@@ -143,7 +145,15 @@ export default function CheckoutDrawer(props: Props) {
               className="max-w-md flex justify-center w-full"
               aria-label="outlined primary button group"
             >
-              <Button className="w-full" variant="outlined">
+              <Button
+                className="w-full"
+                variant="outlined"
+                onClick={() => {
+                  setOrderId(undefined)
+                  toggleDrawer(false)
+                  toast('Order Canceled')
+                }}
+              >
                 Cancel
               </Button>
               {/* Go to scan QR pay Button */}
