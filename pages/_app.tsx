@@ -42,7 +42,6 @@ function MyApp({
               <ClientOnly>
                 <Script src="https://terminal.jup.ag/main.js" />
                 <Toaster position="top-center" richColors />
-
                 <Component {...pageProps} />
               </ClientOnly>
             </AnanasConfig>

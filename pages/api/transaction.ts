@@ -1,13 +1,14 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+import { prisma } from '@/server/db'
 import {
   Cluster,
   clusterApiUrl,
   Connection,
-  PublicKey,
-  Transaction,
-  SystemProgram,
-  LAMPORTS_PER_SOL,
   Keypair,
+  LAMPORTS_PER_SOL,
+  PublicKey,
+  SystemProgram,
+  Transaction,
 } from '@solana/web3.js'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
@@ -117,6 +118,16 @@ async function post(req: NextApiRequest, res: NextApiResponse<PostResponse | Pos
     res.status(400).json({ error: 'No reference provided' })
     return
   }
+
+  // update to db
+  await prisma.order.update({
+    where: {
+      reference,
+    },
+    data: {
+      customerAddress: account,
+    },
+  })
 
   try {
     const postResponse = await postImpl(

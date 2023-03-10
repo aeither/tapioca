@@ -1,4 +1,5 @@
 import { useOrderById } from '@/libs/hooks/use-db'
+import useTransactionListener from '@/libs/hooks/useTransactionListener'
 import { useStore } from '@/libs/store'
 import { Button, Typography } from '@mui/material'
 import Dialog from '@mui/material/Dialog'
@@ -14,6 +15,8 @@ export default function PaymentDialog() {
   const orderId = useStore((state) => state.orderId)
   const order = useOrderById({ orderId })
 
+  useTransactionListener({ reference: order.data && order.data.reference })
+
   const handleClickOpen = () => {
     setOpen(true)
   }
@@ -23,8 +26,6 @@ export default function PaymentDialog() {
   }
 
   const createPayment = () => {
-    console.log('order.data', order.data)
-
     if (!order.data) return
     // window.location is only available in the browser, so create the URL in here
     const { location } = window
@@ -34,20 +35,13 @@ export default function PaymentDialog() {
       label: 'Solana Burgers',
     }
     const solanaUrl = encodeURL(urlParams)
-    console.log(
-      '🚀 ~ file: TransactionRequestQR.tsx:23 ~ useEffect ~ solanaUrl',
-      solanaUrl,
-    )
+
     const qr = createQR(solanaUrl, 220, 'transparent')
     qr.update({ backgroundOptions: { round: 20 } })
-    console.log('qrRef.current', qrRef)
+
     if (qrRef.current) {
       qrRef.current.innerHTML = ''
       qr.append(qrRef.current)
-      console.log(
-        '🚀 ~ file: payment-dialog.tsx:46 ~ useEffect ~ qrRef.current:',
-        qrRef.current,
-      )
     }
   }
 

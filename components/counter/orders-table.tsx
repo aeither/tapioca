@@ -13,6 +13,7 @@ const columns: GridColDef[] = [
 
 export function OrdersTable() {
   const { orders } = useDB()
+
   // orders.data[0].
   const rows: GridRowsProp = React.useMemo(() => {
     let arr: any[] = []
