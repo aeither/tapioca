@@ -31,7 +31,7 @@ export default function PaymentDialog() {
     const apiUrl = `${location.protocol}//${location.host}/api/transaction?network=devnet&reference=${order.data.reference}`
     const urlParams: TransactionRequestURLFields = {
       link: new URL(apiUrl),
-      label: 'My Store',
+      label: 'Solana Burgers',
     }
     const solanaUrl = encodeURL(urlParams)
     console.log(
