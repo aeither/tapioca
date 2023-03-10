@@ -13,6 +13,17 @@ export const useOrderTotal = ({ orderId }: { orderId: string | undefined }) => {
   )
   return orderTotal
 }
+export const useOrderById = ({ orderId }: { orderId: string | undefined }) => {
+  const orderById = api.db.orderById.useQuery(
+    { orderId: orderId! },
+    {
+      enabled: !!orderId,
+      staleTime: Infinity,
+      cacheTime: Infinity,
+    },
+  )
+  return orderById
+}
 
 export const useProducts = ({ orderId }: { orderId: string | undefined }) => {
   const products = api.db.products.useQuery(

@@ -43,6 +43,20 @@ export const dbRouter = createTRPCRouter({
     return await ctx.prisma.order.findMany()
   }),
 
+  orderById: publicProcedure
+    .input(
+      z.object({
+        orderId: z.string(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      return await ctx.prisma.order.findFirst({
+        where: {
+          id: input.orderId,
+        },
+      })
+    }),
+
   createNewOrder: publicProcedure
     .input(
       z.object({

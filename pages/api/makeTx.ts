@@ -30,7 +30,6 @@ export default async function handler(
   res: NextApiResponse<MakeTransactionOutputData | ErrorOutput>,
 ) {
   if (req.method === 'GET') {
-    console.log('🚀 ~ file: makeTx.ts:35 ~ req.query', req.query)
     const { reference, payer } = req.query as {
       reference?: string
       payer?: string

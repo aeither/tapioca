@@ -16,6 +16,7 @@ import { styled } from '@mui/material/styles'
 import SwipeableDrawer from '@mui/material/SwipeableDrawer'
 import Typography from '@mui/material/Typography'
 import * as React from 'react'
+import PaymentDialog from './payment-dialog'
 
 const drawerBleeding = 56
 
@@ -51,7 +52,7 @@ export default function CheckoutDrawer(props: Props) {
   const { window } = props
   const [open, setOpen] = React.useState(false)
 
-  const { orderId } = useStore()
+  const orderId = useStore((state) => state.orderId)
   const products = useProducts({ orderId })
   const orderTotal = useOrderTotal({ orderId })
 
@@ -145,9 +146,8 @@ export default function CheckoutDrawer(props: Props) {
               <Button className="w-full" variant="outlined">
                 Cancel
               </Button>
-              <Button className="w-full" variant="contained">
-                Pay
-              </Button>
+              {/* Go to scan QR pay Button */}
+              <PaymentDialog />
             </ButtonGroup>
           </div>
         </StyledBox>
