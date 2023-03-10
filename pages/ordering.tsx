@@ -125,7 +125,7 @@ export default function ResponsiveDrawer(props: Props) {
         <Toolbar />
         <Grid container spacing={2}>
           {HAMBURGERS.map((item) => (
-            <Grid key={item.id} xs={6}>
+            <Grid key={item.id} xs={12} md={6}>
               <ProductDialog {...item} />
             </Grid>
           ))}

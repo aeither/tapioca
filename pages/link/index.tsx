@@ -1,4 +1,3 @@
-import ExtensionPay from '@/components/checkout/extension-pay'
 import Layout from '@/components/layout'
 import { motion } from 'framer-motion'
 import { useRouter } from 'next/router'
@@ -17,7 +16,6 @@ export default function Home() {
         <Balancer>Building blocks for your Next project</Balancer>
       </motion.h1>
       <QrCodeCell reference={debouncedReference as unknown as string} />
-      <ExtensionPay reference={debouncedReference as string} />
     </Layout>
   )
 }

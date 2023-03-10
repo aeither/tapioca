@@ -1,4 +1,3 @@
-import { useNewProductModal } from '@/components/checkout/new-product-modal'
 import Layout from '@/components/layout'
 import ProductCard from '@/components/products/product-card'
 import { Button } from '@/components/ui/button'
@@ -16,21 +15,15 @@ export default function Products() {
   const _shop = shop || 'DEMO_SHOP'
 
   const { data: products, isLoading } = useSWR<Product[]>(`/api/product`, fetcher)
-  const { Modal: NewProductModal, setShowModal: setShowNewProductModal } =
-    useNewProductModal({
-      props: {
-        address: typeof _shop === 'string' ? _shop : _shop[0],
-      },
-    })
 
   return (
     <Layout>
-      <NewProductModal />
+      {/* <NewProductModal /> */}
       <div className="mb-8 flex w-full items-center justify-between">
         <motion.h1 className="font-display text-xl font-bold tracking-[-0.02em] drop-shadow-sm md:text-4xl md:leading-[5rem]">
           <Balancer>Products</Balancer>
         </motion.h1>
-        <Button onClick={() => setShowNewProductModal(true)}>Add product</Button>
+        {/* <Button onClick={() => setShowNewProductModal(true)}>Add product</Button> */}
       </div>
 
       {isLoading && (
@@ -51,7 +44,7 @@ export default function Products() {
               key={id}
               productId={id}
               title={title}
-              description={description}
+              description={description || ''}
               price={price}
             />
           ))}

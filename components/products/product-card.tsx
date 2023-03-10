@@ -1,4 +1,4 @@
-import toast from 'sonner'
+import { toast } from 'sonner'
 import Balancer from 'react-wrap-balancer'
 import { mutate } from 'swr'
 import { useEditProductModal } from './edit-product-modal'

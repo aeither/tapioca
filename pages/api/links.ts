@@ -1,5 +1,4 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { addLink } from '@/libs/api/links'
 
 import { authOptions } from 'pages/api/auth/[...nextauth]'
 import { unstable_getServerSession } from 'next-auth/next'
@@ -20,7 +19,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       status?: string
       sort?: 'createdAt' | 'clicks'
     }
-    const response = await prisma.link.findMany({
+    const response = await prisma.order.findMany({
       where: {
         userId: (session.user as any).id as string,
       },
@@ -33,16 +32,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     // POST /api/links – create a new link
   } else if (req.method === 'POST') {
-    const response = await addLink({
-      ...req.body,
-      reference: new Keypair().publicKey.toBase58(),
-      userId: (session.user as any).id as string,
-    })
+    // const response = await addLink({
+    //   ...req.body,
+    //   reference: new Keypair().publicKey.toBase58(),
+    //   userId: (session.user as any).id as string,
+    // })
 
-    if (response === null) {
-      return res.status(403).json({ error: 'Key already exists' })
-    }
-    return res.status(200).json(response)
+    // if (response === null) {
+    //   return res.status(403).json({ error: 'Key already exists' })
+    // }
+    // return res.status(200).json(response)
+    return res.status(200).json('removed')
 
     // PATCH /api/links – update a new link
   } else if (req.method === 'PATCH') {
@@ -57,7 +57,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(400).json({ error: 'Reference not found in query' })
     }
 
-    const response = await prisma.link.update({
+    const response = await prisma.order.update({
       where: {
         reference: String(reference),
       },
