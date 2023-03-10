@@ -33,7 +33,7 @@ export type PostError = {
 // Response for GET request
 function get(res: NextApiResponse<GetResponse>) {
   res.status(200).json({
-    label: 'My Store',
+    label: 'Solana Burgers',
     icon: 'https://solanapay.com/src/img/branding/Solanapay.com/downloads/gradient.svg',
   })
 }
@@ -82,7 +82,7 @@ async function postImpl(
   // Return the serialized transaction
   return {
     transaction: base64,
-    message: 'Thankyou for your purchase!',
+    message: 'Complete your payment. Your order will be ready shortly.',
     network,
   }
 }
