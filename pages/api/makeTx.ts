@@ -34,7 +34,7 @@ export default async function handler(
       reference?: string
       payer?: string
     }
-    const link = await prisma.link.findUnique({
+    const link = await prisma.order.findUnique({
       where: {
         reference,
       },
@@ -48,10 +48,10 @@ export default async function handler(
     if (!link) return res.status(400).json({ error: 'link not found' })
 
     try {
-      const { amount, receiver } = link
+      const { amount, shopAddress } = link
 
       const buyerPublicKey = new PublicKey(payer)
-      const shopPublicKey = new PublicKey(receiver)
+      const shopPublicKey = new PublicKey(shopAddress)
 
       const network = WalletAdapterNetwork.Devnet
       const endpoint = clusterApiUrl(network)

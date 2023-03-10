@@ -16,7 +16,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const { reference } = req.query as {
       reference?: string
     }
-    const response = await prisma.link.findFirst({
+    const response = await prisma.order.findFirst({
       where: {
         reference: reference,
       },

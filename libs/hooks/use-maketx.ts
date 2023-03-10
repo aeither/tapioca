@@ -4,7 +4,7 @@ import { PublicKey, Transaction } from '@solana/web3.js'
 import { useEffect, useMemo, useState } from 'react'
 import useSWR from 'swr'
 
-import { MakeTransactionOutputData } from '@/pages/api/makeTransaction'
+import { MakeTransactionOutputData } from '@/pages/api/makeTx'
 import { PaymentStatus } from '@prisma/client'
 
 export default function useMakeTx({ reference }: { reference: string | undefined }) {
