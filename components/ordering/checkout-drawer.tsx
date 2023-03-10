@@ -19,6 +19,7 @@ import Typography from '@mui/material/Typography'
 import * as React from 'react'
 import { FormContainer, TextFieldElement } from 'react-hook-form-mui'
 import { toast } from 'sonner'
+import { AnimatedPrice } from './animated-price'
 import PaymentDialog from './payment-dialog'
 
 const drawerBleeding = 56
@@ -122,10 +123,13 @@ export default function CheckoutDrawer(props: Props) {
               </Typography>
             </div>
             <Typography sx={{ p: 2 }}>
-              {orderTotal.data && orderTotal.data._sum.price
-                ? orderTotal.data._sum.price.toFixed(2)
-                : 0}{' '}
-              $
+              <AnimatedPrice
+                price={
+                  orderTotal.data && orderTotal.data._sum.price
+                    ? orderTotal.data._sum.price.toFixed(2)
+                    : 0
+                }
+              />
             </Typography>
           </div>
         </StyledBox>
