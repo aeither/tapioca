@@ -64,7 +64,7 @@ export function useDB() {
   })
 
   const addProduct = api.db.addProduct.useMutation({
-    onSuccess(data) {
+    onSuccess() {
       queryClient.invalidateQueries()
     },
     onError: ({ data }: any) => {

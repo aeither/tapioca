@@ -114,6 +114,7 @@ export const dbRouter = createTRPCRouter({
     .input(
       z.object({
         title: z.string(),
+        description: z.string().optional(),
         price: z.number(),
         orderId: z.string(),
       }),
@@ -133,6 +134,7 @@ export const dbRouter = createTRPCRouter({
       return await ctx.prisma.product.create({
         data: {
           title: input.title,
+          description: input.description,
           price: input.price,
           orderId: input.orderId,
         },

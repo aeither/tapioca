@@ -125,6 +125,7 @@ export default function MenuStepper(props: Omit<ProductCardProps, 'handleClickOp
           orderId: orderId,
           price: data.price,
           title: data.name,
+          description: `${data.drink}, ${data.sauce}, ${data.dressing}`,
         }),
       ])
       toast.promise(promises, {
@@ -145,6 +146,7 @@ export default function MenuStepper(props: Omit<ProductCardProps, 'handleClickOp
           orderId: id,
           price: data.price,
           title: data.name,
+          description: `${data.drink}, ${data.sauce}, ${data.dressing}`,
         })
       })
       toast.promise(promises, {
