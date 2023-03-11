@@ -32,8 +32,8 @@ function SelectEditInputCell(props: GridRenderCellParams) {
     toast.promise(Promise.all([promise1, promise2]), {
       loading: 'Loading...',
       success: (data) => {
-        console.log('Status updated')
-        return `status updated`
+        console.log('Order updated successfully!')
+        return `Order updated successfully!`
       },
       error: 'Error',
     })

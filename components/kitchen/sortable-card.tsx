@@ -28,8 +28,12 @@ function OrderCard(props: Order) {
           {products.data &&
             products.data.map((product) => (
               <>
-                <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                <Typography sx={{ mb: 1.5 }} variant={'h3'}>
                   {product.title} x 1
+                </Typography>
+                <Typography sx={{ mb: 1.5 }} variant={'body1'}>
+                  {'  -> '}
+                  {product.description}
                 </Typography>
               </>
             ))}
@@ -53,7 +57,7 @@ function OrderCard(props: Order) {
             })
           }}
         >
-          Ready!
+          Order Ready
         </Button>
       </CardActions>
     </Card>
