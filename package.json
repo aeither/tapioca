@@ -8,6 +8,8 @@
     "format:write": "prettier --write \"**/*.{css,js,json,jsx,ts,tsx}\"",
     "format": "prettier \"**/*.{css,js,json,jsx,ts,tsx}\"",
     "start": "next start",
+    "prebuild": "prisma generate",
+    "predev": "prisma generate",
     "prisma": "prisma db push && prisma generate",
     "lint": "next lint"
   },
