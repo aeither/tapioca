@@ -1,14 +1,13 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+import { shopAddress } from '@/libs/constants/constants'
 import { prisma } from '@/server/db'
 import {
   Cluster,
   clusterApiUrl,
-  Connection,
-  Keypair,
-  LAMPORTS_PER_SOL,
+  Connection, LAMPORTS_PER_SOL,
   PublicKey,
   SystemProgram,
-  Transaction,
+  Transaction
 } from '@solana/web3.js'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
@@ -44,6 +43,7 @@ async function postImpl(
   network: Cluster,
   account: PublicKey,
   reference: PublicKey,
+  order: string,
 ): Promise<PostResponse> {
   // Can also use a custom RPC here
   const endpoint = clusterApiUrl(network)
@@ -58,10 +58,22 @@ async function postImpl(
     lastValidBlockHeight,
   })
 
+  // update to db
+  const productsTotal = await prisma.product.aggregate({
+    where: {
+      orderId: {
+        equals: order,
+      },
+    },
+    _sum: {
+      price: true,
+    },
+  })
+
   const transferInstruction = SystemProgram.transfer({
     fromPubkey: account,
-    toPubkey: Keypair.generate().publicKey,
-    lamports: LAMPORTS_PER_SOL / 1000,
+    toPubkey: shopAddress, // Restaurant address
+    lamports: ((productsTotal._sum.price || 1) * LAMPORTS_PER_SOL) / 20, // convert
   })
 
   // Add reference as a key to the instruction
@@ -119,6 +131,12 @@ async function post(req: NextApiRequest, res: NextApiResponse<PostResponse | Pos
     return
   }
 
+  const order = getFromQuery(req, 'order')
+  if (!order) {
+    res.status(400).json({ error: 'No order provided' })
+    return
+  }
+
   // update to db
   await prisma.order.update({
     where: {
@@ -134,6 +152,7 @@ async function post(req: NextApiRequest, res: NextApiResponse<PostResponse | Pos
       network,
       new PublicKey(account),
       new PublicKey(reference),
+      order,
     )
     res.status(200).json(postResponse)
   } catch (error) {

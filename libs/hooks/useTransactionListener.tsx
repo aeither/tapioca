@@ -14,6 +14,7 @@ export default function useTransactionListener({
   reference: string | null | undefined
 }) {
   const orderId = useStore((state) => state.orderId)
+  const setOrderId = useStore((state) => state.setOrderId)
   const { connection } = useConnection()
   const { updateOrder } = useDB()
   const { replace } = useRouter()
@@ -35,6 +36,7 @@ export default function useTransactionListener({
           orderId,
           status: PaymentStatus.SUCCEEDED,
         })
+        setOrderId(undefined)
         toast('Transaction confirmed')
         replace('/')
       } catch (e) {

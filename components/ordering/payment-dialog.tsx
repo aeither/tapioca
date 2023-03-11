@@ -29,7 +29,7 @@ export default function PaymentDialog() {
     if (!order.data) return
     // window.location is only available in the browser, so create the URL in here
     const { location } = window
-    const apiUrl = `${location.protocol}//${location.host}/api/transaction?network=devnet&reference=${order.data.reference}`
+    const apiUrl = `${location.protocol}//${location.host}/api/transaction?network=devnet&reference=${order.data.reference}&order=${order.data.id}`
     const urlParams: TransactionRequestURLFields = {
       link: new URL(apiUrl),
       label: 'Solana Burgers',
