@@ -18,7 +18,7 @@ export type ProductCardProps = {
 
 export default function ProductCard(props: Omit<ProductCardProps, 'handleClose'>) {
   return (
-    <Card sx={{ maxWidth: 345, height: '100%' }}>
+    <Card sx={{ width: '100%', maxWidth: 345, height: '100%' }}>
       <CardActionArea onClick={props.handleClickOpen}>
         <CardMedia
           component="img"

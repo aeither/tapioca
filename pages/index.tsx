@@ -129,6 +129,7 @@ export default function ResponsiveDrawer(props: Props) {
           <AnimatePresence>
             {HAMBURGERS.map((item) => (
               <Grid
+                className="flex items-center justify-center"
                 component={motion.div}
                 key={item.id}
                 xs={12}
