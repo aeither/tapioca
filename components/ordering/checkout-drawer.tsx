@@ -78,6 +78,10 @@ export default function CheckoutDrawer(props: Props) {
   // This is used only for the example
   const container = window !== undefined ? () => window().document.body : undefined
 
+  React.useEffect(() => {
+    if (!orderId) toggleDrawer(false)
+  }, [orderId])
+
   return (
     <Root>
       <CssBaseline />

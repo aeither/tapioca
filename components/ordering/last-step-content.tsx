@@ -12,7 +12,7 @@ export default function LastStepContent(props: { handleReset: () => void }) {
       <Typography>{drink} x 1</Typography>
       <Typography>{sauce} x 1</Typography>
       <Typography>{dressing} x 1</Typography>
-      <Typography>{price} USDC</Typography>
+      <Typography>{price} $</Typography>
       <div className="mt-2 flex gap-2">
         <Button type="button" variant="text" onClick={props.handleReset}>
           Reset

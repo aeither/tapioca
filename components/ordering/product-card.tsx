@@ -32,7 +32,7 @@ export default function ProductCard(props: Omit<ProductCardProps, 'handleClose'>
             {props.name}
           </Typography>
           <Typography variant="body1" fontWeight={'bold'} color="text.accent">
-            {props.price} USDC
+            {props.price} $
           </Typography>
           <div className="flex flex-wrap gap-2">
             {props.ingredients.map((ingredient, i) => (
