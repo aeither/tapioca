@@ -1,154 +1,147 @@
-import Card from '@/components/home/card'
-import ComponentGrid from '@/components/home/component-grid'
-import { CreateLinkModal } from '@/components/home/create-link-modal'
-import Products from '@/components/home/products'
-import QrCodeCell from '@/components/home/qrcode-cell'
-import { ConnectWallet } from '@/components/home/wallet'
-import WebVitals from '@/components/home/web-vitals'
-import Layout from '@/components/layout'
-import { DEPLOY_URL } from '@/libs/constants/constants'
-import { useDB } from '@/libs/hooks/use-db'
-import { motion } from 'framer-motion'
-import Image from 'next/image'
-import Link from 'next/link'
-import Balancer from 'react-wrap-balancer'
-import { toast } from 'sonner'
+import ProductCard from '@/components/ordering/product-card'
+import { MENU_ITEMS } from '@/libs/constants/datas'
+import { AppBar, IconButton } from '@mui/material'
+import Box from '@mui/material/Box'
+import CssBaseline from '@mui/material/CssBaseline'
+import Divider from '@mui/material/Divider'
+import Drawer from '@mui/material/Drawer'
+import List from '@mui/material/List'
+import ListItem from '@mui/material/ListItem'
+import ListItemButton from '@mui/material/ListItemButton'
+import ListItemIcon from '@mui/material/ListItemIcon'
+import ListItemText from '@mui/material/ListItemText'
+import Toolbar from '@mui/material/Toolbar'
+import Typography from '@mui/material/Typography'
+import * as React from 'react'
+import { MenuIcon } from 'lucide-react'
+import { HAMBURGERS } from '@/libs/constants/hamburgers'
+import CheckoutDrawer from '@/components/ordering/checkout-drawer'
+import Grid from '@mui/material/Unstable_Grid2' // Grid version 2
+import ProductDialog from '@/components/ordering/product-dialog'
+import { AnimatePresence, motion } from 'framer-motion'
+import { FADE_IN_ANIMATION_SETTINGS } from '@/libs/constants/constants'
 
-export default function Home() {
-  // const { data: links } = useSWR<PrismaLinkType[]>(`/api/links`, fetcher)
-  const { orders } = useDB()
+const drawerWidth = 200
 
-  return (
-    <Layout>
-      <motion.h1 className="bg-gradient-to-br from-black to-stone-500 bg-clip-text text-center font-display text-4xl font-bold tracking-[-0.02em] text-transparent drop-shadow-sm md:text-7xl md:leading-[5rem]">
-        <Balancer>Building blocks for your Next project</Balancer>
-      </motion.h1>
-
-      {/* here we are animating with Tailwind instead of Framer Motion because Framer Motion messes up the z-index for child components */}
-      <div className="my-10 grid w-full max-w-screen-xl animate-[slide-down-fade_0.5s_ease-in-out] grid-cols-1 gap-5 px-5 md:grid-cols-3 xl:px-0">
-        <div className={''}>
-          <ConnectWallet />
-          <Products submitTarget="/cart" enabled />
-        </div>
-        <div className={''}>
-          <button onClick={() => toast('hello world')}>toast</button>
-          {/* CreateLinkModal -> CreateOrder */}
-          <CreateLinkModal />
-          <table className="table-auto">
-            <thead>
-              <tr>
-                <th>Amount</th>
-                <th>Reference</th>
-                <th>Status</th>
-                <th>Info</th>
-                <th>Page</th>
-                <th>Share</th>
-                <th>Copy</th>
-              </tr>
-            </thead>
-            <tbody>
-              {orders.data &&
-                orders.data.map((link, i) => (
-                  <tr key={i}>
-                    <td>{link.amount}</td>
-                    <td>{link.reference}</td>
-                    <td>{link.status}</td>
-                    <td>
-                      <p>Info</p>
-                    </td>
-                    <td>
-                      <Link href={`/link?reference=${link.reference}`}>Open</Link>
-                    </td>
-                    <td>
-                      <button
-                        onClick={() => {
-                          if (navigator.share) {
-                            navigator
-                              .share({
-                                title: 'WebShare API Demo',
-                                url: `https://${window.location.host}/link?reference=${link.reference}`,
-                              })
-                              .then(() => {
-                                console.log('Thanks for sharing!')
-                              })
-                              .catch(console.error)
-                          } else {
-                            // show modal
-                          }
-                        }}
-                      >
-                        Share
-                      </button>
-                    </td>
-                    <td>
-                      <QrCodeCell reference={link.reference as unknown as string} />
-                    </td>
-                  </tr>
-                ))}
-            </tbody>
-          </table>
-        </div>
-        {features.map(({ title, description, demo, large }) => (
-          <Card
-            key={title}
-            title={title}
-            description={description}
-            demo={title === 'Beautiful, reusable components' ? <ComponentGrid /> : demo}
-            large={large}
-          />
-        ))}
-      </div>
-    </Layout>
-  )
+interface Props {
+  /**
+   * Injected by the documentation to work in an iframe.
+   * You won't need it on your project.
+   */
+  window?: () => Window
 }
 
-const features = [
-  {
-    title: 'Beautiful, reusable components',
-    description:
-      'Pre-built beautiful, a11y-first components, powered by [Tailwind CSS](https://tailwindcss.com/), [Radix UI](https://www.radix-ui.com/), and [Framer Motion](https://framer.com/motion)',
-    large: true,
-  },
-  {
-    title: 'Performance first',
-    description:
-      'Built on [Next.js](https://nextjs.org/) primitives like `@next/font` and `next/image` for stellar performance.',
-    demo: <WebVitals />,
-  },
-  {
-    title: 'One-click Deploy',
-    description:
-      'Jumpstart your next project by deploying Precedent to [Vercel](https://vercel.com/) in one click.',
-    demo: (
-      <a href={DEPLOY_URL}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="https://vercel.com/button" alt="Deploy with Vercel" width={120} />
-      </a>
-    ),
-  },
-  {
-    title: 'Built-in Auth + Database',
-    description:
-      'Precedent comes with authentication and database via [Auth.js](https://authjs.dev/) + [Prisma](https://prisma.io/)',
-    demo: (
-      <div className="flex items-center justify-center space-x-20">
-        <Image alt="Auth.js logo" src="/authjs.webp" width={50} height={50} />
-        <Image alt="Prisma logo" src="/prisma.svg" width={50} height={50} />
-      </div>
-    ),
-  },
-  {
-    title: 'Hooks, utilities, and more',
-    description: 'Precedent offers a collection of hooks, utilities, and `@vercel/og`',
-    demo: (
-      <div className="grid grid-flow-col grid-rows-3 gap-10 p-10">
-        <span className="font-mono font-semibold">useIntersectionObserver</span>
-        <span className="font-mono font-semibold">useLocalStorage</span>
-        <span className="font-mono font-semibold">useScroll</span>
-        <span className="font-mono font-semibold">nFormatter</span>
-        <span className="font-mono font-semibold">capitalize</span>
-        <span className="font-mono font-semibold">truncate</span>
-      </div>
-    ),
-  },
-]
+export default function ResponsiveDrawer(props: Props) {
+  const { window } = props
+  const [mobileOpen, setMobileOpen] = React.useState(false)
+
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen)
+  }
+
+  const drawer = (
+    <div>
+      <Toolbar />
+      <Divider />
+      <List>
+        {MENU_ITEMS.map((item, index) => (
+          <ListItem key={item.name} disablePadding>
+            <ListItemButton>
+              <ListItemIcon>{item.icon}</ListItemIcon>
+              <ListItemText primary={item.name} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+    </div>
+  )
+  // loop through an object and map it to an array. the object keys are name: string, day: number
+  const container = window !== undefined ? () => window().document.body : undefined
+
+  return (
+    <Box sx={{ display: 'flex' }}>
+      <CssBaseline />
+      <AppBar
+        position="fixed"
+        sx={{
+          width: { sm: `calc(100% - ${drawerWidth}px)` },
+          ml: { sm: `${drawerWidth}px` },
+        }}
+      >
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            onClick={handleDrawerToggle}
+            sx={{ mr: 2, display: { sm: 'none' } }}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" noWrap component="div">
+            Menu
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <Box component="nav" sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}>
+        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
+        <Drawer
+          container={container}
+          variant="temporary"
+          open={mobileOpen}
+          onClose={handleDrawerToggle}
+          ModalProps={{
+            keepMounted: true, // Better open performance on mobile.
+          }}
+          sx={{
+            display: { xs: 'block', sm: 'none' },
+            '& .MuiDrawer-paper': {
+              boxSizing: 'border-box',
+              width: drawerWidth,
+            },
+          }}
+        >
+          {drawer}
+        </Drawer>
+        <Drawer
+          variant="permanent"
+          sx={{
+            display: { xs: 'none', sm: 'block' },
+            '& .MuiDrawer-paper': {
+              boxSizing: 'border-box',
+              width: drawerWidth,
+            },
+          }}
+          open
+        >
+          {drawer}
+        </Drawer>
+      </Box>
+      <Box
+        component="main"
+        sx={{
+          flexGrow: 1,
+          p: 3,
+        }}
+      >
+        <Toolbar />
+        <Grid container spacing={2}>
+          <AnimatePresence>
+            {HAMBURGERS.map((item) => (
+              <Grid
+                component={motion.div}
+                key={item.id}
+                xs={12}
+                sm={6}
+                {...FADE_IN_ANIMATION_SETTINGS}
+              >
+                <ProductDialog {...item} />
+              </Grid>
+            ))}
+          </AnimatePresence>
+        </Grid>
+      </Box>
+      <CheckoutDrawer />
+    </Box>
+  )
+}

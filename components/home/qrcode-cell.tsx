@@ -15,3 +15,6 @@ export default function QrCodeCell({ reference }: { reference: string }) {
     </div>
   )
 }
+
+// import QrCodeCell from '@/components/home/qrcode-cell'
+// <QrCodeCell reference={link.reference as unknown as string} />

@@ -1,10 +1,10 @@
 import Head from 'next/head'
 
-const DOMAIN = 'https://precedent.dev'
+const DOMAIN = 'https://tapioca-solutions.vercel.app/'
 
 export default function Meta({
-  title = 'Precedent - Building blocks for your Next.js project',
-  description = 'Precedent is the all-in-one solution for your Next.js project. It includes a design system, authentication, analytics, and more.',
+  title = 'Tapioca - The all-in-one restaurant management system',
+  description = 'Tapioca is the solution to integrate seamless payment experience for your customers and order management for your collaborators.',
   image = `${DOMAIN}/api/og`,
 }: {
   title?: string

@@ -43,3 +43,6 @@ export const ConnectWallet: FC = ({ ...props }) => {
     </>
   )
 }
+
+// import { ConnectWallet } from '@/components/home/wallet'
+// <ConnectWallet />
