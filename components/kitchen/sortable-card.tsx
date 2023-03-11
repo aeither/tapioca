@@ -1,35 +1,68 @@
+import { useDB, useProducts } from '@/libs/hooks/use-db'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
+import { Chip } from '@mui/material'
 import Button from '@mui/material/Button'
 import Card from '@mui/material/Card'
 import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
+import { Order, PaymentStatus } from '@prisma/client'
+import { toast } from 'sonner'
 
-function OrderCard() {
+function OrderCard(props: Order) {
+  const products = useProducts({ orderId: props.id })
+  const { updateOrder } = useDB()
+
   return (
-    <Card sx={{ minWidth: 275 }}>
+    <Card sx={{ minWidth: 275 }} className="rounded border p-2 m-2">
       <CardContent>
-        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-          Word of the Day
-        </Typography>
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          adjective
+          {`${props.updatedAt.getHours()}:
+            ${props.updatedAt.getMinutes()}:
+            ${props.updatedAt.getSeconds()}`}
         </Typography>
+        <div className="flex gap-2 py-2">
+          <Chip label={`${props.amount} $`} variant="outlined" />
+          <Chip label={`Table ${props.table}`} variant="outlined" />
+        </div>
         <Typography variant="body2">
-          well meaning and kindly.
-          <br />
-          {'"a benevolent smile"'}
+          {products.data &&
+            products.data.map((product) => (
+              <>
+                <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                  {product.title} x 1
+                </Typography>
+              </>
+            ))}
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Learn More</Button>
+        <Button
+          variant="contained"
+          onClick={async () => {
+            console.log('hello world')
+            const promise = updateOrder.mutateAsync({
+              orderId: props.id,
+              status: PaymentStatus.READY,
+            })
+            toast.promise(promise, {
+              loading: 'Loading...',
+              success: () => {
+                return `ready!!!`
+              },
+              error: 'Error',
+            })
+          }}
+        >
+          Ready!
+        </Button>
       </CardActions>
     </Card>
   )
 }
 
-export function SortableItem(props: { id: number }) {
+export function SortableItem(props: Order) {
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({
     id: props.id,
   })
@@ -41,13 +74,13 @@ export function SortableItem(props: { id: number }) {
 
   return (
     <div
-      className="touch-none"
+      // className="touch-none"
       ref={setNodeRef}
       style={style}
       {...attributes}
       {...listeners}
     >
-      <OrderCard />
+      <OrderCard {...props} />
     </div>
   )
 }

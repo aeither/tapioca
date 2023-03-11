@@ -1,12 +1,12 @@
-import React, { useState } from 'react'
+import { useDB } from '@/libs/hooks/use-db'
 import {
-  DndContext,
   closestCenter,
+  DndContext,
+  DragEndEvent,
   KeyboardSensor,
   PointerSensor,
   useSensor,
   useSensors,
-  DragEndEvent,
 } from '@dnd-kit/core'
 import {
   arrayMove,
@@ -14,6 +14,7 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable'
+import { useState } from 'react'
 import { SortableItem } from './sortable-card'
 
 export default function SortableOrders() {
@@ -24,6 +25,7 @@ export default function SortableOrders() {
       coordinateGetter: sortableKeyboardCoordinates,
     }),
   )
+  const { orders } = useDB()
 
   return (
     <DndContext
@@ -31,17 +33,21 @@ export default function SortableOrders() {
       collisionDetection={closestCenter}
       onDragEnd={handleDragEnd}
     >
-      <SortableContext items={items} strategy={verticalListSortingStrategy}>
-        {items.map((id) => (
-          <SortableItem key={id} id={id} />
-        ))}
-      </SortableContext>
+      {orders.data && (
+        <SortableContext items={orders.data} strategy={verticalListSortingStrategy}>
+          {orders.data
+            .filter((order) => order.customerAddress !== null)
+            .map((order) => (
+              <SortableItem key={order.id} {...order} />
+            ))}
+        </SortableContext>
+      )}
     </DndContext>
   )
 
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event
-    if(!over) return
+    if (!over) return
 
     if (active.id !== over.id) {
       setItems((items) => {

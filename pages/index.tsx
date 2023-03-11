@@ -1,5 +1,8 @@
-import ProductCard from '@/components/ordering/product-card'
+import CheckoutDrawer from '@/components/ordering/checkout-drawer'
+import ProductDialog from '@/components/ordering/product-dialog'
+import { FADE_IN_ANIMATION_SETTINGS } from '@/libs/constants/constants'
 import { MENU_ITEMS } from '@/libs/constants/datas'
+import { HAMBURGERS } from '@/libs/constants/hamburgers'
 import { AppBar, IconButton } from '@mui/material'
 import Box from '@mui/material/Box'
 import CssBaseline from '@mui/material/CssBaseline'
@@ -12,14 +15,10 @@ import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
-import * as React from 'react'
-import { MenuIcon } from 'lucide-react'
-import { HAMBURGERS } from '@/libs/constants/hamburgers'
-import CheckoutDrawer from '@/components/ordering/checkout-drawer'
-import Grid from '@mui/material/Unstable_Grid2' // Grid version 2
-import ProductDialog from '@/components/ordering/product-dialog'
+import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
 import { AnimatePresence, motion } from 'framer-motion'
-import { FADE_IN_ANIMATION_SETTINGS } from '@/libs/constants/constants'
+import { MenuIcon } from 'lucide-react'
+import * as React from 'react'
 
 const drawerWidth = 200
 
