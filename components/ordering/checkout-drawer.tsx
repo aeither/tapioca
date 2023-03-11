@@ -6,6 +6,7 @@ import { Payment } from '@mui/icons-material'
 import Fastfood from '@mui/icons-material/Fastfood'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
+import LoadingButton from '@mui/lab/LoadingButton'
 import ButtonGroup from '@mui/material/ButtonGroup'
 import { grey } from '@mui/material/colors'
 import CssBaseline from '@mui/material/CssBaseline'
@@ -21,6 +22,7 @@ import { FormContainer, TextFieldElement } from 'react-hook-form-mui'
 import { toast } from 'sonner'
 import { AnimatedPrice } from './animated-price'
 import PaymentDialog from './payment-dialog'
+import SaveIcon from '@mui/icons-material/Save'
 
 const drawerBleeding = 56
 
@@ -186,9 +188,16 @@ export default function CheckoutDrawer(props: Props) {
                   className=""
                   required
                 />
-                <Button type={'submit'} color={'primary'} variant={'contained'}>
+                <LoadingButton
+                  loading={updateOrder.isLoading}
+                  loadingPosition="start"
+                  startIcon={<SaveIcon />}
+                  type={'submit'}
+                  color={'primary'}
+                  variant={'contained'}
+                >
                   Add Number
-                </Button>
+                </LoadingButton>
               </div>
             </FormContainer>
           )}

@@ -7,6 +7,7 @@ specifiers:
   '@jup-ag/core': 4.0.0-beta.9
   '@jup-ag/react-hook': 4.0.0-beta.9
   '@mui/icons-material': ^5.11.11
+  '@mui/lab': 5.0.0-alpha.122
   '@mui/material': ^5.11.12
   '@mui/x-data-grid': ^6.0.1
   '@mui/x-date-pickers': ^6.0.0
@@ -110,6 +111,7 @@ dependencies:
   '@jup-ag/core': 4.0.0-beta.9_gbj7ye4slrwojorm54gcam33su
   '@jup-ag/react-hook': 4.0.0-beta.9_7hbnzkk77xm4t7a2o3wwxtzwpi
   '@mui/icons-material': 5.11.11_ppvyq2xwwyuzezkmi7rs6nde5q
+  '@mui/lab': 5.0.0-alpha.122_2qphbkkvu4ma77i2f4hyixfbs4
   '@mui/material': 5.11.12_pte7igy7nwbxlzeccvq7hpzi4q
   '@mui/x-data-grid': 6.0.1_l63iwaafpcmtjxqaddu7534ibu
   '@mui/x-date-pickers': 6.0.0_5cwqnhrl43dqjew6vjdnhaaie4
@@ -2824,6 +2826,30 @@ packages:
       react-is: 18.2.0
     dev: false
 
+  /@mui/base/5.0.0-alpha.120_ib3m5ricvtkl2cll7qpr2f6lvq:
+    resolution: {integrity: sha512-UoIXLjbl8ghK7OSD1dYzHIj79sx9v5S2J7vYeuhxUS0QR0FwGZ3WLHd31TQ2CT2faPX/AXsHQeFn93wKSnjPUQ==}
+    engines: {node: '>=12.0.0'}
+    peerDependencies:
+      '@types/react': ^17.0.0 || ^18.0.0
+      react: ^17.0.0 || ^18.0.0
+      react-dom: ^17.0.0 || ^18.0.0
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+    dependencies:
+      '@babel/runtime': 7.21.0
+      '@emotion/is-prop-valid': 1.2.0
+      '@mui/types': 7.2.3_@types+react@18.0.26
+      '@mui/utils': 5.11.12_react@18.2.0
+      '@popperjs/core': 2.11.6
+      '@types/react': 18.0.26
+      clsx: 1.2.1
+      prop-types: 15.8.1
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-is: 18.2.0
+    dev: false
+
   /@mui/core-downloads-tracker/5.11.12:
     resolution: {integrity: sha512-LHh8HZQ5nPVcW5QnyLwkAZ40txc/S2bzKMQ3bTO+5mjuwAJ2AzQrjZINLVy1geY7ei1pHXVqO1hcWHg/QdT44w==}
     dev: false
@@ -2843,6 +2869,40 @@ packages:
       '@mui/material': 5.11.12_pte7igy7nwbxlzeccvq7hpzi4q
       '@types/react': 18.0.26
       react: 18.2.0
+    dev: false
+
+  /@mui/lab/5.0.0-alpha.122_2qphbkkvu4ma77i2f4hyixfbs4:
+    resolution: {integrity: sha512-rJyu9llUWAluUQgDEmN0WrpcFxeTdJgu+XYriJtp/MchdvKl/qVTlx+vhnIhqas2bySj5N1VQnkI6qOvfXiYvQ==}
+    engines: {node: '>=12.0.0'}
+    peerDependencies:
+      '@emotion/react': ^11.5.0
+      '@emotion/styled': ^11.3.0
+      '@mui/material': ^5.0.0
+      '@types/react': ^17.0.0 || ^18.0.0
+      react: ^17.0.0 || ^18.0.0
+      react-dom: ^17.0.0 || ^18.0.0
+    peerDependenciesMeta:
+      '@emotion/react':
+        optional: true
+      '@emotion/styled':
+        optional: true
+      '@types/react':
+        optional: true
+    dependencies:
+      '@babel/runtime': 7.21.0
+      '@emotion/react': 11.10.6_kzbn2opkn2327fwg5yzwzya5o4
+      '@emotion/styled': 11.10.6_qry7xzgsc55pr5ngbiorqn3fpa
+      '@mui/base': 5.0.0-alpha.120_ib3m5ricvtkl2cll7qpr2f6lvq
+      '@mui/material': 5.11.12_pte7igy7nwbxlzeccvq7hpzi4q
+      '@mui/system': 5.11.12_dhit7hwbxwjs4eberzjw3ibkbi
+      '@mui/types': 7.2.3_@types+react@18.0.26
+      '@mui/utils': 5.11.12_react@18.2.0
+      '@types/react': 18.0.26
+      clsx: 1.2.1
+      prop-types: 15.8.1
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-is: 18.2.0
     dev: false
 
   /@mui/material/5.11.12_pte7igy7nwbxlzeccvq7hpzi4q:
