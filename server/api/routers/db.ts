@@ -120,6 +120,17 @@ export const dbRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ ctx, input }) => {
+      await ctx.prisma.order.update({
+        where: {
+          id: input.orderId,
+        },
+        data: {
+          amount: {
+            increment: input.price,
+          },
+        },
+      })
+
       return await ctx.prisma.product.create({
         data: {
           title: input.title,
