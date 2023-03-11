@@ -31,7 +31,7 @@ interface Props {
   window?: () => Window
 }
 
-export default function ResponsiveDrawer(props: Props) {
+export default function Home(props: Props) {
   const { window } = props
   const [mobileOpen, setMobileOpen] = React.useState(false)
 
