@@ -138,7 +138,6 @@ export default function MenuStepper(props: Omit<ProductCardProps, 'handleClickOp
     } else {
       const promises = Promise.all([
         createNewOrder.mutateAsync({
-          amount: data.price,
           shopAddress: shopAddress.toBase58(),
         }),
       ]).then(([{ id }]) => {

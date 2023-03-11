@@ -43,9 +43,7 @@ export function useDB() {
   const setOrderId = useStore((state) => state.setOrderId)
 
   const orders = api.db.orders.useQuery(undefined, {
-    // refetchInterval: 2000,
-    staleTime: Infinity,
-    cacheTime: Infinity,
+    refetchInterval: 3000,
   })
 
   const createNewOrder = api.db.createNewOrder.useMutation({

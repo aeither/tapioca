@@ -61,14 +61,13 @@ export const dbRouter = createTRPCRouter({
   createNewOrder: publicProcedure
     .input(
       z.object({
-        amount: z.number(),
         shopAddress: z.string(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
       return await ctx.prisma.order.create({
         data: {
-          amount: input.amount,
+          amount: 0,
           reference: new Keypair().publicKey.toBase58(),
           shopAddress: input.shopAddress,
         },

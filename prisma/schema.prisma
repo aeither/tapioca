@@ -62,6 +62,9 @@ enum PaymentStatus {
   SUCCEEDED
   PENDING
   FAILED
+  PREPARING
+  READY
+  SERVED
 }
 
 model Product {

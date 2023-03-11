@@ -190,7 +190,6 @@ export default function CheckoutDrawer(props: Props) {
                 />
                 <LoadingButton
                   loading={updateOrder.isLoading}
-                  loadingPosition="start"
                   type={'submit'}
                   color={'primary'}
                   variant={'contained'}
