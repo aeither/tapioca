@@ -1,12 +1,11 @@
 import { ConnectWallet } from '@/components/home/wallet'
-import Layout from '@/components/layout'
 import { motion } from 'framer-motion'
 import Balancer from 'react-wrap-balancer'
 import { TOKEN_LIST_URL } from '@jup-ag/core'
 
 export default function Home() {
   return (
-    <Layout>
+    <>
       <motion.h1 className="bg-gradient-to-br from-black to-stone-500 bg-clip-text text-center font-display text-4xl font-bold tracking-[-0.02em] text-transparent drop-shadow-sm md:text-7xl md:leading-[5rem]">
         <Balancer>Building blocks for your Next project</Balancer>
       </motion.h1>
@@ -41,6 +40,6 @@ export default function Home() {
           <div>Best quote:</div>
         </div>
       </div>
-    </Layout>
+    </>
   )
 }
