@@ -1,7 +1,6 @@
 import { ConnectWallet } from '@/components/home/wallet'
 import { motion } from 'framer-motion'
 import Balancer from 'react-wrap-balancer'
-import { TOKEN_LIST_URL } from '@jup-ag/core'
 
 export default function Home() {
   return (

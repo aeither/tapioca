@@ -29,6 +29,7 @@ specifiers:
   '@tailwindcss/line-clamp': ^0.4.2
   '@tailwindcss/typography': ^0.5.9
   '@tanstack/react-query': ^4.26.1
+  '@tiplink/api': ^0.1.2
   '@trpc/client': ^10.14.1
   '@trpc/next': ^10.14.1
   '@trpc/react-query': ^10.14.1
@@ -66,6 +67,7 @@ specifiers:
   react-hook-form: ^7.43.1
   react-hook-form-mui: ^5.15.1
   react-markdown: ^8.0.4
+  react-qrcode-logo: ^2.9.0
   react-use: ^17.4.0
   react-wrap-balancer: ^0.3.0
   sonner: ^0.2.0
@@ -105,6 +107,7 @@ dependencies:
   '@solana/wallet-adapter-wallets': 0.19.11_wlw35r3x6t2xdt35jkel2legeq
   '@solana/web3.js': 1.73.2
   '@tanstack/react-query': 4.26.1_5ltrbq4k3th7ucjbxabykyadgy
+  '@tiplink/api': 0.1.2
   '@trpc/client': 10.14.1_@trpc+server@10.14.1
   '@trpc/next': 10.14.1_d54azksgvncnud2lgxbddtpyti
   '@trpc/react-query': 10.14.1_ldv44zvqpibs4fctxfwnszfeji
@@ -134,6 +137,7 @@ dependencies:
   react-hook-form: 7.43.1_react@18.2.0
   react-hook-form-mui: 5.15.1_myhouejqc6qifne4mvidzdwhcy
   react-markdown: 8.0.5_kzbn2opkn2327fwg5yzwzya5o4
+  react-qrcode-logo: 2.9.0_biqbaboplfbrettd7655fr4n2y
   react-use: 17.4.0_biqbaboplfbrettd7655fr4n2y
   react-wrap-balancer: 0.3.0_react@18.2.0
   sonner: 0.2.0_biqbaboplfbrettd7655fr4n2y
@@ -5319,6 +5323,20 @@ packages:
       use-sync-external-store: 1.2.0_react@18.2.0
     dev: false
 
+  /@tiplink/api/0.1.2:
+    resolution: {integrity: sha512-4Pfo4A8zPGYu5UIkZOgtlK1MG6bO7qIc2sHA0iMfw/RbJhYwnF8THe8S1Umg9LdQ/E5jkT29siMjrEfoRtv81w==}
+    dependencies:
+      '@solana/web3.js': 1.73.2
+      bs58: 5.0.0
+      libsodium: 0.7.11
+      libsodium-wrappers-sumo: 0.7.11
+    transitivePeerDependencies:
+      - bufferutil
+      - encoding
+      - supports-color
+      - utf-8-validate
+    dev: false
+
   /@toruslabs/base-controllers/2.5.0_@babel+runtime@7.21.0:
     resolution: {integrity: sha512-NL4l/Tu8Zk8wgW+2iEpmUwwg9tuZixTGKoC/hU6rki7cIVC7KUHjEcY8BQUxL5Zj+YM70EBAy+zHeFAMUt7GDg==}
     peerDependencies:
@@ -9774,6 +9792,20 @@ packages:
       type-check: 0.4.0
     dev: false
 
+  /libsodium-sumo/0.7.11:
+    resolution: {integrity: sha512-bY+7ph7xpk51Ez2GbE10lXAQ5sJma6NghcIDaSPbM/G9elfrjLa0COHl/7P6Wb/JizQzl5UQontOOP1z0VwbLA==}
+    dev: false
+
+  /libsodium-wrappers-sumo/0.7.11:
+    resolution: {integrity: sha512-DGypHOmJbB1nZn89KIfGOAkDgfv5N6SBGC3Qvmy/On0P0WD1JQvNRS/e3UL3aFF+xC0m+MYz5M+MnRnK2HMrKQ==}
+    dependencies:
+      libsodium-sumo: 0.7.11
+    dev: false
+
+  /libsodium/0.7.11:
+    resolution: {integrity: sha512-WPfJ7sS53I2s4iM58QxY3Inb83/6mjlYgcmZs7DJsvDlnmVUwNinBCi5vBT43P6bHRy01O4zsMU2CoVR6xJ40A==}
+    dev: false
+
   /lilconfig/2.0.6:
     resolution: {integrity: sha512-9JROoBW7pobfsx+Sq2JsASvCo6Pfo6WWoUW79HuB1BCoBXD4PLWJPqDF6fNj67pqBYTbAHkE57M1kS/+L1neOg==}
     engines: {node: '>=10'}
@@ -11857,6 +11889,18 @@ packages:
       react: 16.13.1
       react-dom: 16.13.1_react@16.13.1
       webrtc-adapter: 7.7.1
+    dev: false
+
+  /react-qrcode-logo/2.9.0_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-x9uctB/8kuQ+x7p4V/BRv6qbQV4xYopLcitBuQT3925U/zVFb3bbDUsUZsi7hEKuAX/wRsfhs331FhlPSYCO9Q==}
+    peerDependencies:
+      react: '>=16.4.1'
+      react-dom: '>=16.4.1'
+    dependencies:
+      lodash.isequal: 4.5.0
+      qrcode-generator: 1.4.4
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
     dev: false
 
   /react-refresh/0.4.3:

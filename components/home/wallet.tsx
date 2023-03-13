@@ -36,10 +36,14 @@ export const AnanasConfig: FC<Props> = ({ children, network = 'mainnet' }) => {
   )
 }
 
-export const ConnectWallet: FC = ({ ...props }) => {
+interface ConnectWalletProps {
+  className?: string
+}
+
+export const ConnectWallet: FC<ConnectWalletProps> = ({ className, ...rest }) => {
   return (
     <>
-      <WalletMultiButton {...props} />
+      <WalletMultiButton className={className} {...rest} />
     </>
   )
 }
