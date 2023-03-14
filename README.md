@@ -1,4 +1,4 @@
-## Tapioca
+## Tapioca 🧋
 
 The all-in-one restaurant management system
 
