@@ -6,7 +6,7 @@ image
 
 ### DEMO
 
-website
+[Website](https://tapioca-solutions.vercel.app/)
 
 ### Description
 
@@ -44,9 +44,13 @@ pnpm build
 ### Routes
 
 `/` Ordering app. Toggle to mobile device in devtools.
+
 `/counter` Order dashboard. Track order status.
+
 `/kitchen` Kitchen Display System.
+
 `/giftcard` Generate Gift Card.
+
 `/exchange` Swap tokens.
 
 **Tech Stack**
