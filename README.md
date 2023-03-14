@@ -2,7 +2,7 @@
 
 The all-in-one restaurant management system
 
-image
+![Hero](https://user-images.githubusercontent.com/36173828/224949581-0851255f-47d9-4c0e-a9ee-37800c318be5.png)
 
 ### DEMO
 
