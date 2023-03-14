@@ -53,11 +53,17 @@ pnpm build
 
 `/exchange` Swap tokens.
 
-**Tech Stack**
+### Tech Stack
+
 Typescript
+
 Nextjs
+
 Tailwind
+
 Material UI
+
 Prisma
+
 Postgres
 
