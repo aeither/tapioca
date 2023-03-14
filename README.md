@@ -67,3 +67,6 @@ Prisma
 
 Postgres
 
+### Extra
+
+![supported_wallets_rounded](https://user-images.githubusercontent.com/36173828/224951013-e01cc47d-4fb3-4bd8-b04c-ed1e5764bc65.png)
